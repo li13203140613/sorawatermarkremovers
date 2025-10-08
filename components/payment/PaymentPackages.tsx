@@ -3,11 +3,14 @@
 import { useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { PAYMENT_PACKAGES } from '@/lib/payment/types'
+import { useTranslations } from 'next-intl'
 
 // 初始化 Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export function PaymentPackages() {
+  const t = useTranslations('payment')
+  const tCommon = useTranslations('common')
   const [loading, setLoading] = useState<number | null>(null)
   const [error, setError] = useState('')
 
@@ -27,7 +30,7 @@ export function PaymentPackages() {
 
       if (!response.ok) {
         const data = await response.json()
-        setError(data.error || '创建支付会话失败')
+        setError(data.error || t('errors.failed'))
         setLoading(null)
         return
       }
@@ -35,7 +38,7 @@ export function PaymentPackages() {
       const data = await response.json()
 
       if (!data.url) {
-        setError('未获取到支付链接')
+        setError(t('errors.failed'))
         setLoading(null)
         return
       }
@@ -43,15 +46,15 @@ export function PaymentPackages() {
       // 跳转到 Stripe Checkout 页面
       window.location.href = data.url
     } catch (err) {
-      console.error('支付错误:', err)
-      setError(`网络错误: ${err instanceof Error ? err.message : '请重试'}`)
+      console.error('Payment error:', err)
+      setError(t('errors.failed'))
       setLoading(null)
     }
   }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-4">充值积分</h2>
+      <h2 className="text-xl font-semibold mb-4">{t('title')}</h2>
 
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
@@ -72,7 +75,7 @@ export function PaymentPackages() {
             {pkg.popular && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  推荐
+                  {t('packages.popular')}
                 </span>
               </div>
             )}
@@ -82,12 +85,10 @@ export function PaymentPackages() {
                 ${pkg.amount}
               </div>
               <div className="text-2xl font-semibold text-blue-600 mb-1">
-                {pkg.credits} 积分
+                {pkg.credits} {tCommon('credits')}
               </div>
-              <div className="text-sm text-gray-500 mb-4">{pkg.label}</div>
-
-              <div className="text-xs text-gray-400 mb-4">
-                可处理 {pkg.credits} 个视频
+              <div className="text-sm text-gray-500 mb-4">
+                {t(`packages.${pkg.label}`)}
               </div>
 
               <button
@@ -117,42 +118,15 @@ export function PaymentPackages() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    处理中...
+                    {t('processing')}
                   </span>
                 ) : (
-                  '立即购买'
+                  t('purchase')
                 )}
               </button>
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
-        <div className="flex items-start gap-2">
-          <svg
-            className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <div className="text-sm text-blue-800">
-            <p className="font-medium mb-1">充值说明</p>
-            <ul className="list-disc list-inside space-y-1 text-blue-700">
-              <li>1 美元 = 10 积分</li>
-              <li>最低充值金额为 1 美元</li>
-              <li>支付成功后积分立即到账</li>
-              <li>使用 Stripe 安全支付，支持信用卡</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   )

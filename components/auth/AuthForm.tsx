@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/lib/auth'
+import { useTranslations } from 'next-intl'
 
 export function AuthForm() {
+  const t = useTranslations('auth')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { signInWithGoogle } = useAuth()
@@ -19,7 +21,7 @@ export function AuthForm() {
       }
       // 成功后会重定向到 Google，不需要额外处理
     } catch (err) {
-      setError('Google 登录失败,请重试')
+      setError('Google login failed, please try again')
       setLoading(false)
     }
   }
@@ -27,11 +29,11 @@ export function AuthForm() {
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-6">
-        登录到 RemoveWM
+        RemoveWM
       </h2>
 
       <p className="text-center text-gray-600 mb-8">
-        使用 Google 账户登录以开始使用
+        {t('signInWithGoogle')}
       </p>
 
       {error && (
@@ -52,12 +54,12 @@ export function AuthForm() {
           <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
         </svg>
         <span className="text-base font-medium text-gray-700">
-          {loading ? '登录中...' : '使用 Google 登录'}
+          {loading ? t('signingIn') : t('signInWithGoogle')}
         </span>
       </button>
 
       <p className="mt-6 text-center text-xs text-gray-500">
-        首次登录将自动创建账户并获得 2 个免费积分
+        {t('welcome')}
       </p>
     </div>
   )

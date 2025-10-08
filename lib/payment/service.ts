@@ -35,16 +35,19 @@ export async function createPaymentSession(
   const credits = calculateCredits(amount)
 
   try {
-    const supabase = await createClient()
+    // 创建 Stripe Checkout Session
+    const { id: sessionId, url } = await createCheckoutSession(amount, credits, userId)
 
-    // 创建支付记录
-    const { data: payment, error: dbError } = await supabase
+    // 使用管理员客户端创建支付记录，确保能写入
+    const adminClient = createAdminClient()
+    const { data: payment, error: dbError } = await adminClient
       .from('payment_records')
       .insert({
         user_id: userId,
         amount,
         credits,
         status: 'pending',
+        stripe_session_id: sessionId,
       })
       .select()
       .single()
@@ -55,19 +58,6 @@ export async function createPaymentSession(
         success: false,
         error: '创建支付记录失败',
       }
-    }
-
-    // 创建 Stripe Checkout Session
-    const { id: sessionId, url } = await createCheckoutSession(amount, credits, userId)
-
-    // 更新支付记录，添加 session_id
-    const { error: updateError } = await supabase
-      .from('payment_records')
-      .update({ stripe_session_id: sessionId })
-      .eq('id', payment.id)
-
-    if (updateError) {
-      console.error('更新支付记录失败:', updateError)
     }
 
     return {

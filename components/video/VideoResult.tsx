@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface VideoResultProps {
   videoUrl: string
 }
 
 export function VideoResult({ videoUrl }: VideoResultProps) {
+  const t = useTranslations('video')
   const [copied, setCopied] = useState(false)
 
   const handleCopyLink = async () => {
@@ -15,7 +17,7 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
-      console.error('复制失败:', err)
+      console.error('Copy failed:', err)
     }
   }
 
@@ -37,7 +39,7 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          处理完成
+          {t('result')}
         </h3>
       </div>
 
@@ -49,7 +51,7 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
           className="w-full max-h-96"
           preload="metadata"
         >
-          您的浏览器不支持视频播放
+          {t('errors.processingFailed')}
         </video>
       </div>
 
@@ -64,14 +66,14 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              已复制
+              {t('linkCopied')}
             </>
           ) : (
             <>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              复制视频链接
+              {t('copyLink')}
             </>
           )}
         </button>
@@ -83,14 +85,8 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          下载视频
+          {t('download')}
         </button>
-      </div>
-
-      {/* 视频链接显示 */}
-      <div className="mt-4 p-3 bg-gray-50 rounded-md">
-        <p className="text-xs text-gray-500 mb-1">视频链接：</p>
-        <p className="text-sm text-gray-700 break-all font-mono">{videoUrl}</p>
       </div>
     </div>
   )

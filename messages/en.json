@@ -1,0 +1,83 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "credits": "Credits"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Video Watermark Removal",
+    "subtitle": "Remove watermarks from Sora2 videos with one click",
+    "getStarted": "Get Started",
+    "features": {
+      "title": "Features",
+      "fast": {
+        "title": "Fast Processing",
+        "description": "AI-powered watermark removal in seconds"
+      },
+      "quality": {
+        "title": "High Quality",
+        "description": "Preserve original video quality"
+      },
+      "easy": {
+        "title": "Easy to Use",
+        "description": "Simply paste the link and process"
+      }
+    }
+  },
+  "auth": {
+    "signInWithGoogle": "Sign in with Google",
+    "signingIn": "Signing in...",
+    "signOut": "Sign Out",
+    "welcome": "Welcome"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "currentCredits": "Current Credits",
+    "videoProcessing": "Video Processing",
+    "recharge": "Recharge"
+  },
+  "video": {
+    "pasteLink": "Paste Sora2 video share link",
+    "processing": "Processing...",
+    "process": "Process",
+    "result": "Processing Result",
+    "download": "Download",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied!",
+    "newVideo": "Process New Video",
+    "errors": {
+      "invalidLink": "Please enter a valid share link",
+      "insufficientCredits": "Insufficient credits, please recharge",
+      "processingFailed": "Processing failed, please try again"
+    }
+  },
+  "payment": {
+    "title": "Recharge Credits",
+    "packages": {
+      "starter": "Starter Package",
+      "standard": "Standard Package",
+      "premium": "Premium Package",
+      "popular": "Popular"
+    },
+    "purchase": "Purchase",
+    "processing": "Processing payment...",
+    "success": {
+      "title": "Recharge Successful!",
+      "description": "Your credits have been added to your account",
+      "backToDashboard": "Back to Dashboard",
+      "useNow": "Use Now"
+    },
+    "errors": {
+      "failed": "Payment failed, please try again"
+    }
+  }
+}

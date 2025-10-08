@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { VideoResult } from './VideoResult'
+import { useTranslations } from 'next-intl'
 
 interface ProcessResponse {
   success: boolean
@@ -10,6 +11,8 @@ interface ProcessResponse {
 }
 
 export function VideoProcessor() {
+  const t = useTranslations('video')
+  const tDashboard = useTranslations('dashboard')
   const [shareLink, setShareLink] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -33,7 +36,7 @@ export function VideoProcessor() {
       const data: ProcessResponse = await response.json()
 
       if (!response.ok) {
-        setError(data.error || '处理失败')
+        setError(data.error || t('errors.processingFailed'))
         return
       }
 
@@ -41,11 +44,11 @@ export function VideoProcessor() {
         setVideoUrl(data.videoUrl)
         setShareLink('') // 清空输入框
       } else {
-        setError('处理失败，请重试')
+        setError(t('errors.processingFailed'))
       }
     } catch (err) {
-      setError('网络错误，请检查连接')
-      console.error('处理错误:', err)
+      setError(t('errors.processingFailed'))
+      console.error('Processing error:', err)
     } finally {
       setLoading(false)
     }
@@ -54,12 +57,12 @@ export function VideoProcessor() {
   return (
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">视频水印去除</h2>
+        <h2 className="text-xl font-semibold mb-4">{tDashboard('videoProcessing')}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="shareLink" className="block text-sm font-medium text-gray-700 mb-2">
-              Sora2 分享链接
+              {t('pasteLink')}
             </label>
             <input
               id="shareLink"
@@ -71,9 +74,6 @@ export function VideoProcessor() {
               disabled={loading}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
             />
-            <p className="mt-1 text-xs text-gray-500">
-              粘贴您的 Sora2 视频分享链接，消耗 1 积分
-            </p>
           </div>
 
           {error && (
@@ -93,19 +93,13 @@ export function VideoProcessor() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-                处理中...
+                {t('processing')}
               </span>
             ) : (
-              '开始去除水印'
+              t('process')
             )}
           </button>
         </form>
-
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-          <p className="text-sm text-blue-800">
-            💡 <strong>提示：</strong>处理一个视频需要消耗 1 个积分，请确保您有足够的积分。
-          </p>
-        </div>
       </div>
 
       {videoUrl && <VideoResult videoUrl={videoUrl} />}

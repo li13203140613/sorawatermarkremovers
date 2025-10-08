@@ -1,0 +1,83 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "credits": "积分"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "控制台",
+    "login": "登录",
+    "logout": "退出登录"
+  },
+  "home": {
+    "title": "视频去水印",
+    "subtitle": "一键去除 Sora2 视频水印",
+    "getStarted": "开始使用",
+    "features": {
+      "title": "功能特点",
+      "fast": {
+        "title": "快速处理",
+        "description": "AI 驱动，秒级完成水印去除"
+      },
+      "quality": {
+        "title": "高质量",
+        "description": "保持原始视频质量"
+      },
+      "easy": {
+        "title": "简单易用",
+        "description": "粘贴链接即可处理"
+      }
+    }
+  },
+  "auth": {
+    "signInWithGoogle": "使用 Google 登录",
+    "signingIn": "登录中...",
+    "signOut": "退出登录",
+    "welcome": "欢迎"
+  },
+  "dashboard": {
+    "title": "控制台",
+    "currentCredits": "当前积分",
+    "videoProcessing": "视频处理",
+    "recharge": "充值"
+  },
+  "video": {
+    "pasteLink": "粘贴 Sora2 视频分享链接",
+    "processing": "处理中...",
+    "process": "开始处理",
+    "result": "处理结果",
+    "download": "下载视频",
+    "copyLink": "复制链接",
+    "linkCopied": "链接已复制！",
+    "newVideo": "处理新视频",
+    "errors": {
+      "invalidLink": "请输入有效的分享链接",
+      "insufficientCredits": "积分不足，请充值",
+      "processingFailed": "处理失败，请重试"
+    }
+  },
+  "payment": {
+    "title": "充值积分",
+    "packages": {
+      "starter": "入门套餐",
+      "standard": "标准套餐",
+      "premium": "超值套餐",
+      "popular": "热门"
+    },
+    "purchase": "购买",
+    "processing": "处理支付中...",
+    "success": {
+      "title": "充值成功！",
+      "description": "您的积分已经到账，可以开始使用了",
+      "backToDashboard": "返回控制台",
+      "useNow": "立即使用"
+    },
+    "errors": {
+      "failed": "支付失败，请重试"
+    }
+  }
+}

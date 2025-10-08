@@ -25,18 +25,18 @@ export const PAYMENT_PACKAGES: PaymentPackage[] = [
   {
     amount: 1,
     credits: 10,
-    label: '入门套餐',
+    label: 'starter',
   },
   {
     amount: 5,
     credits: 50,
-    label: '标准套餐',
+    label: 'standard',
     popular: true,
   },
   {
     amount: 10,
     credits: 100,
-    label: '超值套餐',
+    label: 'premium',
   },
 ]
 

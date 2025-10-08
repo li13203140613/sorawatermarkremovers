@@ -3,8 +3,11 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 function PaymentSuccessContent() {
+  const t = useTranslations('payment')
+  const tCommon = useTranslations('common')
   const searchParams = useSearchParams()
   const router = useRouter()
   const [processing, setProcessing] = useState(true)
@@ -29,8 +32,8 @@ function PaymentSuccessContent() {
       <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h1 className="text-2xl font-bold mb-2">处理中...</h1>
-          <p className="text-gray-600">正在确认您的支付，请稍候</p>
+          <h1 className="text-2xl font-bold mb-2">{t('processing')}</h1>
+          <p className="text-gray-600">{t('success.description')}</p>
         </div>
       </main>
     )
@@ -55,9 +58,9 @@ function PaymentSuccessContent() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">充值成功！</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('success.title')}</h1>
         <p className="text-gray-600 mb-6">
-          您的积分已经到账，可以开始使用了
+          {t('success.description')}
         </p>
 
         <div className="space-y-3">
@@ -65,14 +68,14 @@ function PaymentSuccessContent() {
             href="/dashboard"
             className="block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
           >
-            返回控制台
+            {t('success.backToDashboard')}
           </Link>
 
           <Link
             href="/dashboard"
             className="block w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md transition-colors"
           >
-            立即使用
+            {t('success.useNow')}
           </Link>
         </div>
       </div>
@@ -81,12 +84,14 @@ function PaymentSuccessContent() {
 }
 
 export default function PaymentSuccessPage() {
+  const tCommon = useTranslations('common')
+
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h1 className="text-2xl font-bold mb-2">加载中...</h1>
+          <h1 className="text-2xl font-bold mb-2">{tCommon('loading')}</h1>
         </div>
       </main>
     }>
