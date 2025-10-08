@@ -1,0 +1,19 @@
+import { UserProfile } from '@/components/auth'
+import { VideoProcessor } from '@/components/video'
+import { PaymentPackages } from '@/components/payment'
+
+export default function DashboardPage() {
+  return (
+    <main className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <h1 className="text-3xl font-bold">控制面板</h1>
+
+        <UserProfile />
+
+        <VideoProcessor />
+
+        <PaymentPackages />
+      </div>
+    </main>
+  )
+}
