@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
+import { cookies } from 'next/headers';
+import { defaultLocale, type Locale, locales } from '@/i18n';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 
 export const metadata: Metadata = {
@@ -15,8 +16,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const locale = await getLocale();
-  const messages = await getMessages();
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale;
+  const locale = localeCookie && locales.includes(localeCookie) ? localeCookie : defaultLocale;
+
+  const messages = (await import(`@/messages/${locale}.json`)).default;
 
   return (
     <html lang={locale}>

@@ -8,7 +8,7 @@ export default function LanguageSwitcher() {
 
   const handleLanguageChange = (locale: Locale) => {
     startTransition(() => {
-      document.cookie = `locale=${locale}; path=/; max-age=31536000`
+      document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`
       window.location.reload()
     })
   }

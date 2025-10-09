@@ -1,25 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
-import createMiddleware from 'next-intl/middleware'
-import { locales, defaultLocale } from './i18n'
-
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'never',
-})
 
 export async function middleware(request: NextRequest) {
-  // 先处理 i18n
-  let response = intlMiddleware(request)
-
-  // 如果 intlMiddleware 没有返回响应（某些路径会返回 undefined），创建默认响应
-  if (!response) {
-    response = NextResponse.next()
-  }
-
-  // 然后处理 Supabase session
-  return await updateSession(request, response)
+  // 直接处理 Supabase session，不使用 next-intl middleware
+  // 语言切换通过 cookie 实现，在客户端处理
+  return await updateSession(request)
 }
 
 export const config = {
