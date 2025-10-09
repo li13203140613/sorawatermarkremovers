@@ -36,10 +36,26 @@ export async function createPaymentSession(
 
   try {
     // 创建 Stripe Checkout Session
-    const { id: sessionId, url } = await createCheckoutSession(amount, credits, userId)
+    let sessionId: string
+    let url: string
+
+    try {
+      const session = await createCheckoutSession(amount, credits, userId)
+      sessionId = session.id
+      url = session.url
+      console.log('[Payment] Stripe session created:', sessionId)
+    } catch (stripeError) {
+      console.error('[Payment] Stripe session creation failed:', stripeError)
+      return {
+        success: false,
+        error: 'Stripe 会话创建失败',
+      }
+    }
 
     // 使用管理员客户端创建支付记录，确保能写入
     const adminClient = createAdminClient()
+    console.log('[Payment] Using admin client to create payment record')
+
     const { data: payment, error: dbError } = await adminClient
       .from('payment_records')
       .insert({
@@ -52,13 +68,28 @@ export async function createPaymentSession(
       .select()
       .single()
 
-    if (dbError || !payment) {
-      console.error('创建支付记录失败:', dbError)
+    if (dbError) {
+      console.error('[Payment] Database insert error:', {
+        error: dbError,
+        code: dbError.code,
+        message: dbError.message,
+        details: dbError.details,
+      })
       return {
         success: false,
-        error: '创建支付记录失败',
+        error: `创建支付记录失败: ${dbError.message}`,
       }
     }
+
+    if (!payment) {
+      console.error('[Payment] No payment data returned')
+      return {
+        success: false,
+        error: '创建支付记录失败: 未返回数据',
+      }
+    }
+
+    console.log('[Payment] Payment record created successfully:', payment.id)
 
     return {
       success: true,
