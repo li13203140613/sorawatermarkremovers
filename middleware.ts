@@ -11,7 +11,12 @@ const intlMiddleware = createMiddleware({
 
 export async function middleware(request: NextRequest) {
   // 先处理 i18n
-  const response = intlMiddleware(request)
+  let response = intlMiddleware(request)
+
+  // 如果 intlMiddleware 没有返回响应（某些路径会返回 undefined），创建默认响应
+  if (!response) {
+    response = NextResponse.next()
+  }
 
   // 然后处理 Supabase session
   return await updateSession(request, response)
