@@ -22,11 +22,11 @@ export function VideoResult({ videoUrl }: VideoResultProps) {
   }
 
   const handleDownload = () => {
-    // 创建一个隐藏的 a 标签来触发下载
+    // 使用代理下载 API，避免安全警告
+    const downloadUrl = `/api/video/download?url=${encodeURIComponent(videoUrl)}`
     const a = document.createElement('a')
-    a.href = videoUrl
+    a.href = downloadUrl
     a.download = `sora-video-${Date.now()}.mp4`
-    a.target = '_blank'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
