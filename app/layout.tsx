@@ -3,7 +3,7 @@ import "./globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { cookies } from 'next/headers';
 import { defaultLocale, type Locale, locales } from '@/i18n';
-import { ClientLayout } from '@/components/layout/ClientLayout';
+import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
 
 export const metadata: Metadata = {
   title: "RemoveWM - Video Watermark Removal",
@@ -50,9 +50,14 @@ export default async function RootLayout({
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <ClientProviders>
+            <div className="min-h-screen flex flex-col">
+              <ClientNavBar />
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </ClientProviders>
         </NextIntlClientProvider>
       </body>
     </html>

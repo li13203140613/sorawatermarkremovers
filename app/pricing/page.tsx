@@ -14,7 +14,7 @@ export default function PricingPage() {
             {t('title')}
           </h1>
           <p className="text-base md:text-lg text-gray-600">
-            选择您的完美计划
+            {t('subtitle')}
           </p>
         </div>
 

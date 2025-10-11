@@ -1,3 +1,5 @@
+'use client'
+
 import { VideoProcessor } from '@/components/video'
 import { useTranslations } from 'next-intl'
 

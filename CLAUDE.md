@@ -6,6 +6,8 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-12 | Other | Modified: .gitignore | .gitignore | AI Auto |
+| 2025-10-12 | Other | Modified: pre-commit | .husky/pre-commit | AI Auto |
 | 2025-10-12 | Components | Modified: ClientLayout.tsx | components/layout/ClientLayout.tsx | AI Auto |
 | 2025-10-12 | Components | Modified: LanguageSwitcher.tsx | components/language/LanguageSwitcher.tsx | AI Auto |
 | 2025-10-12 | Components | Modified: NavBar.tsx | components/layout/NavBar.tsx | AI Auto |

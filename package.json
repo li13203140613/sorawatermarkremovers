@@ -6,7 +6,8 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.3.1",
@@ -28,6 +29,9 @@
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "^15.5.4",
+    "husky": "^8.0.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.0",
     "typescript": "^5"

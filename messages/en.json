@@ -16,6 +16,7 @@
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "pricing": "Pricing",
     "login": "Login",
     "logout": "Logout"
   },
@@ -79,6 +80,7 @@
   },
   "payment": {
     "title": "Recharge Credits",
+    "subtitle": "Choose Your Perfect Plan",
     "packages": {
       "starter": "Starter Package",
       "standard": "Standard Package",
