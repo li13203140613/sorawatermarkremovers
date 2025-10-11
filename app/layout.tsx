@@ -17,6 +17,8 @@ export default async function RootLayout({
 }) {
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale;
+
+  // 如果没有 cookie，使用默认语言（将在客户端检测浏览器语言）
   const locale = localeCookie && locales.includes(localeCookie) ? localeCookie : defaultLocale;
 
   const messages = (await import(`@/messages/${locale}.json`)).default;

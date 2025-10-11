@@ -5,17 +5,32 @@ import { locales, type Locale } from '@/i18n'
 
 export default function LanguageSwitcher() {
   const [isPending, startTransition] = useTransition()
-  const [currentLocale, setCurrentLocale] = useState<Locale>('zh')
+  const [currentLocale, setCurrentLocale] = useState<Locale>('en')
   const [isOpen, setIsOpen] = useState(false)
 
-  // 读取当前语言
+  // 读取当前语言，如果没有则根据浏览器语言自动设置
   useEffect(() => {
     const cookie = document.cookie
       .split('; ')
       .find(row => row.startsWith('NEXT_LOCALE='))
-    const locale = cookie?.split('=')[1] as Locale
-    if (locale && locales.includes(locale)) {
-      setCurrentLocale(locale)
+    const cookieLocale = cookie?.split('=')[1] as Locale
+
+    if (cookieLocale && locales.includes(cookieLocale)) {
+      // 如果有 cookie，使用 cookie 中的语言
+      setCurrentLocale(cookieLocale)
+    } else {
+      // 如果没有 cookie，根据浏览器语言自动设置
+      const browserLang = navigator.language.toLowerCase()
+      const detectedLocale: Locale = browserLang.startsWith('zh') ? 'zh' : 'en'
+
+      setCurrentLocale(detectedLocale)
+      // 保存到 cookie
+      document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=31536000`
+
+      // 如果检测到的语言与默认语言不同，刷新页面以加载正确的翻译
+      if (detectedLocale !== 'en') {
+        window.location.reload()
+      }
     }
   }, [])
 
