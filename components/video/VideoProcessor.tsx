@@ -151,24 +151,10 @@ export function VideoProcessor() {
           {/* 未登录用户显示 Turnstile 验证 */}
           {!isLoggedIn && showTurnstile && (
             <div className="space-y-4">
-              <div className="flex flex-col items-center gap-4">
-                <TurnstileWidget
-                  onSuccess={handleTurnstileSuccess}
-                  onError={handleTurnstileError}
-                />
-                {/* Turnstile 验证失败时显示登录选项 */}
-                {error === 'VERIFICATION_FAILED' && (
-                  <div className="text-center space-y-2">
-                    <p className="text-sm text-red-600">Verification failed.</p>
-                    <Link
-                      href="/login"
-                      className="inline-block px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
-                    >
-                      Login to Skip Verification
-                    </Link>
-                  </div>
-                )}
-              </div>
+              <TurnstileWidget
+                onSuccess={handleTurnstileSuccess}
+                onError={handleTurnstileError}
+              />
             </div>
           )}
 
