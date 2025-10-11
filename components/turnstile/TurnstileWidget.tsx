@@ -23,7 +23,7 @@ export function TurnstileWidget({ onSuccess, onError }: TurnstileWidgetProps) {
         setStatus('error')
         onError?.()
       }
-    }, 15000) // 15秒超时
+    }, 60000) // 60秒超时
 
     return () => clearTimeout(timer)
   }, [status, onError])
