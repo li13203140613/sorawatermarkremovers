@@ -72,10 +72,13 @@
     "copyLink": "复制链接",
     "linkCopied": "链接已复制！",
     "newVideo": "处理新视频",
+    "buyCredits": "购买积分",
+    "loginForMore": "登录获取更多",
     "errors": {
       "invalidLink": "请输入有效的分享链接",
-      "insufficientCredits": "积分不足，请充值",
-      "processingFailed": "处理失败，请重试"
+      "insufficientCredits": "积分不足",
+      "processingFailed": "处理失败，请重试",
+      "verificationRequired": "请完成下方验证"
     }
   },
   "payment": {

@@ -72,10 +72,13 @@
     "copyLink": "Copy Link",
     "linkCopied": "Link copied!",
     "newVideo": "Process New Video",
+    "buyCredits": "Buy Credits",
+    "loginForMore": "Login for More",
     "errors": {
       "invalidLink": "Please enter a valid share link",
-      "insufficientCredits": "Insufficient credits, please recharge",
-      "processingFailed": "Processing failed, please try again"
+      "insufficientCredits": "Insufficient credits.",
+      "processingFailed": "Processing failed, please try again",
+      "verificationRequired": "Please complete the verification below."
     }
   },
   "payment": {
