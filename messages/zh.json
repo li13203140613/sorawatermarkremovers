@@ -79,6 +79,7 @@
   },
   "payment": {
     "title": "充值积分",
+    "subtitle": "选择您的完美计划",
     "packages": {
       "starter": "入门套餐",
       "standard": "标准套餐",

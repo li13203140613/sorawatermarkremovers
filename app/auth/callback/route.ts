@@ -11,6 +11,6 @@ export async function GET(request: Request) {
     await supabase.auth.exchangeCodeForSession(code)
   }
 
-  // 成功后重定向到仪表板
-  return NextResponse.redirect(`${origin}/dashboard`)
+  // 成功后重定向到首页
+  return NextResponse.redirect(`${origin}/`)
 }

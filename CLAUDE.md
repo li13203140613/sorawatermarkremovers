@@ -6,6 +6,11 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-12 | Components | Modified: ClientLayout.tsx | components/layout/ClientLayout.tsx | AI Auto |
+| 2025-10-12 | Components | Modified: LanguageSwitcher.tsx | components/language/LanguageSwitcher.tsx | AI Auto |
+| 2025-10-12 | Components | Modified: NavBar.tsx | components/layout/NavBar.tsx | AI Auto |
+| 2025-10-12 | Components | Modified: index.ts | components/auth/index.ts | AI Auto |
+| 2025-10-12 | Components | Modified: NavUserProfile.tsx | components/auth/NavUserProfile.tsx | AI Auto |
 | 2025-10-11 | Other | Modified: CreditsContext.tsx | contexts/CreditsContext.tsx | AI Auto |
 | 2025-10-11 | API | Modified: route.ts | app/api/video/process/route.ts | AI Auto |
 | 2025-10-11 | Library | Modified: verify.ts | lib/turnstile/verify.ts | AI Auto |
