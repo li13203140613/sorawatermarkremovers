@@ -10,6 +10,8 @@ export interface VideoProcessResult {
   success: boolean
   videoUrl?: string
   error?: string
+  shouldConsumeCredit?: boolean
+  source?: 'cookie' | 'database'
 }
 
 export interface VideoRecord {

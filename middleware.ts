@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
+  // 跳过测试页面,不进行 Supabase 验证
+  if (request.nextUrl.pathname.startsWith('/test-cookie')) {
+    return NextResponse.next()
+  }
+
   // 直接处理 Supabase session，不使用 next-intl middleware
   // 语言切换通过 cookie 实现，在客户端处理
   return await updateSession(request)

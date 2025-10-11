@@ -7,6 +7,12 @@
     "confirm": "确认",
     "credits": "积分"
   },
+  "credits": {
+    "credits": "积分",
+    "loginForMore": "登录获取更多",
+    "insufficient": "积分不足",
+    "free": "免费体验"
+  },
   "nav": {
     "home": "首页",
     "dashboard": "控制台",
@@ -40,16 +46,27 @@
     "welcome": "欢迎"
   },
   "dashboard": {
-    "title": "控制台",
+    "title": "Sora 视频高清免费去水印工具",
+    "subtitle": "免费使用 · 极速处理 · 高清画质",
     "currentCredits": "当前积分",
     "videoProcessing": "视频处理",
-    "recharge": "充值"
+    "recharge": "充值",
+    "disclaimer": {
+      "title": "免责声明：遵守服务，与 OpenAI 无关联",
+      "content": "使用此工具即表示您确认拥有该视频的版权或已获得处理权限。此工具仅供个人使用，我们不对侵权行为负责。",
+      "limit": "免费用户: 每分钟 1 次请求"
+    },
+    "footer": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "contact": "联系我们"
+    }
   },
   "video": {
-    "pasteLink": "粘贴 Sora2 视频分享链接",
+    "pasteLink": "在此粘贴 Sora 分享链接 (https://sora.chatgpt.com/p/s_xxxxx)",
     "processing": "处理中...",
-    "process": "开始处理",
-    "result": "处理结果",
+    "process": "一键去水印",
+    "result": "视频预览",
     "download": "下载视频",
     "copyLink": "复制链接",
     "linkCopied": "链接已复制！",

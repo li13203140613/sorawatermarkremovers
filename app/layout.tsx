@@ -5,6 +5,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { cookies } from 'next/headers';
 import { defaultLocale, type Locale, locales } from '@/i18n';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import { CreditsDisplay } from '@/components/credits/CreditsDisplay';
+import { CreditsProvider } from '@/contexts/CreditsContext';
 
 export const metadata: Metadata = {
   title: "RemoveWM - Video Watermark Removal",
@@ -52,25 +54,31 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
-            <div className="min-h-screen flex flex-col">
-              <nav className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="flex justify-between items-center h-16">
-                    <div className="flex items-center">
-                      <a href="/" className="text-xl font-bold text-gray-900">
-                        RemoveWM
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <LanguageSwitcher />
+            <CreditsProvider>
+              <div className="min-h-screen flex flex-col">
+                <nav className="bg-white shadow-sm border-b">
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-16">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
+                          <span className="text-white text-xl font-bold">S</span>
+                        </div>
+                        <a href="/" className="text-xl font-semibold text-gray-900">
+                          Sora Tools
+                        </a>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <CreditsDisplay />
+                        <LanguageSwitcher />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </nav>
-              <main className="flex-1">
-                {children}
-              </main>
-            </div>
+                </nav>
+                <main className="flex-1">
+                  {children}
+                </main>
+              </div>
+            </CreditsProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

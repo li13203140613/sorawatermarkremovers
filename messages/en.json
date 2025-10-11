@@ -7,6 +7,12 @@
     "confirm": "Confirm",
     "credits": "Credits"
   },
+  "credits": {
+    "credits": "Credits",
+    "loginForMore": "Login for More",
+    "insufficient": "Insufficient Credits",
+    "free": "Free Trial"
+  },
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -40,17 +46,28 @@
     "welcome": "Welcome"
   },
   "dashboard": {
-    "title": "Dashboard",
+    "title": "Sora Video HD Free Watermark Removal Tool",
+    "subtitle": "Free to Use · Lightning Fast · High Quality",
     "currentCredits": "Current Credits",
     "videoProcessing": "Video Processing",
-    "recharge": "Recharge"
+    "recharge": "Recharge",
+    "disclaimer": {
+      "title": "Disclaimer: Comply with Terms of Service, No Affiliation with OpenAI",
+      "content": "By using this tool, you confirm that you own the copyright to the video or have obtained permission to process it. This tool is for personal use only, and we are not responsible for any copyright infringement.",
+      "limit": "Free users: 1 request per minute"
+    },
+    "footer": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us"
+    }
   },
   "video": {
-    "pasteLink": "Paste Sora2 video share link",
+    "pasteLink": "Paste Sora share link here (https://sora.chatgpt.com/p/s_xxxxx)",
     "processing": "Processing...",
-    "process": "Process",
-    "result": "Processing Result",
-    "download": "Download",
+    "process": "Remove Watermark",
+    "result": "Video Preview",
+    "download": "Download Video",
     "copyLink": "Copy Link",
     "linkCopied": "Link copied!",
     "newVideo": "Process New Video",
