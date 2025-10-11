@@ -132,16 +132,16 @@ export function VideoProcessor() {
             <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
               {error === 'INSUFFICIENT_CREDITS' ? (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-red-700">Insufficient credits.</span>
+                  <span className="text-sm text-red-700">{t('errors.insufficientCredits')}</span>
                   <Link
-                    href="/login"
+                    href={isLoggedIn ? '/pricing' : '/login'}
                     className="ml-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
                   >
-                    Login for More
+                    {isLoggedIn ? t('buyCredits') : t('loginForMore')}
                   </Link>
                 </div>
               ) : error === 'VERIFICATION_REQUIRED' ? (
-                <span className="text-sm text-red-700">Please complete the verification below.</span>
+                <span className="text-sm text-red-700">{t('errors.verificationRequired')}</span>
               ) : (
                 <span className="text-sm text-red-700">{error}</span>
               )}
