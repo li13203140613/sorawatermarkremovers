@@ -6,8 +6,8 @@ import { defaultLocale, type Locale, locales } from '@/i18n';
 import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
 
 export const metadata: Metadata = {
-  title: "RemoveWM - Video Watermark Removal",
-  description: "Remove watermarks from videos using credits",
+  title: "RemoveWM - HD Sora Video Watermark Removal",
+  description: "Remove Sora video watermarks in HD quality without compromising resolution. Simply paste your link and our AI removes the Sora logo watermark in seconds.",
 };
 
 export default async function RootLayout({
