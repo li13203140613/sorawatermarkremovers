@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { PAYMENT_PACKAGES } from '@/lib/payment/types'
 import { useTranslations } from 'next-intl'
@@ -8,11 +8,55 @@ import { useTranslations } from 'next-intl'
 // 初始化 Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
+// 从 cookie 读取当前语言
+function getCurrentLocale(): string {
+  if (typeof window === 'undefined') return 'en'
+
+  const cookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('NEXT_LOCALE='))
+
+  return cookie?.split('=')[1] || 'en'
+}
+
 export function PaymentPackages() {
   const t = useTranslations('payment')
   const tCommon = useTranslations('common')
+  // 初始化时就尝试读取 locale,避免闪烁
+  const [locale, setLocale] = useState(() => getCurrentLocale())
   const [loading, setLoading] = useState<number | null>(null)
   const [error, setError] = useState('')
+
+  // 在客户端挂载后再次确认语言设置,并监听 cookie 变化
+  useEffect(() => {
+    const updateLocale = () => {
+      const currentLocale = getCurrentLocale()
+      console.log('[PaymentPackages] Updating locale from cookie:', currentLocale)
+      setLocale(currentLocale)
+    }
+
+    // 立即更新一次
+    updateLocale()
+
+    // 监听页面可见性变化(当用户切换回标签页时更新)
+    document.addEventListener('visibilitychange', updateLocale)
+
+    // 监听焦点事件(当窗口获得焦点时更新)
+    window.addEventListener('focus', updateLocale)
+
+    return () => {
+      document.removeEventListener('visibilitychange', updateLocale)
+      window.removeEventListener('focus', updateLocale)
+    }
+  }, [])
+
+  // 根据语言环境确定货币类型
+  const currency = locale === 'zh' ? 'cny' : 'usd'
+  const currencySymbol = locale === 'zh' ? '¥' : '$'
+
+  console.log('[PaymentPackages] Locale:', locale)
+  console.log('[PaymentPackages] Currency:', currency)
+  console.log('[PaymentPackages] Currency Symbol:', currencySymbol)
 
   const handlePurchase = async (amount: number, index: number) => {
     setError('')
@@ -25,7 +69,7 @@ export function PaymentPackages() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ amount }),
+        body: JSON.stringify({ amount, currency, locale }),
       })
 
       if (!response.ok) {
@@ -82,7 +126,7 @@ export function PaymentPackages() {
 
             <div className="text-center">
               <div className="text-3xl font-bold text-gray-900 mb-2">
-                ${pkg.amount}
+                {currencySymbol}{locale === 'zh' ? pkg.amountCNY : pkg.amountUSD}
               </div>
               <div className="text-2xl font-semibold text-blue-600 mb-1">
                 {pkg.credits} {tCommon('credits')}
@@ -92,7 +136,7 @@ export function PaymentPackages() {
               </div>
 
               <button
-                onClick={() => handlePurchase(pkg.amount, index)}
+                onClick={() => handlePurchase(locale === 'zh' ? pkg.amountCNY : pkg.amountUSD, index)}
                 disabled={loading !== null}
                 className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
                   pkg.popular

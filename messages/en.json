@@ -82,7 +82,7 @@
     }
   },
   "payment": {
-    "title": "",
+    "title": "Recharge Credits",
     "subtitle": "Choose Your Perfect Plan",
     "packages": {
       "starter": "Starter Package",
