@@ -1,0 +1,101 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient, createClientWithCookie } from '@/lib/supabase/server'
+
+/**
+ * CORS 配置
+ */
+const ALLOWED_ORIGINS = [
+  'https://www.sora-prompt.io',
+  'chrome-extension://*'
+]
+
+function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return false
+  return ALLOWED_ORIGINS.some(allowed => {
+    if (allowed.endsWith('*')) {
+      const prefix = allowed.slice(0, -1)
+      return origin.startsWith(prefix)
+    }
+    return origin === allowed
+  })
+}
+
+function getCorsHeaders(origin: string | null) {
+  return {
+    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : 'https://www.sora-prompt.io',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cookie',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Max-Age': '86400',
+  }
+}
+
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin')
+  return new NextResponse(null, {
+    status: 200,
+    headers: getCorsHeaders(origin),
+  })
+}
+
+/**
+ * 获取用户信息
+ */
+export async function GET(request: NextRequest) {
+  const origin = request.headers.get('origin')
+  const headers = getCorsHeaders(origin)
+
+  try {
+    // 检测请求来源并创建 Supabase 客户端
+    const cookieHeader = request.headers.get('cookie')
+    let supabase
+
+    if (cookieHeader) {
+      console.log('🔌 扩展请求，手动解析 Cookie')
+      supabase = createClientWithCookie(cookieHeader)
+    } else {
+      console.log('🌐 网页请求，使用标准 Cookie')
+      supabase = await createClient()
+    }
+
+    // 获取用户信息
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: '未登录' },
+        { status: 401, headers }
+      )
+    }
+
+    // 获取用户 profile（包含积分）
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('credits, avatar_url, full_name')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError) {
+      console.error('获取用户 profile 失败:', profileError)
+    }
+
+    // 返回用户信息
+    return NextResponse.json(
+      {
+        id: user.id,
+        email: user.email,
+        name: profile?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0],
+        avatar_url: profile?.avatar_url || user.user_metadata?.avatar_url,
+        credits: profile?.credits || 0,
+      },
+      { status: 200, headers }
+    )
+
+  } catch (error) {
+    console.error('❌ 获取用户信息失败:', error)
+    return NextResponse.json(
+      { error: '服务器错误' },
+      { status: 500, headers }
+    )
+  }
+}
