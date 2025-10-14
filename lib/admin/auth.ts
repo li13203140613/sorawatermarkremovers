@@ -1,32 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'
 
 /**
  * 验证是否为管理员
- * 使用环境变量 ADMIN_EMAIL 来指定管理员邮箱
+ * 检查 admin-session Cookie
  */
 export async function isAdmin(request: NextRequest): Promise<boolean> {
   try {
-    const supabase = await createClient()
+    const cookieStore = await cookies()
+    const adminSession = cookieStore.get('admin-session')
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    if (!user) {
-      return false
-    }
-
-    // 从环境变量获取管理员邮箱
-    const adminEmail = process.env.ADMIN_EMAIL
-
-    if (!adminEmail) {
-      console.error('❌ ADMIN_EMAIL 环境变量未设置')
-      return false
-    }
-
-    // 检查用户邮箱是否匹配管理员邮箱
-    return user.email === adminEmail
+    return adminSession?.value === 'true'
   } catch (error) {
     console.error('验证管理员失败:', error)
     return false

@@ -6,6 +6,32 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-14 | Other | Modified: verify_table.sql | supabase/migrations/verify_table.sql | AI Auto |
+| 2025-10-14 | Docs | Modified: ADMIN_SETUP.md | ADMIN_SETUP.md | AI Auto |
+| 2025-10-14 | Components | Modified: LogsFilter.tsx | components/admin/LogsFilter.tsx | AI Auto |
+| 2025-10-14 | Components | Modified: LogsTable.tsx | components/admin/LogsTable.tsx | AI Auto |
+| 2025-10-14 | Components | Modified: UsersTable.tsx | components/admin/UsersTable.tsx | AI Auto |
+| 2025-10-14 | Components | Modified: StatsCards.tsx | components/admin/StatsCards.tsx | AI Auto |
+| 2025-10-14 | Library | Modified: auth.ts | lib/admin/auth.ts | AI Auto |
+| 2025-10-14 | Library | Modified: queries.ts | lib/admin/queries.ts | AI Auto |
+| 2025-10-14 | Assets | Modified: test-extension.html | public/test-extension.html | AI Auto |
+| 2025-10-14 | Library | Modified: logger.ts | lib/admin/logger.ts | AI Auto |
+| 2025-10-14 | Tests | Modified: test-cookie.js | sora-extension/test-cookie.js | AI Auto |
+| 2025-10-14 | Tests | Modified: test-cookie.html | sora-extension/test-cookie.html | AI Auto |
+| 2025-10-14 | Other | Modified: create_usage_logs.sql | supabase/migrations/create_usage_logs.sql | AI Auto |
+| 2025-10-14 | Other | Modified: debug.html | sora-extension/debug.html | AI Auto |
+| 2025-10-14 | Other | Modified: popup.js | sora-extension/popup.js | AI Auto |
+| 2025-10-14 | Styles | Modified: popup.css | sora-extension/popup.css | AI Auto |
+| 2025-10-14 | Other | Modified: popup.html | sora-extension/popup.html | AI Auto |
+| 2025-10-13 | Other | Modified: icon.svg | sora-extension/icons/icon.svg | AI Auto |
+| 2025-10-13 | Docs | Modified: README.md | sora-extension/icons/README.md | AI Auto |
+| 2025-10-13 | Styles | Modified: styles.css | sora-extension/styles.css | AI Auto |
+| 2025-10-13 | Other | Modified: background.js | sora-extension/background.js | AI Auto |
+| 2025-10-13 | Other | Modified: content.js | sora-extension/content.js | AI Auto |
+| 2025-10-13 | Docs | Modified: CORS-CONFIG.md | sora-extension/CORS-CONFIG.md | AI Auto |
+| 2025-10-13 | Docs | Modified: ROADMAP.md | sora-extension/ROADMAP.md | AI Auto |
+| 2025-10-12 | Components | Modified: PaymentPackages.tsx | components/payment/PaymentPackages.tsx | AI Auto |
+| 2025-10-12 | Other | Modified: next-sitemap.config.js | next-sitemap.config.js | AI Auto |
 | 2025-10-12 | Other | Modified: .gitignore | .gitignore | AI Auto |
 | 2025-10-12 | Other | Modified: pre-commit | .husky/pre-commit | AI Auto |
 | 2025-10-12 | Components | Modified: ClientLayout.tsx | components/layout/ClientLayout.tsx | AI Auto |

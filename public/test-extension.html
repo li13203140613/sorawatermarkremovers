@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>测试扩展 - 本地测试页面</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .success { color: green; }
+    .error { color: red; }
+    .info { color: blue; }
+  </style>
+</head>
+<body>
+  <h1>扩展测试页面 - localhost:3000</h1>
+
+  <div>
+    <h2>步骤 1: 检查浏览器 Cookie</h2>
+    <button onclick="checkBrowserCookies()">检查浏览器 Cookie</button>
+    <pre id="browser-cookies"></pre>
+  </div>
+
+  <div>
+    <h2>步骤 2: 测试扩展读取 Cookie</h2>
+    <button onclick="testExtensionCookies()">测试扩展读取</button>
+    <pre id="extension-cookies"></pre>
+  </div>
+
+  <div>
+    <h2>步骤 3: 测试 API 调用</h2>
+    <button onclick="testAPI()">测试 API</button>
+    <pre id="api-result"></pre>
+  </div>
+
+  <script>
+    // 检查浏览器当前页面的 Cookie
+    function checkBrowserCookies() {
+      const output = document.getElementById('browser-cookies');
+      const cookies = document.cookie;
+
+      output.innerHTML = '<span class="info">当前页面所有 Cookie:</span>\n';
+      output.innerHTML += cookies || '(空)';
+
+      // 查找 auth token
+      if (cookies.includes('sb-zjefhzapfbouslkgllah-auth-token')) {
+        output.innerHTML += '\n\n<span class="success">✅ 找到 Auth Token!</span>';
+      } else {
+        output.innerHTML += '\n\n<span class="error">❌ 未找到 Auth Token</span>';
+        output.innerHTML += '\n\n可能原因:';
+        output.innerHTML += '\n1. 未登录';
+        output.innerHTML += '\n2. Cookie 名称不同';
+        output.innerHTML += '\n3. Cookie HttpOnly 无法被 JS 读取';
+      }
+    }
+
+    // 测试扩展读取 Cookie
+    async function testExtensionCookies() {
+      const output = document.getElementById('extension-cookies');
+
+      if (!chrome || !chrome.cookies) {
+        output.innerHTML = '<span class="error">❌ Chrome Cookies API 不可用（需要在扩展中运行）</span>';
+        return;
+      }
+
+      try {
+        output.innerHTML = '<span class="info">正在读取...</span>\n';
+
+        // 读取所有 localhost:3000 的 Cookie
+        const allCookies = await chrome.cookies.getAll({
+          url: 'http://localhost:3000'
+        });
+
+        output.innerHTML = `<span class="info">localhost:3000 的所有 Cookie (${allCookies.length} 个):</span>\n`;
+        output.innerHTML += JSON.stringify(allCookies, null, 2);
+
+        // 查找 auth token
+        const authCookie = allCookies.find(c => c.name === 'sb-zjefhzapfbouslkgllah-auth-token');
+        if (authCookie) {
+          output.innerHTML += '\n\n<span class="success">✅ 扩展可以读取 Auth Token!</span>';
+        } else {
+          output.innerHTML += '\n\n<span class="error">❌ 扩展无法读取 Auth Token</span>';
+        }
+      } catch (error) {
+        output.innerHTML = '<span class="error">❌ 错误: ' + error.message + '</span>';
+      }
+    }
+
+    // 测试 API 调用
+    async function testAPI() {
+      const output = document.getElementById('api-result');
+      output.innerHTML = '<span class="info">正在调用 API...</span>\n';
+
+      try {
+        const response = await fetch('http://localhost:3000/api/user/profile', {
+          method: 'GET',
+          credentials: 'include', // 自动携带同域 Cookie
+        });
+
+        const data = await response.json();
+
+        output.innerHTML = `<span class="info">API 响应 (${response.status}):</span>\n`;
+        output.innerHTML += JSON.stringify(data, null, 2);
+
+        if (response.ok && data.email) {
+          output.innerHTML += '\n\n<span class="success">✅ API 调用成功！用户: ' + data.email + '</span>';
+        } else {
+          output.innerHTML += '\n\n<span class="error">❌ API 返回错误</span>';
+        }
+      } catch (error) {
+        output.innerHTML = '<span class="error">❌ API 调用失败: ' + error.message + '</span>';
+      }
+    }
+  </script>
+</body>
+</html>

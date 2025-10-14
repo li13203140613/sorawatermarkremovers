@@ -3,7 +3,6 @@ export interface PaymentPackage {
   credits: number // 对应积分
   label: string // 显示标签
   popular?: boolean // 是否热门
-  cnyAmount: number // 人民币金额（用于微信支付）
 }
 
 export interface CreateCheckoutSessionRequest {
@@ -27,20 +26,17 @@ export const PAYMENT_PACKAGES: PaymentPackage[] = [
     amount: 1,
     credits: 10,
     label: 'starter',
-    cnyAmount: 7,
   },
   {
     amount: 5,
     credits: 50,
     label: 'standard',
     popular: true,
-    cnyAmount: 35,
   },
   {
     amount: 10,
     credits: 100,
     label: 'premium',
-    cnyAmount: 70,
   },
 ]
 

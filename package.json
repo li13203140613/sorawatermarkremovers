@@ -15,6 +15,7 @@
     "@stripe/stripe-js": "^8.0.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.47.10",
+    "date-fns": "^4.1.0",
     "js-cookie": "^3.0.5",
     "next": "^15.5.4",
     "next-intl": "^4.3.11",
