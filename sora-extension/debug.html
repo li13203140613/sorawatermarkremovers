@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Debug - Extension</title>
+  <style>
+    body { font-family: monospace; padding: 20px; }
+    .log { margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 4px; }
+    .error { background: #ffebee; color: #c62828; }
+    .success { background: #e8f5e9; color: #2e7d32; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Extension Debug Page</h1>
+
+  <button onclick="testGetCookie()">1. 测试读取 Auth Cookie</button>
+  <button onclick="testParseToken()">2. 测试解析 Token</button>
+  <button onclick="testAPICall()">3. 测试 API 调用</button>
+  <button onclick="testGetUserInfo()">4. 测试完整流程</button>
+
+  <div id="output"></div>
+
+  <script>
+    function log(message, type = 'log') {
+      const output = document.getElementById('output');
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      output.appendChild(div);
+      console.log(message);
+    }
+
+    async function testGetCookie() {
+      log('开始读取 Cookie...');
+      try {
+        const cookie = await chrome.cookies.get({
+          url: 'https://www.sora-prompt.io',
+          name: 'sb-zjefhzapfbouslkgllah-auth-token'
+        });
+
+        if (cookie) {
+          log(`✅ Cookie 读取成功`, 'success');
+          log(`Cookie 值长度: ${cookie.value.length}`);
+          return cookie.value;
+        } else {
+          log('❌ 未找到 Cookie', 'error');
+          return null;
+        }
+      } catch (error) {
+        log(`❌ 错误: ${error.message}`, 'error');
+        return null;
+      }
+    }
+
+    async function testParseToken() {
+      log('开始解析 Token...');
+      const token = await testGetCookie();
+      if (!token) {
+        log('❌ 没有 Token，无法解析', 'error');
+        return null;
+      }
+
+      try {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+          log('❌ Token 格式错误', 'error');
+          return null;
+        }
+
+        const payload = parts[1];
+        const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+
+        const userData = JSON.parse(jsonPayload);
+        log('✅ Token 解析成功', 'success');
+        log(`邮箱: ${userData.email}`);
+        log(`用户元数据: ${JSON.stringify(userData.user_metadata)}`);
+        return userData;
+      } catch (error) {
+        log(`❌ 解析失败: ${error.message}`, 'error');
+        return null;
+      }
+    }
+
+    async function testAPICall() {
+      log('开始测试 API 调用...');
+      const token = await testGetCookie();
+      if (!token) {
+        log('❌ 没有 Token', 'error');
+        return;
+      }
+
+      try {
+        log('调用 API: http://localhost:3000/api/user/profile');
+        const response = await fetch('http://localhost:3000/api/user/profile', {
+          method: 'GET',
+          headers: {
+            'Cookie': `sb-zjefhzapfbouslkgllah-auth-token=${token}`,
+          },
+          credentials: 'include',
+        });
+
+        log(`响应状态: ${response.status}`);
+        const data = await response.json();
+        log(`响应数据: ${JSON.stringify(data)}`);
+
+        if (response.ok) {
+          log('✅ API 调用成功', 'success');
+        } else {
+          log('❌ API 返回错误', 'error');
+        }
+      } catch (error) {
+        log(`❌ API 调用失败: ${error.message}`, 'error');
+      }
+    }
+
+    async function testGetUserInfo() {
+      log('开始测试完整流程...');
+      try {
+        const response = await chrome.runtime.sendMessage({
+          action: 'getUserInfo'
+        });
+
+        log(`Background 响应: ${JSON.stringify(response)}`);
+
+        if (response && response.success) {
+          log('✅ 获取用户信息成功', 'success');
+          log(`登录状态: ${response.isLoggedIn}`);
+          log(`用户名: ${response.name}`);
+          log(`邮箱: ${response.email}`);
+          log(`积分: ${response.credits}`);
+        } else {
+          log('❌ 获取失败', 'error');
+        }
+      } catch (error) {
+        log(`❌ 错误: ${error.message}`, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

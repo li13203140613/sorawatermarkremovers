@@ -6,6 +6,10 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-14 | Other | Modified: background-oauth.js | sora-extension/background-oauth.js | AI Auto |
+| 2025-10-14 | Other | Modified: auth.js | sora-extension/auth.js | AI Auto |
+| 2025-10-14 | Other | Modified: config.js | sora-extension/config.js | AI Auto |
+| 2025-10-14 | Docs | Modified: DEPLOYMENT_GUIDE.md | DEPLOYMENT_GUIDE.md | AI Auto |
 | 2025-10-14 | Other | Modified: verify_table.sql | supabase/migrations/verify_table.sql | AI Auto |
 | 2025-10-14 | Docs | Modified: ADMIN_SETUP.md | ADMIN_SETUP.md | AI Auto |
 | 2025-10-14 | Components | Modified: LogsFilter.tsx | components/admin/LogsFilter.tsx | AI Auto |
