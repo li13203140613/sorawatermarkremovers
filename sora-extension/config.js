@@ -5,7 +5,7 @@
 
 // Supabase 配置
 export const SUPABASE_URL = 'https://zjefhzapfbouslkgllah.supabase.co';
-export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqZWZoemFwZmJvdXNsa2dsbGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxMzg2MjIsImV4cCI6MjA1MzcxNDYyMn0.J_5z-DLJuRrD9_jElMJNUfRIhATj1vLKZ4YPVu3MTPA';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqZWZoemFwZmJvdXNsa2dsbGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1MjEsImV4cCI6MjA3NTQ4OTUyMX0.49ix1bGrSrTqsS5qDXWgj6OOk-bj5UOaDTkNazqCdko';
 
 // API 配置
 export const API_BASE_URL = 'https://www.sora-prompt.io';

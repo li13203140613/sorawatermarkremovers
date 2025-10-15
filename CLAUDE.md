@@ -6,6 +6,12 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-15 | Components | Modified: VideoResult.tsx | components/video/VideoResult.tsx | AI Auto |
+| 2025-10-14 | Other | Modified: 20250114_add_user_credits.sql | supabase/migrations/20250114_add_user_credits.sql | AI Auto |
+| 2025-10-14 | Other | Modified: create-user-profile.js | create-user-profile.js | AI Auto |
+| 2025-10-14 | Tests | Modified: test-user-credits.js | test-user-credits.js | AI Auto |
+| 2025-10-14 | Other | Modified: background-oauth-bridge.js | sora-extension/background-oauth-bridge.js | AI Auto |
+| 2025-10-14 | Other | Modified: google-auth.js | sora-extension/google-auth.js | AI Auto |
 | 2025-10-14 | Other | Modified: background-oauth.js | sora-extension/background-oauth.js | AI Auto |
 | 2025-10-14 | Other | Modified: auth.js | sora-extension/auth.js | AI Auto |
 | 2025-10-14 | Other | Modified: config.js | sora-extension/config.js | AI Auto |

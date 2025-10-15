@@ -47,25 +47,66 @@ export async function GET(request: NextRequest) {
 
   try {
     // 检测请求来源并创建 Supabase 客户端
+    const authHeader = request.headers.get('authorization')
     const cookieHeader = request.headers.get('cookie')
     let supabase
+    let user = null
 
-    if (cookieHeader) {
-      console.log('🔌 扩展请求，手动解析 Cookie')
-      supabase = createClientWithCookie(cookieHeader)
-    } else {
-      console.log('🌐 网页请求，使用标准 Cookie')
-      supabase = await createClient()
+    // 1. 优先检查 Bearer token（扩展 OAuth 登录）
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.split(' ')[1]
+      console.log('🔑 使用 Bearer token 认证')
+
+      // 创建一个新的 Supabase 客户端实例
+      const { createClient } = await import('@supabase/supabase-js')
+      const supabaseClient = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          global: {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        }
+      )
+
+      // 使用 token 获取用户信息（不需要传递 token，会自动从 headers 中获取）
+      const { data: userData, error } = await supabaseClient.auth.getUser()
+      if (!error && userData.user) {
+        user = userData.user
+        supabase = supabaseClient
+        console.log('✅ Bearer token 验证成功，用户:', userData.user.email)
+      } else {
+        console.log('❌ Bearer token 验证失败:', error?.message)
+      }
     }
 
-    // 获取用户信息
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    // 2. 如果 Bearer token 失败或不存在，尝试 Cookie
+    if (!user) {
+      if (cookieHeader) {
+        console.log('🍪 扩展请求，手动解析 Cookie')
+        supabase = createClientWithCookie(cookieHeader)
+      } else {
+        console.log('🌐 网页请求，使用标准 Cookie')
+        supabase = await createClient()
+      }
 
-    if (authError || !user) {
-      return NextResponse.json(
-        { error: '未登录' },
-        { status: 401, headers }
-      )
+      // 获取用户信息
+      const { data: { user: cookieUser }, error: authError } = await supabase.auth.getUser()
+
+      if (authError || !cookieUser) {
+        return NextResponse.json(
+          { error: '未登录' },
+          { status: 401, headers }
+        )
+      }
+      user = cookieUser
+    }
+
+    // 如果 supabase 客户端未定义，创建一个默认的
+    if (!supabase) {
+      supabase = await createClient()
     }
 
     // 获取用户 profile（包含积分）

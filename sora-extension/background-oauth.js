@@ -10,7 +10,7 @@ console.log('🎬 Sora Video Downloader Background Service 已启动 (OAuth 版�
 const CONFIG = {
   // Supabase 配置
   SUPABASE_URL: 'https://zjefhzapfbouslkgllah.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqZWZoemFwZmJvdXNsa2dsbGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxMzg2MjIsImV4cCI6MjA1MzcxNDYyMn0.J_5z-DLJuRrD9_jElMJNUfRIhATj1vLKZ4YPVu3MTPA',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqZWZoemFwZmJvdXNsa2dsbGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1MjEsImV4cCI6MjA3NTQ4OTUyMX0.49ix1bGrSrTqsS5qDXWgj6OOk-bj5UOaDTkNazqCdko',
 
   // API 配置
   API_BASE_URL: 'https://www.sora-prompt.io',
@@ -31,25 +31,56 @@ const CONFIG = {
 // ========== OAuth 认证功能 ==========
 
 /**
- * 使用 OAuth 登录
+ * 生成 PKCE Code Verifier 和 Challenge
+ */
+async function generatePKCE() {
+  // 生成随机的 code_verifier (43-128 字符)
+  const randomBytes = new Uint8Array(32);
+  crypto.getRandomValues(randomBytes);
+  const codeVerifier = btoa(String.fromCharCode(...randomBytes))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+
+  // 生成 code_challenge (SHA-256 hash of code_verifier)
+  const encoder = new TextEncoder();
+  const data = encoder.encode(codeVerifier);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = new Uint8Array(hashBuffer);
+  const codeChallenge = btoa(String.fromCharCode(...hashArray))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+
+  return { codeVerifier, codeChallenge };
+}
+
+/**
+ * 使用 OAuth 登录 (PKCE Flow)
  */
 async function loginWithOAuth(provider = 'google') {
   try {
-    console.log(`🔐 开始 ${provider} OAuth 登录流程...`);
+    console.log(`🔐 开始 ${provider} OAuth 登录流程 (PKCE Flow)...`);
 
-    // 1. 获取扩展的 redirect URI
+    // 1. 生成 PKCE 参数
+    const { codeVerifier, codeChallenge } = await generatePKCE();
+    console.log('🔑 PKCE Code Verifier 已生成');
+
+    // 2. 获取扩展的 redirect URI
     const redirectUri = chrome.identity.getRedirectURL();
     console.log('📍 Redirect URI:', redirectUri);
 
-    // 2. 构建 Supabase OAuth URL
+    // 3. 构建 Supabase OAuth URL (PKCE Flow)
     const authUrl =
       `${CONFIG.SUPABASE_URL}/auth/v1/authorize?` +
       `provider=${provider}&` +
-      `redirect_to=${encodeURIComponent(redirectUri)}`;
+      `redirect_to=${encodeURIComponent(redirectUri)}&` +
+      `code_challenge=${codeChallenge}&` +
+      `code_challenge_method=S256`;
 
     console.log('🌐 打开授权窗口...');
 
-    // 3. 使用 Promise 包装 launchWebAuthFlow
+    // 4. 使用 Promise 包装 launchWebAuthFlow
     return new Promise((resolve, reject) => {
       chrome.identity.launchWebAuthFlow(
         {
@@ -71,28 +102,59 @@ async function loginWithOAuth(provider = 'google') {
             return;
           }
 
-          console.log('✅ 授权成功，解析 Token...');
+          console.log('✅ 授权成功，正在交换 Code...');
+          console.log('📋 Redirect URL:', redirectUrl);
 
           try {
-            // 4. 从 redirect URL 中提取 tokens
-            const hashParams = redirectUrl.split('#')[1];
-            if (!hashParams) {
-              throw new Error('无效的授权响应格式');
+            // 5. 从 redirect URL 中提取 authorization code
+            const url = new URL(redirectUrl);
+            const code = url.searchParams.get('code');
+
+            if (!code) {
+              console.error('❌ 未获取到 authorization code');
+              console.log('📋 URL 参数:', Object.fromEntries(url.searchParams));
+              throw new Error('未获取到 authorization code');
             }
 
-            const params = new URLSearchParams(hashParams);
-            const accessToken = params.get('access_token');
-            const refreshToken = params.get('refresh_token');
-            const expiresIn = parseInt(params.get('expires_in') || '3600');
+            console.log('📝 Authorization Code 已获取');
+
+            // 6. 使用 code 和 code_verifier 交换 access_token
+            const tokenResponse = await fetch(
+              `${CONFIG.SUPABASE_URL}/auth/v1/token?grant_type=pkce`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'apikey': CONFIG.SUPABASE_ANON_KEY,
+                },
+                body: JSON.stringify({
+                  auth_code: code,
+                  code_verifier: codeVerifier,
+                }),
+              }
+            );
+
+            if (!tokenResponse.ok) {
+              const errorText = await tokenResponse.text();
+              console.error('❌ Token 交换失败:', tokenResponse.status, errorText);
+              throw new Error(`Token 交换失败: ${errorText}`);
+            }
+
+            const tokenData = await tokenResponse.json();
+            console.log('✅ Token 交换成功');
+
+            const accessToken = tokenData.access_token;
+            const refreshToken = tokenData.refresh_token;
+            const expiresIn = parseInt(tokenData.expires_in || '3600');
 
             if (!accessToken) {
-              throw new Error('未获取到 access_token');
+              throw new Error('Token 响应中没有 access_token');
             }
 
-            // 5. 计算过期时间
+            // 7. 计算过期时间
             const expiresAt = Date.now() + expiresIn * 1000;
 
-            // 6. 存储 tokens
+            // 8. 存储 tokens
             await chrome.storage.local.set({
               [CONFIG.STORAGE_KEYS.ACCESS_TOKEN]: accessToken,
               [CONFIG.STORAGE_KEYS.REFRESH_TOKEN]: refreshToken,
@@ -102,7 +164,7 @@ async function loginWithOAuth(provider = 'google') {
             console.log('💾 Token 已存储');
             console.log('⏰ Token 过期时间:', new Date(expiresAt).toLocaleString());
 
-            // 7. 获取并存储用户信息
+            // 9. 获取并存储用户信息
             const userInfo = await fetchUserInfo(accessToken);
             if (userInfo) {
               await chrome.storage.local.set({
@@ -227,7 +289,9 @@ async function fetchUserInfo(token) {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
+        'X-Extension-Request': 'true',
       },
+      credentials: 'include',
     });
 
     if (!response.ok) {
