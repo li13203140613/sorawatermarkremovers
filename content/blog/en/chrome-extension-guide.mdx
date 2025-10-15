@@ -1,0 +1,235 @@
+---
+title: "Complete Chrome Extension User Guide"
+description: "Install and use RemoveWM Chrome extension to download watermark-free videos with one click in your browser"
+date: "2025-10-13"
+author: "RemoveWM Team"
+tags: ["Chrome Extension", "Browser Plugin", "Tutorial"]
+---
+
+# Complete Chrome Extension User Guide
+
+The RemoveWM Chrome extension allows you to download watermark-free videos directly in your browser with one click, without having to copy links to the website.
+
+## Extension Features
+
+### Core Functions
+
+- 🚀 **One-Click Download**: Click download while browsing videos
+- 🎯 **Auto Detection**: Intelligently recognize supported video platforms
+- ⚡ **Fast Processing**: Automatically remove watermarks in the background
+- 💾 **Batch Download**: Support downloading multiple videos simultaneously
+- 🔒 **Privacy Protection**: Local processing, no data upload
+
+### Supported Websites
+
+Currently supports the following platforms:
+
+1. **Douyin** - douyin.com
+2. **Xiaohongshu** - xiaohongshu.com
+3. **Kuaishou** - kuaishou.com
+4. **TikTok** - tiktok.com
+5. **Xigua Video** - ixigua.com
+
+## Installation Steps
+
+### Method 1: Install from Chrome Web Store (Recommended)
+
+1. Visit [Chrome Web Store](#)
+2. Search for "RemoveWM"
+3. Click "Add to Chrome"
+4. Click "Add Extension" in the popup
+
+### Method 2: Manual Installation of Developer Version
+
+If you want to use the latest test version:
+
+#### Step 1: Download Extension Files
+
+```bash
+# Download extension source code
+git clone https://github.com/removewm/chrome-extension.git
+cd chrome-extension
+npm install
+npm run build
+```
+
+#### Step 2: Load into Chrome
+
+1. Open Chrome browser
+2. Visit `chrome://extensions/`
+3. Enable "Developer mode" in the top right
+4. Click "Load unpacked"
+5. Select the `build` folder
+
+## Usage Tutorial
+
+### Basic Usage
+
+#### 1. Login
+
+First-time use requires login:
+
+1. Click the RemoveWM icon in browser toolbar
+2. Click "Login" button
+3. Use your RemoveWM account to login
+
+#### 2. Download Videos
+
+When browsing supported video websites:
+
+1. Extension automatically detects videos on the page
+2. Shows "Download" button next to video player
+3. Click button to start download
+4. Wait for processing to complete (progress shown)
+5. Video automatically saves to download folder
+
+### Advanced Features
+
+#### Batch Download
+
+Batch download videos on list pages:
+
+1. Browse video list page (e.g., TikTok homepage)
+2. Click extension icon to open panel
+3. Check videos you want to download
+4. Click "Batch Download" button
+
+#### Custom Settings
+
+Click extension icon → Settings to configure:
+
+- **Default Quality**: Choose 1080p, 720p or original
+- **Save Path**: Customize download folder
+- **File Naming**: Set filename format
+- **Auto Download**: Automatically start download when video detected
+
+```javascript
+// Settings example
+{
+  "quality": "1080p",
+  "savePath": "Downloads/RemoveWM",
+  "fileFormat": "{platform}_{author}_{title}_{date}",
+  "autoDownload": false
+}
+```
+
+## Frequently Asked Questions
+
+### Extension Cannot Detect Videos
+
+**Possible Causes:**
+
+1. Website updated page structure
+2. Video is private or deleted
+3. Extension needs updating
+
+**Solutions:**
+
+- Refresh page and retry
+- Check for new version
+- Report issue to us
+
+### Slow Download Speed
+
+**Optimization Tips:**
+
+- Choose lower quality (e.g., 720p)
+- Avoid downloading during peak hours
+- Check network connection
+- Consider upgrading membership (priority processing queue)
+
+### Downloaded Videos Won't Play
+
+**Check Items:**
+
+1. Confirm download completed (check progress)
+2. Check if file size is normal
+3. Try opening with another player
+4. Re-download video
+
+### Extension Icon Not Showing
+
+**Solution Steps:**
+
+1. Check if extension is enabled
+2. Restart Chrome browser
+3. Reinstall extension
+
+## Keyboard Shortcuts
+
+Extension supports the following shortcuts:
+
+| Shortcut | Function |
+|----------|----------|
+| `Alt + D` | Download current video |
+| `Alt + S` | Open extension settings |
+| `Alt + H` | View download history |
+| `Ctrl + Shift + D` | Batch download mode |
+
+You can customize shortcuts at `chrome://extensions/shortcuts`.
+
+## Permission Description
+
+Extension requires the following permissions:
+
+### Required Permissions
+
+- **storage**: Save settings and download history
+- **downloads**: Manage downloaded files
+- **tabs**: Detect videos on current tab
+
+### Optional Permissions
+
+- **notifications**: Show download completion notifications
+- **contextMenus**: Right-click menu shortcuts
+
+### Privacy Statement
+
+We promise:
+
+- ✅ Only runs on supported websites
+- ✅ Does not collect browsing history
+- ✅ Does not track user behavior
+- ✅ Only uploads necessary processing data
+- ✅ Download records only saved locally
+
+## Changelog
+
+### v2.1.0 (2025-10-15)
+
+- ✨ Added batch download feature
+- 🎨 Optimized user interface
+- 🐛 Fixed detection failures on some websites
+- ⚡ Improved processing speed by 30%
+
+### v2.0.0 (2025-10-01)
+
+- 🎉 Brand new user interface design
+- 🚀 Support 4K video downloads
+- 📱 Added mobile sync feature
+
+## Technical Support
+
+For help, please:
+
+1. Check [FAQ](#)
+2. Visit [Help Center](#)
+3. Contact customer support
+4. Submit issues on [GitHub](https://github.com/removewm/chrome-extension/issues)
+
+## Summary
+
+RemoveWM Chrome extension makes video downloading simple and efficient:
+
+- No need to copy links
+- Automatically remove watermarks
+- Support batch downloads
+- Protect user privacy
+
+Install and experience it now!
+
+## Related Links
+
+- [Quick Start Guide](/blog/getting-started)
+- [AI Technology Explained](/blog/ai-watermark-removal)
+- [Pricing Plans](/#pricing)

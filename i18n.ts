@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { getRequestConfig } from 'next-intl/server'
 
 export const locales = ['en', 'zh'] as const
@@ -6,11 +5,14 @@ export type Locale = (typeof locales)[number]
 export const defaultLocale: Locale = 'zh'
 
 export default getRequestConfig(async ({ locale }) => {
-  // 验证传入的 locale 是否有效
-  if (!locale || !locales.includes(locale as any)) notFound()
+  // 如果 locale 无效，使用默认语言作为 fallback
+  // 不能在 root layout 中使用 notFound()
+  const validLocale = locale && locales.includes(locale as any)
+    ? locale
+    : defaultLocale
 
   return {
-    locale: locale as string,
-    messages: (await import(`./messages/${locale}.json`)).default
+    locale: validLocale,
+    messages: (await import(`./messages/${validLocale}.json`)).default
   }
 })

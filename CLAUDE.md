@@ -6,6 +6,31 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-16 | API | Modified: test-online-api-with-token.js | test-online-api-with-token.js | AI Auto |
+| 2025-10-16 | Tests | Modified: test-service-role.js | test-service-role.js | AI Auto |
+| 2025-10-16 | API | Modified: test-production-api.js | test-production-api.js | AI Auto |
+| 2025-10-16 | Other | Modified: sora2-complete-prompt-guide.mdx | content/blog/en/sora2-complete-prompt-guide.mdx | AI Auto |
+| 2025-10-16 | Tests | Modified: test-with-real-token.js | test-with-real-token.js | AI Auto |
+| 2025-10-16 | API | Modified: test-local-api.js | test-local-api.js | AI Auto |
+| 2025-10-16 | Tests | Modified: test-credits-query.js | test-credits-query.js | AI Auto |
+| 2025-10-15 | Library | Modified: context.tsx | lib/auth/context.tsx | AI Auto |
+| 2025-10-15 | Docs | Modified: TRANSLATE_GUIDE.md | scripts/TRANSLATE_GUIDE.md | AI Auto |
+| 2025-10-15 | Other | Modified: translate-prompt.txt | scripts/translate-prompt.txt | AI Auto |
+| 2025-10-15 | Other | Modified: create-blog-post.js | scripts/create-blog-post.js | AI Auto |
+| 2025-10-15 | Other | Modified: sora-invitation-codes.mdx | content/blog/en/sora-invitation-codes.mdx | AI Auto |
+| 2025-10-15 | Other | Modified: i18n.config.ts | i18n.config.ts | AI Auto |
+| 2025-10-15 | Other | Modified: tailwind.config.ts | tailwind.config.ts | AI Auto |
+| 2025-10-15 | Styles | Modified: blog.css | styles/blog.css | AI Auto |
+| 2025-10-15 | Other | Modified: chrome-extension-guide.mdx | content/blog/en/chrome-extension-guide.mdx | AI Auto |
+| 2025-10-15 | Other | Modified: ai-watermark-removal.mdx | content/blog/en/ai-watermark-removal.mdx | AI Auto |
+| 2025-10-15 | Other | Modified: getting-started.mdx | content/blog/en/getting-started.mdx | AI Auto |
+| 2025-10-15 | Components | Modified: BlogRelated.tsx | components/blog/BlogRelated.tsx | AI Auto |
+| 2025-10-15 | Components | Modified: BlogSearch.tsx | components/blog/BlogSearch.tsx | AI Auto |
+| 2025-10-15 | Components | Modified: BlogContent.tsx | components/blog/BlogContent.tsx | AI Auto |
+| 2025-10-15 | Components | Modified: BlogHeader.tsx | components/blog/BlogHeader.tsx | AI Auto |
+| 2025-10-15 | Components | Modified: BlogCard.tsx | components/blog/BlogCard.tsx | AI Auto |
+| 2025-10-15 | Components | Modified: MDXComponents.tsx | components/blog/MDXComponents.tsx | AI Auto |
+| 2025-10-15 | Library | Modified: utils.ts | lib/blog/utils.ts | AI Auto |
 | 2025-10-15 | Other | Modified: i18n.ts | i18n.ts | AI Auto |
 | 2025-10-15 | Components | Modified: VideoResult.tsx | components/video/VideoResult.tsx | AI Auto |
 | 2025-10-14 | Other | Modified: 20250114_add_user_credits.sql | supabase/migrations/20250114_add_user_credits.sql | AI Auto |

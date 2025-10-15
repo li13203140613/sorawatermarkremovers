@@ -620,10 +620,19 @@ async function handleDownloadClick(e) {
       return;
     }
 
-    // Step 3: 检查积分是否充足
-    const currentCredits = userInfo.credits || 0;
-    console.log('💰 当前积分:', currentCredits);
+    // Step 3: 检查积分是否充足（必须以数据库为准）
+    const currentCredits = userInfo.credits;
+    console.log('💰 当前积分（数据库）:', currentCredits);
 
+    // 如果积分为 null 或 undefined，说明数据库查询失败
+    if (currentCredits === null || currentCredits === undefined) {
+      console.error('❌ 无法获取积分信息');
+      ToastManager.showErrorToast('Failed to retrieve credits. Please try again.');
+      updateButtonState('error', 'Credits Error');
+      return;
+    }
+
+    // 检查积分是否充足
     if (currentCredits < 1) {
       console.log('⚠️ 积分不足，显示充值提示');
 

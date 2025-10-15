@@ -55,7 +55,16 @@ async function loadUserInfo() {
 function displayLoggedInUser(data) {
   document.getElementById('user-name').textContent = data.name || '用户';
   document.getElementById('user-email').textContent = data.email || '-';
-  document.getElementById('user-credits').textContent = data.credits || 0;
+
+  // 显示数据库积分，如果查询失败则显示 "null"
+  const creditsElement = document.getElementById('user-credits');
+  if (data.credits === null || data.credits === undefined) {
+    creditsElement.textContent = 'null';
+    creditsElement.style.color = '#999'; // 灰色表示未查询到
+  } else {
+    creditsElement.textContent = data.credits;
+    creditsElement.style.color = ''; // 恢复默认颜色
+  }
 
   // 设置用户头像
   const avatarContainer = document.getElementById('user-avatar');

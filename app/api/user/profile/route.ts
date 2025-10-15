@@ -57,11 +57,11 @@ export async function GET(request: NextRequest) {
       const token = authHeader.split(' ')[1]
       console.log('🔑 使用 Bearer token 认证')
 
-      // 创建一个新的 Supabase 客户端实例
+      // 创建一个新的 Supabase 客户端实例（使用 Service Role Key 以绕过 RLS）
       const { createClient } = await import('@supabase/supabase-js')
       const supabaseClient = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,  // 使用 Service Role Key
         {
           global: {
             headers: {
@@ -110,24 +110,54 @@ export async function GET(request: NextRequest) {
     }
 
     // 获取用户 profile（包含积分）
-    const { data: profile, error: profileError } = await supabase
+    let { data: profile, error: profileError } = await supabase
       .from('user_profiles')
       .select('credits, avatar_url, full_name')
       .eq('id', user.id)
       .single()
 
-    if (profileError) {
-      console.error('获取用户 profile 失败:', profileError)
+    // 如果用户 profile 不存在，自动创建一条默认记录
+    if (profileError && profileError.code === 'PGRST116') {
+      console.log('⚠️ 用户 profile 不存在，自动创建...')
+      console.log('   用户 ID:', user.id)
+      console.log('   邮箱:', user.email)
+
+      const { data: newProfile, error: insertError } = await supabase
+        .from('user_profiles')
+        .insert({
+          id: user.id,
+          email: user.email,
+          credits: 0, // 默认 0 积分
+          full_name: user.user_metadata?.full_name || user.email?.split('@')[0],
+          avatar_url: user.user_metadata?.avatar_url,
+        })
+        .select('credits, avatar_url, full_name')
+        .single()
+
+      if (insertError) {
+        console.error('❌ 创建用户 profile 失败:', insertError)
+      } else {
+        console.log('✅ 用户 profile 创建成功')
+        profile = newProfile
+      }
+    } else if (profileError) {
+      console.error('❌ 获取用户 profile 失败:', profileError)
+      console.error('   用户 ID:', user.id)
+      console.error('   错误详情:', profileError.message)
+    } else {
+      console.log('✅ 用户 profile 查询成功')
+      console.log('   积分:', profile?.credits)
+      console.log('   用户名:', profile?.full_name)
     }
 
-    // 返回用户信息
+    // 返回用户信息（积分必须以数据库为准，查询失败则返回 null）
     return NextResponse.json(
       {
         id: user.id,
         email: user.email,
         name: profile?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0],
         avatar_url: profile?.avatar_url || user.user_metadata?.avatar_url,
-        credits: profile?.credits || 0,
+        credits: profile?.credits !== undefined ? profile.credits : null, // 必须以数据库为准
       },
       { status: 200, headers }
     )

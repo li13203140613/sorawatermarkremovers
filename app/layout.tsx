@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/blog.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { cookies } from 'next/headers';
 import { defaultLocale, type Locale, locales } from '@/i18n';

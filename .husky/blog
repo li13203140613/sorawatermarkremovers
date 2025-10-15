@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Git blog 钩子 - 快速创建博客文章
+node scripts/create-blog-post.js

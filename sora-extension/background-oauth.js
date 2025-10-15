@@ -12,7 +12,7 @@ const CONFIG = {
   SUPABASE_URL: 'https://zjefhzapfbouslkgllah.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqZWZoemFwZmJvdXNsa2dsbGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1MjEsImV4cCI6MjA3NTQ4OTUyMX0.49ix1bGrSrTqsS5qDXWgj6OOk-bj5UOaDTkNazqCdko',
 
-  // API 配置
+  // API 配置（生产环境）
   API_BASE_URL: 'https://www.sora-prompt.io',
   API_VIDEO_PROCESS: 'https://www.sora-prompt.io/api/video/process',
   API_USER_PROFILE: 'https://www.sora-prompt.io/api/user/profile',
@@ -56,31 +56,26 @@ async function generatePKCE() {
 }
 
 /**
- * 使用 OAuth 登录 (PKCE Flow)
+ * 使用 OAuth 登录（在扩展弹窗中完成授权）
  */
 async function loginWithOAuth(provider = 'google') {
   try {
-    console.log(`🔐 开始 ${provider} OAuth 登录流程 (PKCE Flow)...`);
+    console.log(`🔐 开始 ${provider} OAuth 登录流程...`);
 
-    // 1. 生成 PKCE 参数
-    const { codeVerifier, codeChallenge } = await generatePKCE();
-    console.log('🔑 PKCE Code Verifier 已生成');
-
-    // 2. 获取扩展的 redirect URI
+    // 1. 获取扩展的 redirect URI
     const redirectUri = chrome.identity.getRedirectURL();
     console.log('📍 Redirect URI:', redirectUri);
 
-    // 3. 构建 Supabase OAuth URL (PKCE Flow)
+    // 2. 构建 Supabase OAuth URL
     const authUrl =
       `${CONFIG.SUPABASE_URL}/auth/v1/authorize?` +
       `provider=${provider}&` +
-      `redirect_to=${encodeURIComponent(redirectUri)}&` +
-      `code_challenge=${codeChallenge}&` +
-      `code_challenge_method=S256`;
+      `redirect_to=${encodeURIComponent(redirectUri)}`;
 
     console.log('🌐 打开授权窗口...');
+    console.log('🔗 Auth URL:', authUrl);
 
-    // 4. 使用 Promise 包装 launchWebAuthFlow
+    // 3. 使用 Promise 包装 launchWebAuthFlow
     return new Promise((resolve, reject) => {
       chrome.identity.launchWebAuthFlow(
         {
@@ -102,59 +97,31 @@ async function loginWithOAuth(provider = 'google') {
             return;
           }
 
-          console.log('✅ 授权成功，正在交换 Code...');
+          console.log('✅ 授权成功');
           console.log('📋 Redirect URL:', redirectUrl);
 
           try {
-            // 5. 从 redirect URL 中提取 authorization code
+            // 4. 从 redirect URL 中提取 tokens
             const url = new URL(redirectUrl);
-            const code = url.searchParams.get('code');
+            const fragment = url.hash.substring(1); // 移除 # 号
+            const params = new URLSearchParams(fragment);
 
-            if (!code) {
-              console.error('❌ 未获取到 authorization code');
-              console.log('📋 URL 参数:', Object.fromEntries(url.searchParams));
-              throw new Error('未获取到 authorization code');
-            }
-
-            console.log('📝 Authorization Code 已获取');
-
-            // 6. 使用 code 和 code_verifier 交换 access_token
-            const tokenResponse = await fetch(
-              `${CONFIG.SUPABASE_URL}/auth/v1/token?grant_type=pkce`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'apikey': CONFIG.SUPABASE_ANON_KEY,
-                },
-                body: JSON.stringify({
-                  auth_code: code,
-                  code_verifier: codeVerifier,
-                }),
-              }
-            );
-
-            if (!tokenResponse.ok) {
-              const errorText = await tokenResponse.text();
-              console.error('❌ Token 交换失败:', tokenResponse.status, errorText);
-              throw new Error(`Token 交换失败: ${errorText}`);
-            }
-
-            const tokenData = await tokenResponse.json();
-            console.log('✅ Token 交换成功');
-
-            const accessToken = tokenData.access_token;
-            const refreshToken = tokenData.refresh_token;
-            const expiresIn = parseInt(tokenData.expires_in || '3600');
+            const accessToken = params.get('access_token');
+            const refreshToken = params.get('refresh_token');
+            const expiresIn = parseInt(params.get('expires_in') || '3600');
 
             if (!accessToken) {
-              throw new Error('Token 响应中没有 access_token');
+              console.error('❌ 未获取到 access_token');
+              console.log('📋 URL Fragment:', fragment);
+              throw new Error('未获取到 access_token');
             }
 
-            // 7. 计算过期时间
+            console.log('✅ Token 已获取');
+
+            // 5. 计算过期时间
             const expiresAt = Date.now() + expiresIn * 1000;
 
-            // 8. 存储 tokens
+            // 6. 存储 tokens
             await chrome.storage.local.set({
               [CONFIG.STORAGE_KEYS.ACCESS_TOKEN]: accessToken,
               [CONFIG.STORAGE_KEYS.REFRESH_TOKEN]: refreshToken,
@@ -164,7 +131,7 @@ async function loginWithOAuth(provider = 'google') {
             console.log('💾 Token 已存储');
             console.log('⏰ Token 过期时间:', new Date(expiresAt).toLocaleString());
 
-            // 9. 获取并存储用户信息
+            // 7. 获取并存储用户信息
             const userInfo = await fetchUserInfo(accessToken);
             if (userInfo) {
               await chrome.storage.local.set({
@@ -278,13 +245,15 @@ async function getValidAccessToken() {
 }
 
 /**
- * 获取用户信息
+ * 获取用户信息（必须从数据库查询积分）
  */
 async function fetchUserInfo(token) {
   try {
     console.log('📡 获取用户信息...');
+    console.log('🔑 使用 Token:', token.substring(0, 50) + '...');
+    console.log('📍 API URL:', CONFIG.API_USER_PROFILE);
 
-    // 调用后端 API 获取完整信息
+    // 调用后端 API 获取完整信息（包括数据库积分）
     const response = await fetch(CONFIG.API_USER_PROFILE, {
       method: 'GET',
       headers: {
@@ -294,21 +263,25 @@ async function fetchUserInfo(token) {
       credentials: 'include',
     });
 
+    console.log('📊 API 响应状态:', response.status);
+
     if (!response.ok) {
+      const errorText = await response.text();
       console.error('❌ 获取用户信息失败:', response.status);
-      // 降级到基本信息
+      console.error('❌ 错误详情:', errorText);
+      // API 失败时积分为 null
       return await fetchBasicUserInfo(token);
     }
 
     const data = await response.json();
-    console.log('✅ 用户信息获取成功');
+    console.log('✅ 用户信息获取成功，数据库积分:', data.credits);
 
     return {
       id: data.id,
       email: data.email,
       name: data.name || data.email?.split('@')[0] || '用户',
       avatarUrl: data.avatar_url,
-      credits: data.credits || 0,
+      credits: data.credits !== undefined ? data.credits : null, // 必须以数据库为准
     };
   } catch (error) {
     console.error('❌ 获取用户信息异常:', error);
@@ -317,7 +290,7 @@ async function fetchUserInfo(token) {
 }
 
 /**
- * 从 Supabase 获取基本用户信息（降级方案）
+ * 从 Supabase 获取基本用户信息（降级方案，积分为 null）
  */
 async function fetchBasicUserInfo(token) {
   try {
@@ -339,7 +312,7 @@ async function fetchBasicUserInfo(token) {
       email: user.email,
       name: user.user_metadata?.full_name || user.email?.split('@')[0] || '用户',
       avatarUrl: user.user_metadata?.avatar_url,
-      credits: 0,
+      credits: null, // 降级方案下积分为 null，表示无法获取
     };
   } catch (error) {
     console.error('❌ 获取基本用户信息失败:', error);
@@ -368,7 +341,7 @@ async function logout() {
 }
 
 /**
- * 获取用户信息（用于 Popup 显示）
+ * 获取用户信息（用于 Popup 显示）- 必须从数据库查询积分
  */
 async function getUserInfo() {
   try {
@@ -376,36 +349,31 @@ async function getUserInfo() {
     const token = await getValidAccessToken();
 
     if (!token) {
-      // 未登录
+      // 未登录 - 不显示积分
       return {
         success: true,
         isLoggedIn: false,
-        credits: 1,
+        credits: null,
       };
     }
 
-    // 2. 从缓存读取用户信息
-    const storage = await chrome.storage.local.get([CONFIG.STORAGE_KEYS.USER_INFO]);
-    let userInfo = storage[CONFIG.STORAGE_KEYS.USER_INFO];
+    // 2. 每次都重新从数据库获取用户信息（不使用缓存，确保积分是最新的）
+    console.log('🔄 从数据库获取最新用户信息和积分...');
+    const userInfo = await fetchUserInfo(token);
 
-    // 3. 如果缓存不存在，重新获取
     if (!userInfo) {
-      console.log('🔄 缓存不存在，重新获取用户信息...');
-      userInfo = await fetchUserInfo(token);
-
-      if (userInfo) {
-        await chrome.storage.local.set({
-          [CONFIG.STORAGE_KEYS.USER_INFO]: userInfo,
-        });
-      } else {
-        return {
-          success: false,
-          error: '获取用户信息失败',
-        };
-      }
+      return {
+        success: false,
+        error: '获取用户信息失败',
+      };
     }
 
-    // 4. 返回用户信息
+    // 3. 更新缓存
+    await chrome.storage.local.set({
+      [CONFIG.STORAGE_KEYS.USER_INFO]: userInfo,
+    });
+
+    // 4. 返回用户信息（积分可能为 null）
     return {
       success: true,
       isLoggedIn: true,
