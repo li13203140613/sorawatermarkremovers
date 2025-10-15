@@ -15,14 +15,18 @@ export async function POST(request: NextRequest) {
     }
 
     // 获取请求参数
-    const { amount } = await request.json()
+    const { amount, currency = 'usd', locale = 'en' } = await request.json()
 
     if (!amount || typeof amount !== 'number') {
       return NextResponse.json({ error: '无效的金额' }, { status: 400 })
     }
 
+    if (!['usd', 'cny'].includes(currency)) {
+      return NextResponse.json({ error: '无效的货币类型' }, { status: 400 })
+    }
+
     // 创建支付会话
-    const result = await createPaymentSession(amount, user.id)
+    const result = await createPaymentSession(amount, user.id, currency, locale)
 
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: 400 })

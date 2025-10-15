@@ -11,14 +11,22 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function createCheckoutSession(
   amount: number,
   credits: number,
-  userId: string
+  userId: string,
+  currency: 'usd' | 'cny' = 'usd',
+  locale: string = 'en'
 ): Promise<{ id: string; url: string }> {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
+  // 根据货币类型选择支付方式
+  const paymentMethodTypes = currency === 'cny'
+    ? ['alipay', 'wechat_pay', 'card']
+    : ['card']
+
+  // 构建会话配置
+  const sessionConfig: any = {
+    payment_method_types: paymentMethodTypes,
     line_items: [
       {
         price_data: {
-          currency: 'usd',
+          currency: currency,
           product_data: {
             name: `${credits} 积分`,
             description: `充值 ${credits} 个积分`,
@@ -29,14 +37,27 @@ export async function createCheckoutSession(
       },
     ],
     mode: 'payment',
+    locale: locale === 'zh' ? 'zh' : 'auto', // 设置 Stripe Checkout 页面语言
     success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard`,
     metadata: {
       userId,
       credits: credits.toString(),
       amount: amount.toString(),
+      currency,
     },
-  })
+  }
+
+  // 如果是人民币支付，添加微信支付配置
+  if (currency === 'cny') {
+    sessionConfig.payment_method_options = {
+      wechat_pay: {
+        client: 'web',
+      },
+    }
+  }
+
+  const session = await stripe.checkout.sessions.create(sessionConfig)
 
   return {
     id: session.id,

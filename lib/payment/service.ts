@@ -1,20 +1,28 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createCheckoutSession } from './stripe'
-import { CREDITS_PER_DOLLAR, MIN_AMOUNT } from './types'
+import {
+  CREDITS_PER_DOLLAR,
+  CREDITS_PER_YUAN,
+  MIN_AMOUNT_USD,
+  MIN_AMOUNT_CNY
+} from './types'
 
 /**
  * 验证充值金额
  */
-export function validateAmount(amount: number): boolean {
-  return amount >= MIN_AMOUNT && Number.isInteger(amount)
+export function validateAmount(amount: number, currency: 'usd' | 'cny' = 'usd'): boolean {
+  const minAmount = currency === 'cny' ? MIN_AMOUNT_CNY : MIN_AMOUNT_USD
+  return amount >= minAmount && Number.isInteger(amount)
 }
 
 /**
  * 计算积分数量
  */
-export function calculateCredits(amount: number): number {
-  return amount * CREDITS_PER_DOLLAR
+export function calculateCredits(amount: number, currency: 'usd' | 'cny' = 'usd'): number {
+  return currency === 'cny'
+    ? amount * CREDITS_PER_YUAN
+    : amount * CREDITS_PER_DOLLAR
 }
 
 /**
@@ -22,17 +30,21 @@ export function calculateCredits(amount: number): number {
  */
 export async function createPaymentSession(
   amount: number,
-  userId: string
+  userId: string,
+  currency: 'usd' | 'cny' = 'usd',
+  locale: string = 'en'
 ): Promise<{ success: boolean; sessionId?: string; url?: string; error?: string }> {
   // 验证金额
-  if (!validateAmount(amount)) {
+  if (!validateAmount(amount, currency)) {
+    const minAmount = currency === 'cny' ? MIN_AMOUNT_CNY : MIN_AMOUNT_USD
+    const currencyText = currency === 'cny' ? '元' : '美元'
     return {
       success: false,
-      error: `充值金额必须为整数，最低 ${MIN_AMOUNT} 美元`,
+      error: `充值金额必须为整数，最低 ${minAmount} ${currencyText}`,
     }
   }
 
-  const credits = calculateCredits(amount)
+  const credits = calculateCredits(amount, currency)
 
   try {
     // 创建 Stripe Checkout Session
@@ -40,7 +52,7 @@ export async function createPaymentSession(
     let url: string
 
     try {
-      const session = await createCheckoutSession(amount, credits, userId)
+      const session = await createCheckoutSession(amount, credits, userId, currency, locale)
       sessionId = session.id
       url = session.url
       console.log('[Payment] Stripe session created:', sessionId)
