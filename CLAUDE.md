@@ -6,6 +6,7 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-15 | Other | Modified: i18n.ts | i18n.ts | AI Auto |
 | 2025-10-15 | Components | Modified: VideoResult.tsx | components/video/VideoResult.tsx | AI Auto |
 | 2025-10-14 | Other | Modified: 20250114_add_user_credits.sql | supabase/migrations/20250114_add_user_credits.sql | AI Auto |
 | 2025-10-14 | Other | Modified: create-user-profile.js | create-user-profile.js | AI Auto |
