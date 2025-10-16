@@ -6,6 +6,12 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-16 | Components | Modified: VideoGenerator.tsx | components/aicoding/VideoGenerator.tsx | AI Auto |
+| 2025-10-16 | Docs | Modified: FINAL-DESIGN.md | chrome-extension/FINAL-DESIGN.md | AI Auto |
+| 2025-10-16 | Docs | Modified: UI-DESIGN.md | chrome-extension/UI-DESIGN.md | AI Auto |
+| 2025-10-16 | Docs | Modified: WIREFRAME.md | chrome-extension/WIREFRAME.md | AI Auto |
+| 2025-10-16 | Tests | Modified: test-popup.html | chrome-extension/test-popup.html | AI Auto |
+| 2025-10-16 | Other | Modified: VERSION.txt | chrome-extension/VERSION.txt | AI Auto |
 | 2025-10-16 | Docs | Modified: CLAUDE.md | CLAUDE.md | AI Auto |
 | 2025-10-16 | Docs | Created: AICODING_INTEGRATION.md | AICODING_INTEGRATION.md | AI Coding API集成文档 |
 | 2025-10-16 | Config | Modified: .env.local | .env.local | 添加AICODING_API_KEY配置 |

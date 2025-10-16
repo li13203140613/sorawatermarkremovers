@@ -1,0 +1,6 @@
+Version: 1.1.0
+Updated: 2025-10-16 18:53
+Changes:
+- Increased popup width to 380px
+- Enhanced credits card styling
+- Improved recharge button prominence
