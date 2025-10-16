@@ -92,11 +92,11 @@ function createDownloadButton() {
   button.setAttribute('type', 'button')
 
   button.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 16L7 11L8.4 9.6L11 12.2V4H13V12.2L15.6 9.6L17 11L12 16Z" fill="currentColor"/>
       <path d="M5 20H19V18H5V20Z" fill="currentColor"/>
     </svg>
-    <span>Remove Watermark</span>
+    <span>Download</span>
   `
 
   // 绑定点击事件

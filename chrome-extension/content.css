@@ -9,31 +9,33 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 
   /* 定位 */
   margin-left: 16px; /* 与 Remixes 的间距 */
 
   /* 尺寸 */
-  padding: 10px 20px;
-  height: 44px;
+  padding: 14px 24px;
+  min-width: 180px;
+  height: 48px;
 
   /* 外观 */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 22px; /* 圆角按钮 */
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1;
+  letter-spacing: 0.3px;
   cursor: pointer;
   white-space: nowrap;
 
   /* 阴影 */
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
 
   /* 动画 */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* 层级 */
   position: relative;
@@ -41,8 +43,8 @@
 }
 
 .sora-remove-watermark-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 
