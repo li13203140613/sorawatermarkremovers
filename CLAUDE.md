@@ -6,6 +6,19 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-16 | Docs | Modified: CLAUDE.md | CLAUDE.md | AI Auto |
+| 2025-10-16 | Docs | Created: AICODING_INTEGRATION.md | AICODING_INTEGRATION.md | AI Coding API集成文档 |
+| 2025-10-16 | Config | Modified: .env.local | .env.local | 添加AICODING_API_KEY配置 |
+| 2025-10-16 | Tests | Created: page.tsx | app/test-aicoding/page.tsx | AI Coding测试页面 |
+| 2025-10-16 | API | Created: route.ts | app/api/aicoding/status/[taskId]/route.ts | 查询任务状态API |
+| 2025-10-16 | API | Created: route.ts | app/api/aicoding/create/route.ts | 创建视频生成任务API |
+| 2025-10-16 | Components | Created: VideoGenerator.tsx | components/aicoding/VideoGenerator.tsx | AI视频生成组件 |
+| 2025-10-16 | Tests | Created: test-aicoding.js | test-aicoding.js | Node.js测试脚本 |
+| 2025-10-16 | Tests | Created: test-aicoding-api.html | test-aicoding-api.html | HTML测试页面 |
+| 2025-10-16 | Tests | Modified: test-phase2.js | test-phase2.js | AI Auto |
+| 2025-10-16 | Tests | Modified: test-phase2-complete.tmp | test-phase2-complete.tmp | AI Auto |
+| 2025-10-16 | Tests | Modified: test-video-bearer-token.js | test-video-bearer-token.js | AI Auto |
+| 2025-10-16 | API | Modified: test-video-api.js | test-video-api.js | AI Auto |
 | 2025-10-16 | Tests | Modified: test-supabase-query.js | test-supabase-query.js | AI Auto |
 | 2025-10-16 | Other | Modified: icon128.svg | chrome-extension/icons/icon128.svg | AI Auto |
 | 2025-10-16 | Other | Modified: icon48.svg | chrome-extension/icons/icon48.svg | AI Auto |
