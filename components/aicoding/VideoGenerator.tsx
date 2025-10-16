@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { useAuth } from '@/lib/auth';
+import { useCredits } from '@/hooks/useCredits';
+import { useRouter } from 'next/navigation';
 
 interface VideoGeneratorProps {
   apiKey?: string;
@@ -20,16 +23,29 @@ interface TaskStatus {
 }
 
 export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
+  // Auth & Credits
+  const { user, loading: authLoading } = useAuth();
+  const { credits, hasCredits, isLoggedIn, refresh: refreshCredits } = useCredits();
+  const router = useRouter();
+
+  // Form State
   const [model, setModel] = useState<'sora2' | 'sora2-unwm'>('sora2');
   const [prompt, setPrompt] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // Task State
   const [loading, setLoading] = useState(false);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 计算所需积分
+  const requiredCredits = model === 'sora2' ? 1 : 2;
 
   // 文件转 base64
   const fileToBase64 = (file: File): Promise<string> => {
@@ -46,7 +62,6 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
-      // 创建预览
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -69,6 +84,22 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
     e.preventDefault();
     setError(null);
     setTaskStatus(null);
+
+    // 1. 检查登录状态
+    if (!user) {
+      setError('请先登录后再使用视频生成功能');
+      setTimeout(() => {
+        router.push('/login?redirect=/test-aicoding');
+      }, 2000);
+      return;
+    }
+
+    // 2. 检查积分是否充足
+    if (credits < requiredCredits) {
+      setError(`积分不足！生成视频需要 ${requiredCredits} 积分，当前剩余 ${credits} 积分`);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -76,9 +107,11 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
         model: string;
         prompt: string;
         images?: string[];
+        creditsToConsume: number;
       } = {
         model,
-        prompt
+        prompt,
+        creditsToConsume: requiredCredits
       };
 
       if (imageFile) {
@@ -106,6 +139,10 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
       if (!actualTaskId) {
         throw new Error('API 未返回任务ID');
       }
+
+      // 刷新积分显示
+      await refreshCredits();
+
       setTaskId(actualTaskId);
       startPolling(actualTaskId);
 
@@ -197,26 +234,39 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">
-      {/* 顶部横幅 */}
-      <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl font-bold mb-3 flex items-center gap-3">
-            <span className="text-5xl">🎬</span>
-            AI 视频生成工作室
-          </h1>
-          <p className="text-purple-100 text-lg">使用先进的 AI 技术，将创意变为现实</p>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 py-12">
       {/* 主体内容 - 左右分栏 */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
           {/* 左侧：输入区域 (40%) */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-8 sticky top-8">
               <form onSubmit={handleSubmit} className="space-y-6">
+
+                {/* 用户信息提示 */}
+                {!authLoading && (
+                  <div className={`p-4 rounded-xl border-2 ${
+                    isLoggedIn
+                      ? 'bg-green-50 border-green-200'
+                      : 'bg-yellow-50 border-yellow-200'
+                  }`}>
+                    {isLoggedIn ? (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-green-800">
+                          ✅ 已登录
+                        </span>
+                        <span className="text-sm font-bold text-green-800">
+                          💎 剩余积分: {credits}
+                        </span>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-yellow-800">
+                        ⚠️ 请先<a href="/login?redirect=/test-aicoding" className="underline font-bold">登录</a>后使用
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 {/* 模型选择 */}
                 <div>
@@ -225,38 +275,48 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                     视频模型
                   </label>
                   <div className="space-y-3">
-                    <label className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                    <label className={`flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer transition-all ${
                       model === 'sora2'
                         ? 'border-purple-500 bg-purple-50'
                         : 'border-gray-200 hover:border-purple-300'
                     }`}>
-                      <input
-                        type="radio"
-                        name="model"
-                        value="sora2"
-                        checked={model === 'sora2'}
-                        onChange={(e) => setModel(e.target.value as 'sora2')}
-                        disabled={loading}
-                        className="w-5 h-5 text-purple-600"
-                      />
-                      <span className="ml-3 font-medium text-gray-800">标准版</span>
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="model"
+                          value="sora2"
+                          checked={model === 'sora2'}
+                          onChange={(e) => setModel(e.target.value as 'sora2')}
+                          disabled={loading}
+                          className="w-5 h-5 text-purple-600"
+                        />
+                        <span className="ml-3 font-medium text-gray-800">标准版</span>
+                      </div>
+                      <span className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
+                        1 积分
+                      </span>
                     </label>
 
-                    <label className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                    <label className={`flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer transition-all ${
                       model === 'sora2-unwm'
                         ? 'border-purple-500 bg-purple-50'
                         : 'border-gray-200 hover:border-purple-300'
                     }`}>
-                      <input
-                        type="radio"
-                        name="model"
-                        value="sora2-unwm"
-                        checked={model === 'sora2-unwm'}
-                        onChange={(e) => setModel(e.target.value as 'sora2-unwm')}
-                        disabled={loading}
-                        className="w-5 h-5 text-purple-600"
-                      />
-                      <span className="ml-3 font-medium text-gray-800">专业版（无水印）</span>
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="model"
+                          value="sora2-unwm"
+                          checked={model === 'sora2-unwm'}
+                          onChange={(e) => setModel(e.target.value as 'sora2-unwm')}
+                          disabled={loading}
+                          className="w-5 h-5 text-purple-600"
+                        />
+                        <span className="ml-3 font-medium text-gray-800">专业版（无水印）</span>
+                      </div>
+                      <span className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
+                        2 积分
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -332,7 +392,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                 <div className="space-y-3 pt-4">
                   <button
                     type="submit"
-                    disabled={loading || !prompt}
+                    disabled={loading || !prompt || !isLoggedIn || credits < requiredCredits}
                     className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {loading ? (
@@ -346,7 +406,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                     ) : (
                       <span className="flex items-center justify-center gap-2">
                         <span className="text-2xl">🚀</span>
-                        开始生成视频
+                        开始生成视频 ({requiredCredits} 积分)
                       </span>
                     )}
                   </button>
@@ -391,7 +451,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
               )}
 
               {/* 处理中状态（有进度） */}
-              {taskStatus && taskStatus.status !== 'completed' && (
+              {taskStatus && taskStatus.status !== 'completed' && !error && (
                 <div className="text-center px-8 py-16 w-full max-w-md">
                   <div className="text-7xl mb-6">
                     {taskStatus.status === 'processing' ? '⚡' : '⏸️'}
@@ -424,12 +484,28 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                   <div className="text-7xl mb-6">❌</div>
                   <h3 className="text-2xl font-bold text-red-600 mb-3">生成失败</h3>
                   <p className="text-gray-600 bg-red-50 rounded-lg p-4">{error}</p>
-                  <button
-                    onClick={handleReset}
-                    className="mt-6 px-8 py-3 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition-colors"
-                  >
-                    重新尝试
-                  </button>
+                  {!isLoggedIn ? (
+                    <button
+                      onClick={() => router.push('/login?redirect=/test-aicoding')}
+                      className="mt-6 px-8 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors"
+                    >
+                      前往登录
+                    </button>
+                  ) : credits < requiredCredits ? (
+                    <button
+                      onClick={() => router.push('/pricing')}
+                      className="mt-6 px-8 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors"
+                    >
+                      购买积分
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleReset}
+                      className="mt-6 px-8 py-3 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition-colors"
+                    >
+                      重新尝试
+                    </button>
+                  )}
                 </div>
               )}
 
