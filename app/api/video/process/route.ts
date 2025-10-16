@@ -49,24 +49,68 @@ export async function POST(request: NextRequest) {
   const origin = request.headers.get('origin')
   const headers = getCorsHeaders(origin)
   try {
-    // 1. 检测请求来源并创建 Supabase 客户端
+    // 1. 用户认证 - 支持 Bearer Token 和 Cookie 两种方式
+    const authHeader = request.headers.get('authorization')
     const cookieHeader = request.headers.get('cookie')
+    let user = null
     let supabase
 
-    if (cookieHeader) {
-      // Chrome 扩展请求 - 手动解析 Cookie
-      console.log('🔌 扩展请求，手动解析 Cookie')
-      supabase = createClientWithCookie(cookieHeader)
-    } else {
-      // 网页请求 - 正常创建客户端
-      console.log('🌐 网页请求，使用标准 Cookie')
-      supabase = await createClient()
-    }
+    // 优先检查 Bearer Token (Chrome 插件)
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      console.log('🔑 使用 Bearer Token 认证 (Chrome 插件)')
+      const token = authHeader.split(' ')[1]
 
-    // 2. 验证用户身份
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+      try {
+        // 创建临时客户端验证 token
+        const { createClient: createSupabaseClient } = await import('@supabase/supabase-js')
+        const tempClient = createSupabaseClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        )
+
+        // 验证 token 并获取用户
+        const { data: userData, error: authError } = await tempClient.auth.getUser(token)
+
+        if (authError || !userData.user) {
+          console.error('❌ Bearer Token 验证失败:', authError?.message)
+          return NextResponse.json(
+            { error: '认证失败，请重新登录' },
+            { status: 401, headers }
+          )
+        }
+
+        user = userData.user
+        console.log('✅ Bearer Token 验证成功:', user.email)
+
+        // 创建 Service Role 客户端用于数据库操作
+        supabase = createSupabaseClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
+      } catch (error) {
+        console.error('❌ Bearer Token 处理异常:', error)
+        return NextResponse.json(
+          { error: '认证失败' },
+          { status: 401, headers }
+        )
+      }
+
+    } else if (cookieHeader) {
+      // Cookie 认证 (网页版或扩展的 Cookie 模式)
+      console.log('🍪 使用 Cookie 认证')
+      supabase = createClientWithCookie(cookieHeader)
+
+      const { data: { user: cookieUser } } = await supabase.auth.getUser()
+      user = cookieUser
+
+    } else {
+      // 回退到标准 Cookie 认证
+      console.log('🌐 使用标准 Cookie 认证')
+      supabase = await createClient()
+
+      const { data: { user: standardUser } } = await supabase.auth.getUser()
+      user = standardUser
+    }
 
     // 3. 获取请求参数
     const body = await request.json()
@@ -104,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     if (user) {
       // 已登录用户 → Database 轨道
-      result = await processVideo(shareLink, user.id, undefined)
+      result = await processVideo(shareLink, user.id, undefined, supabase)
     } else if (visitorId) {
       // 未登录用户 → Cookie 轨道
       result = await processVideo(shareLink, null, visitorId)

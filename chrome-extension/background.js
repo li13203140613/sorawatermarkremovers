@@ -302,6 +302,86 @@ async function fetchUserProfile() {
   }
 }
 
+// === 下载视频（去水印）===
+
+async function downloadVideo(videoUrl) {
+  log('📥 开始下载视频 (去水印)...')
+  log('🔗 视频 URL:', videoUrl)
+
+  try {
+    // 1. 检查是否登录
+    const accessToken = await getAccessToken()
+    if (!accessToken) {
+      throw new Error('请先登录')
+    }
+
+    // 2. 调用去水印 API
+    log('🔧 调用去水印 API...')
+    const apiUrl = getApiBaseUrl()
+    const response = await fetch(`${apiUrl}/video/process`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        shareLink: videoUrl
+      })
+    })
+
+    log('📡 API 响应状态:', response.status)
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      log('❌ API 错误:', errorData)
+
+      // 处理特殊错误
+      if (response.status === 401) {
+        await clearSession()
+        throw new Error('登录已过期，请重新登录')
+      }
+
+      if (response.status === 400 && errorData.error) {
+        // 积分不足或其他业务错误
+        throw new Error(errorData.error)
+      }
+
+      throw new Error(errorData.error || 'API 调用失败')
+    }
+
+    const data = await response.json()
+    log('✅ API 返回成功:', data)
+
+    if (!data.success || !data.videoUrl) {
+      throw new Error(data.error || '获取视频失败')
+    }
+
+    // 3. 下载视频
+    log('💾 开始下载视频...')
+    log('🔗 下载链接:', data.videoUrl)
+
+    const downloadId = await chrome.downloads.download({
+      url: data.videoUrl,
+      filename: `sora-video-${Date.now()}.mp4`,
+      saveAs: true
+    })
+
+    log('✅ 下载已启动, ID:', downloadId)
+
+    // 4. 返回成功结果
+    return {
+      success: true,
+      downloadId: downloadId,
+      videoUrl: data.videoUrl,
+      message: '视频下载已开始，积分已扣除'
+    }
+
+  } catch (error) {
+    logError('❌ 下载视频失败:', error)
+    throw error
+  }
+}
+
 // === 消息监听 ===
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -338,10 +418,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return { success: true }
 
       case 'downloadVideo':
-        // 这个功能稍后实现
-        return {
-          success: false,
-          error: '功能开发中...'
+        try {
+          const result = await downloadVideo(request.url)
+          return result
+        } catch (error) {
+          return { success: false, error: error.message }
         }
 
       case 'downloadFile':

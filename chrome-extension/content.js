@@ -26,12 +26,8 @@ function isVideoPage() {
   const url = window.location.href
   const pathname = window.location.pathname
 
-  // Sora 视频页面通常包含这些路径
-  return url.includes('sora.com') &&
-         (pathname.includes('/video/') ||
-          pathname.includes('/watch/') ||
-          pathname.includes('/v/') ||
-          document.querySelector('video') !== null)
+  // Sora 视频页面：https://sora.chatgpt.com/p/s_xxxxx
+  return url.includes('sora.chatgpt.com') && pathname.startsWith('/p/')
 }
 
 // === 查找注入位置 ===

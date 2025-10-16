@@ -1,17 +1,20 @@
 import { createClient } from '@/lib/supabase/server'
 import { removeWatermark, validateSoraLink } from './api'
 import { VideoProcessResult } from './types'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 /**
  * 处理视频去水印（双轨积分系统）
  * @param shareLink Sora2 分享链接
  * @param userId 用户 ID（已登录用户）
  * @param visitorId 访客 ID（未登录用户）
+ * @param supabaseClient Supabase 客户端（可选，用于 Bearer Token 认证）
  */
 export async function processVideo(
   shareLink: string,
   userId: string | null,
-  visitorId?: string
+  visitorId?: string,
+  supabaseClient?: SupabaseClient
 ): Promise<VideoProcessResult> {
   // 1. 验证链接格式
   if (!validateSoraLink(shareLink)) {
@@ -24,7 +27,7 @@ export async function processVideo(
   // 2. 根据用户类型选择积分轨道
   if (userId) {
     // ✅ 已登录 → Database 轨道
-    return await processWithDatabaseCredits(shareLink, userId)
+    return await processWithDatabaseCredits(shareLink, userId, supabaseClient)
   } else if (visitorId) {
     // ✅ 未登录 → Cookie 轨道
     return await processWithCookieCredits(shareLink, visitorId)
@@ -41,9 +44,10 @@ export async function processVideo(
  */
 async function processWithDatabaseCredits(
   shareLink: string,
-  userId: string
+  userId: string,
+  supabaseClient?: SupabaseClient
 ): Promise<VideoProcessResult> {
-  const supabase = await createClient()
+  const supabase = supabaseClient || await createClient()
 
   try {
     // 1. 检查数据库积分

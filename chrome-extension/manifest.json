@@ -24,8 +24,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://sora.com/*",
-        "https://*.sora.com/*"
+        "https://sora.chatgpt.com/*"
       ],
       "js": ["content.js"],
       "css": ["content.css"],
@@ -40,8 +39,8 @@
   ],
   "host_permissions": [
     "https://*.supabase.co/*",
-    "https://sora.com/*",
-    "https://*.sora.com/*"
+    "https://sora.chatgpt.com/*",
+    "https://www.sora-prompt.io/*"
   ],
   "web_accessible_resources": [
     {
