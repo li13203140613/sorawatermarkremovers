@@ -216,7 +216,7 @@ export async function GET(request: NextRequest) {
 
     let { data: profile, error: profileError } = await supabase
       .from('user_profiles')
-      .select('credits, avatar_url, full_name')
+      .select('credits')
       .eq('id', user.id)
       .single()
 
@@ -238,11 +238,9 @@ export async function GET(request: NextRequest) {
           .insert({
             id: user.id,
             email: user.email,
-            credits: 0, // 默认 0 积分
-            full_name: user.user_metadata?.full_name || user.email?.split('@')[0],
-            avatar_url: user.user_metadata?.avatar_url,
+            credits: 0 // 默认 0 积分
           })
-          .select('credits, avatar_url, full_name')
+          .select('credits')
           .single()
 
         if (insertError) {
@@ -260,7 +258,6 @@ export async function GET(request: NextRequest) {
         profile = newProfile
         console.log('✅ 用户档案创建成功')
         console.log('   积分:', profile?.credits)
-        console.log('   用户名:', profile?.full_name)
       } else {
         // 其他数据库错误，详细分类
         const errorDetail = classifyError(profileError, 'database')
@@ -275,16 +272,14 @@ export async function GET(request: NextRequest) {
     } else {
       console.log('✅ 用户档案查询成功')
       console.log('   积分:', profile?.credits)
-      console.log('   用户名:', profile?.full_name)
-      console.log('   头像:', profile?.avatar_url ? '已设置' : '未设置')
     }
 
     // ===== 阶段 4: 返回结果 =====
     const responseData = {
       id: user.id,
       email: user.email,
-      name: profile?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0],
-      avatar_url: profile?.avatar_url || user.user_metadata?.avatar_url,
+      name: user.user_metadata?.full_name || user.email?.split('@')[0],
+      avatar_url: user.user_metadata?.avatar_url || null,
       credits: profile?.credits !== undefined ? profile.credits : 0, // 数据库为准，默认 0
     }
 
