@@ -13,7 +13,8 @@ import {
 
 // 定义允许的来源
 const ALLOWED_ORIGINS = [
-  'https://www.sora-prompt.io'
+  'https://www.sora-prompt.io',
+  'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold'  // Chrome 插件
 ]
 
 // 检查来源是否允许
