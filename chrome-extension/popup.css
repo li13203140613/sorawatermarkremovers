@@ -9,6 +9,11 @@
   box-sizing: border-box;
 }
 
+html {
+  width: 420px;
+  height: 520px;
+}
+
 body {
   width: 420px;
   min-height: 520px;
