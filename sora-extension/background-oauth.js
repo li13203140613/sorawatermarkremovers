@@ -246,11 +246,12 @@ async function getValidAccessToken() {
 
 /**
  * 获取用户信息（必须从数据库查询积分）
+ * 不再使用降级方案，失败时返回null并附带详细错误信息
  */
 async function fetchUserInfo(token) {
   try {
-    console.log('📡 获取用户信息...');
-    console.log('🔑 使用 Token:', token.substring(0, 50) + '...');
+    console.log('\n📡 ============ 获取用户信息 ============');
+    console.log('🔑 Token 前缀:', token.substring(0, 30) + '...');
     console.log('📍 API URL:', CONFIG.API_USER_PROFILE);
 
     // 调用后端 API 获取完整信息（包括数据库积分）
@@ -266,56 +267,71 @@ async function fetchUserInfo(token) {
     console.log('📊 API 响应状态:', response.status);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('❌ 获取用户信息失败:', response.status);
-      console.error('❌ 错误详情:', errorText);
-      // API 失败时积分为 null
-      return await fetchBasicUserInfo(token);
+      const responseText = await response.text();
+      let errorDetail = null;
+
+      // 尝试解析错误详情
+      try {
+        const errorData = JSON.parse(responseText);
+        errorDetail = errorData.error || errorData;
+      } catch (e) {
+        errorDetail = responseText;
+      }
+
+      console.error('\n❌ ============ API 调用失败 ============');
+      console.error('   HTTP 状态:', response.status);
+      console.error('   状态文本:', response.statusText);
+
+      if (errorDetail && errorDetail.code) {
+        console.error('   错误代码:', errorDetail.code);
+        console.error('   错误消息:', errorDetail.message);
+        console.error('   技术细节:', errorDetail.technicalDetail);
+        console.error('   时间戳:', errorDetail.timestamp);
+      } else {
+        console.error('   错误内容:', errorDetail);
+      }
+      console.error('==========================================\n');
+
+      // 不再使用降级方案，直接返回 null
+      return null;
     }
 
     const data = await response.json();
-    console.log('✅ 用户信息获取成功，数据库积分:', data.credits);
+
+    // 检查是否是错误响应（即使 HTTP 200）
+    if (data.error) {
+      console.error('\n❌ ============ API 返回错误 ============');
+      console.error('   错误代码:', data.error.code);
+      console.error('   错误消息:', data.error.message);
+      console.error('   技术细节:', data.error.technicalDetail);
+      console.error('==========================================\n');
+      return null;
+    }
+
+    console.log('\n✅ ============ 用户信息获取成功 ============');
+    console.log('   用户 ID:', data.id);
+    console.log('   邮箱:', data.email);
+    console.log('   用户名:', data.name);
+    console.log('   积分:', data.credits);
+    console.log('   头像:', data.avatar_url ? '已设置' : '未设置');
+    console.log('=============================================\n');
 
     return {
       id: data.id,
       email: data.email,
       name: data.name || data.email?.split('@')[0] || '用户',
       avatarUrl: data.avatar_url,
-      credits: data.credits !== undefined ? data.credits : null, // 必须以数据库为准
+      credits: data.credits !== undefined ? data.credits : 0, // 数据库为准，默认 0
+      errorDetail: null, // 没有错误
     };
   } catch (error) {
-    console.error('❌ 获取用户信息异常:', error);
-    return await fetchBasicUserInfo(token);
-  }
-}
+    console.error('\n❌ ============ 获取用户信息异常 ============');
+    console.error('   异常类型:', error.name);
+    console.error('   异常消息:', error.message);
+    console.error('   异常堆栈:', error.stack);
+    console.error('=============================================\n');
 
-/**
- * 从 Supabase 获取基本用户信息（降级方案，积分为 null）
- */
-async function fetchBasicUserInfo(token) {
-  try {
-    const response = await fetch(`${CONFIG.SUPABASE_URL}/auth/v1/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        apikey: CONFIG.SUPABASE_ANON_KEY,
-      },
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const user = await response.json();
-
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.user_metadata?.full_name || user.email?.split('@')[0] || '用户',
-      avatarUrl: user.user_metadata?.avatar_url,
-      credits: null, // 降级方案下积分为 null，表示无法获取
-    };
-  } catch (error) {
-    console.error('❌ 获取基本用户信息失败:', error);
+    // 不再使用降级方案，直接返回 null
     return null;
   }
 }

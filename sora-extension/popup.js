@@ -53,17 +53,28 @@ async function loadUserInfo() {
  * 显示已登录用户信息
  */
 function displayLoggedInUser(data) {
+  console.log('📊 显示用户信息:', data);
+
   document.getElementById('user-name').textContent = data.name || '用户';
   document.getElementById('user-email').textContent = data.email || '-';
 
-  // 显示数据库积分，如果查询失败则显示 "null"
+  // 显示积分信息
   const creditsElement = document.getElementById('user-credits');
-  if (data.credits === null || data.credits === undefined) {
-    creditsElement.textContent = 'null';
-    creditsElement.style.color = '#999'; // 灰色表示未查询到
-  } else {
-    creditsElement.textContent = data.credits;
+
+  // 注意：credits 可能是 0（正常值）、null（查询失败）或 undefined（未返回）
+  if (data.credits !== undefined && data.credits !== null) {
+    // 成功获取积分（包括 0）
+    creditsElement.textContent = data.credits.toString();
     creditsElement.style.color = ''; // 恢复默认颜色
+    creditsElement.title = '当前剩余积分';
+    console.log('✅ 积分显示:', data.credits);
+  } else {
+    // 积分查询失败
+    creditsElement.textContent = '查询失败';
+    creditsElement.style.color = '#f44336'; // 红色表示错误
+    creditsElement.style.fontSize = '14px';
+    creditsElement.title = 'API 调用失败，请重试或查看控制台日志';
+    console.error('❌ 积分为 null/undefined，查询失败');
   }
 
   // 设置用户头像
