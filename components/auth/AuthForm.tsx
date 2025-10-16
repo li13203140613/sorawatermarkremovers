@@ -1,31 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAuth } from '@/lib/auth'
 import { useTranslations } from 'next-intl'
-import { useSearchParams } from 'next/navigation'
 
 export function AuthForm() {
   const t = useTranslations('auth')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { signInWithGoogle } = useAuth()
-  const searchParams = useSearchParams()
-
-  // 检测是否来自插件
-  const isFromExtension = searchParams.get('source') === 'extension'
-  const extensionId = searchParams.get('extensionId')
 
   const handleGoogleSignIn = async () => {
     setError('')
     setLoading(true)
     try {
-      // 如果来自插件，设置重定向 URL
-      const redirectTo = isFromExtension && extensionId
-        ? `/extension-callback?extensionId=${extensionId}`
-        : undefined
-
-      const { error } = await signInWithGoogle(redirectTo)
+      const { error } = await signInWithGoogle()
       if (error) {
         setError(error.message)
         setLoading(false)

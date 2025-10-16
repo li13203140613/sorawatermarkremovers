@@ -6,6 +6,16 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-16 | Tests | Modified: test-supabase-query.js | test-supabase-query.js | AI Auto |
+| 2025-10-16 | Other | Modified: icon128.svg | chrome-extension/icons/icon128.svg | AI Auto |
+| 2025-10-16 | Other | Modified: icon48.svg | chrome-extension/icons/icon48.svg | AI Auto |
+| 2025-10-16 | Other | Modified: icon16.svg | chrome-extension/icons/icon16.svg | AI Auto |
+| 2025-10-16 | Other | Modified: generate.py | chrome-extension/icons/generate.py | AI Auto |
+| 2025-10-16 | Other | Modified: create-icons.html | chrome-extension/icons/create-icons.html | AI Auto |
+| 2025-10-16 | Docs | Modified: ICON_GUIDE.md | chrome-extension/icons/ICON_GUIDE.md | AI Auto |
+| 2025-10-16 | Other | Modified: manifest.json | chrome-extension/manifest.json | AI Auto |
+| 2025-10-16 | Styles | Modified: content.css | chrome-extension/content.css | AI Auto |
+| 2025-10-16 | Docs | Modified: TOKEN_EXPLANATION.md | chrome-extension/TOKEN_EXPLANATION.md | AI Auto |
 | 2025-10-16 | API | Modified: error-classifier.ts | lib/api/error-classifier.ts | AI Auto |
 | 2025-10-16 | Docs | Modified: VERCEL_CHECK.md | VERCEL_CHECK.md | AI Auto |
 | 2025-10-16 | API | Modified: test-online-api-with-token.js | test-online-api-with-token.js | AI Auto |

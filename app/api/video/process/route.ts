@@ -13,22 +13,13 @@ import {
 
 // 定义允许的来源
 const ALLOWED_ORIGINS = [
-  'https://www.sora-prompt.io',  // 网站本身
-  'chrome-extension://*'          // 所有 Chrome 扩展（生产环境可限制具体 ID）
+  'https://www.sora-prompt.io'
 ]
 
 // 检查来源是否允许
 function isOriginAllowed(origin: string | null): boolean {
   if (!origin) return false
-
-  return ALLOWED_ORIGINS.some(allowed => {
-    if (allowed.endsWith('*')) {
-      // 通配符匹配
-      const prefix = allowed.slice(0, -1)
-      return origin.startsWith(prefix)
-    }
-    return origin === allowed
-  })
+  return ALLOWED_ORIGINS.includes(origin)
 }
 
 // 生成 CORS 响应头
