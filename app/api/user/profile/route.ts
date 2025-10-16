@@ -57,26 +57,24 @@ export async function GET(request: NextRequest) {
       const token = authHeader.split(' ')[1]
       console.log('🔑 使用 Bearer token 认证')
 
-      // 创建一个新的 Supabase 客户端实例（使用 Service Role Key 以绕过 RLS）
-      const { createClient } = await import('@supabase/supabase-js')
-      const supabaseClient = createClient(
+      // 创建一个临时的 Supabase 客户端用于验证 token
+      const { createClient: createSupabaseClient } = await import('@supabase/supabase-js')
+      const tempClient = createSupabaseClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,  // 使用 Service Role Key
-        {
-          global: {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        }
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       )
 
-      // 使用 token 获取用户信息（不需要传递 token，会自动从 headers 中获取）
-      const { data: userData, error } = await supabaseClient.auth.getUser()
+      // 使用用户 token 验证身份
+      const { data: userData, error } = await tempClient.auth.getUser(token)
       if (!error && userData.user) {
         user = userData.user
-        supabase = supabaseClient
         console.log('✅ Bearer token 验证成功，用户:', userData.user.email)
+
+        // 验证成功后，创建 Service Role 客户端用于查询数据库（绕过 RLS）
+        supabase = createSupabaseClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
       } else {
         console.log('❌ Bearer token 验证失败:', error?.message)
       }
