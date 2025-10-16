@@ -365,31 +365,58 @@ async function getUserInfo() {
     const token = await getValidAccessToken();
 
     if (!token) {
-      // 未登录 - 不显示积分
+      // 未登录 - 显示登录界面
+      console.log('ℹ️ 用户未登录');
       return {
         success: true,
         isLoggedIn: false,
-        credits: null,
+        message: '请登录以使用完整功能',
       };
     }
 
-    // 2. 每次都重新从数据库获取用户信息（不使用缓存，确保积分是最新的）
+    // 2. 已有 Token，尝试获取用户信息
     console.log('🔄 从数据库获取最新用户信息和积分...');
     const userInfo = await fetchUserInfo(token);
 
     if (!userInfo) {
+      // Token 有效但 API 调用失败
+      // 这种情况下，我们仍然认为用户"已登录"，但积分查询失败
+      console.error('⚠️ Token 有效但无法获取用户信息，可能是 API 错误');
+
+      // 尝试从缓存读取基本用户信息
+      const storage = await chrome.storage.local.get([CONFIG.STORAGE_KEYS.USER_INFO]);
+      const cachedUser = storage[CONFIG.STORAGE_KEYS.USER_INFO];
+
+      if (cachedUser) {
+        console.log('📦 使用缓存的用户信息（积分可能不准确）');
+        return {
+          success: true,
+          isLoggedIn: true,
+          ...cachedUser,
+          credits: null, // 积分查询失败，设为 null
+          errorMessage: 'API 调用失败，积分数据可能不准确',
+        };
+      }
+
+      // 连缓存都没有，只能返回最基本的信息
       return {
-        success: false,
-        error: '获取用户信息失败',
+        success: true,
+        isLoggedIn: true,
+        email: '未知',
+        name: '用户',
+        credits: null,
+        errorMessage: 'API 调用失败，请重试',
       };
     }
 
-    // 3. 更新缓存
+    // 3. 成功获取用户信息，更新缓存
     await chrome.storage.local.set({
       [CONFIG.STORAGE_KEYS.USER_INFO]: userInfo,
     });
 
-    // 4. 返回用户信息（积分可能为 null）
+    console.log('✅ 用户信息已更新');
+
+    // 4. 返回用户信息
     return {
       success: true,
       isLoggedIn: true,
@@ -397,6 +424,26 @@ async function getUserInfo() {
     };
   } catch (error) {
     console.error('❌ getUserInfo 异常:', error);
+
+    // 异常情况下，尝试返回缓存
+    try {
+      const storage = await chrome.storage.local.get([CONFIG.STORAGE_KEYS.USER_INFO]);
+      const cachedUser = storage[CONFIG.STORAGE_KEYS.USER_INFO];
+
+      if (cachedUser) {
+        return {
+          success: true,
+          isLoggedIn: true,
+          ...cachedUser,
+          credits: null,
+          errorMessage: '网络异常，使用缓存数据',
+        };
+      }
+    } catch (cacheError) {
+      console.error('❌ 读取缓存失败:', cacheError);
+    }
+
+    // 实在没办法了，返回错误
     return {
       success: false,
       error: error.message || '获取用户信息失败',
