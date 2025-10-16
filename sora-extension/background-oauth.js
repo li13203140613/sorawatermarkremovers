@@ -56,26 +56,31 @@ async function generatePKCE() {
 }
 
 /**
- * 使用 OAuth 登录（在扩展弹窗中完成授权）
+ * 使用 OAuth 登录（PKCE Flow）
  */
 async function loginWithOAuth(provider = 'google') {
   try {
-    console.log(`🔐 开始 ${provider} OAuth 登录流程...`);
+    console.log(`🔐 开始 ${provider} OAuth 登录流程 (PKCE Flow)...`);
 
-    // 1. 获取扩展的 redirect URI
+    // 1. 生成 PKCE 参数
+    const { codeVerifier, codeChallenge } = await generatePKCE();
+    console.log('🔑 PKCE Code Verifier 已生成');
+
+    // 2. 获取扩展的 redirect URI
     const redirectUri = chrome.identity.getRedirectURL();
     console.log('📍 Redirect URI:', redirectUri);
 
-    // 2. 构建 Supabase OAuth URL
+    // 3. 构建 Supabase OAuth URL（PKCE Flow）
     const authUrl =
       `${CONFIG.SUPABASE_URL}/auth/v1/authorize?` +
       `provider=${provider}&` +
-      `redirect_to=${encodeURIComponent(redirectUri)}`;
+      `redirect_to=${encodeURIComponent(redirectUri)}&` +
+      `code_challenge=${codeChallenge}&` +
+      `code_challenge_method=S256`;
 
     console.log('🌐 打开授权窗口...');
-    console.log('🔗 Auth URL:', authUrl);
 
-    // 3. 使用 Promise 包装 launchWebAuthFlow
+    // 4. 使用 Promise 包装 launchWebAuthFlow
     return new Promise((resolve, reject) => {
       chrome.identity.launchWebAuthFlow(
         {
@@ -101,7 +106,7 @@ async function loginWithOAuth(provider = 'google') {
           console.log('📋 Redirect URL:', redirectUrl);
 
           try {
-            // 4. 从 redirect URL 中提取 tokens
+            // 5. 从 redirect URL 中提取 authorization code
             const url = new URL(redirectUrl);
             const fragment = url.hash.substring(1); // 移除 # 号
             const params = new URLSearchParams(fragment);
