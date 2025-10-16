@@ -7,25 +7,19 @@ import { classifyError, logErrorDetail, API_ERRORS } from '@/lib/api/error-class
  */
 const ALLOWED_ORIGINS = [
   'https://www.sora-prompt.io',
-  'chrome-extension://*'
+  'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold'  // Chrome 插件
 ]
 
 function isOriginAllowed(origin: string | null): boolean {
   if (!origin) return false
-  return ALLOWED_ORIGINS.some(allowed => {
-    if (allowed.endsWith('*')) {
-      const prefix = allowed.slice(0, -1)
-      return origin.startsWith(prefix)
-    }
-    return origin === allowed
-  })
+  return ALLOWED_ORIGINS.includes(origin)
 }
 
 function getCorsHeaders(origin: string | null) {
   return {
     'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : 'https://www.sora-prompt.io',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cookie, X-Extension-Request',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cookie',
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Max-Age': '86400',
   }
@@ -97,13 +91,11 @@ export async function GET(request: NextRequest) {
     // ===== 阶段 2: 用户认证 =====
     const authHeader = request.headers.get('authorization')
     const cookieHeader = request.headers.get('cookie')
-    const isExtensionRequest = request.headers.get('x-extension-request') === 'true'
 
     let supabase
     let user = null
 
     console.log('\n🔐 开始用户认证...')
-    console.log('   请求来源:', isExtensionRequest ? '浏览器扩展' : '网页')
     console.log('   Auth Header:', authHeader ? '存在' : '不存在')
     console.log('   Cookie Header:', cookieHeader ? '存在' : '不存在')
 
