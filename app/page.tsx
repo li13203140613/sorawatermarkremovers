@@ -39,7 +39,7 @@ export default function Home() {
               {t('disclaimer.limit')}
             </p>
             <div className="flex justify-center gap-8 pt-6">
-              <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+              <a href="/privacy" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
                 {t('footer.privacy')}
               </a>
               <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
