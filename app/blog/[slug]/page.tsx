@@ -35,7 +35,7 @@ export default function BlogPostPage() {
   const slug = params.slug as string
   const urlLang = searchParams.get('lang') as Language | null
 
-  const [lang, setLang] = useState<Language>('zh')
+  const [lang, setLang] = useState<Language>('en')
   const [post, setPost] = useState<BlogPost | null>(null)
   const [mdxSource, setMdxSource] = useState<MDXRemoteSerializeResult | null>(null)
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([])
@@ -47,7 +47,7 @@ export default function BlogPostPage() {
   // 初始化语言
   useEffect(() => {
     const initialLang = urlLang ||
-      (document.cookie.includes('blog_lang=en') ? 'en' : 'zh')
+      (document.cookie.includes('blog_lang=zh') ? 'zh' : 'en')
     setLang(initialLang)
   }, [urlLang])
 

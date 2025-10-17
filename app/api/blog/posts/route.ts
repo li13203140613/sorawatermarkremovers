@@ -4,7 +4,7 @@ import { Language } from '@/lib/blog/types'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const lang = (searchParams.get('lang') || 'zh') as Language
+  const lang = (searchParams.get('lang') || 'en') as Language
 
   try {
     const posts = getAllPosts(lang)

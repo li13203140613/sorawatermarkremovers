@@ -60,6 +60,20 @@ export async function GET(
 
     const data: TaskStatusResponse = await response.json();
 
+    // 添加详细日志
+    console.log(`[AI Coding Status] 任务 ${taskId} 状态查询结果:`);
+    console.log(`[AI Coding Status] - 状态: ${data.status}`);
+    console.log(`[AI Coding Status] - 消息: ${data.message || '无'}`);
+    console.log(`[AI Coding Status] - 进度: ${data.progress?.progress_pct || 0}%`);
+
+    if (data.status === 'failed') {
+      console.error(`[AI Coding Status] ❌ 任务失败！原因: ${data.message}`);
+    }
+
+    if (data.status === 'completed') {
+      console.log(`[AI Coding Status] ✅ 任务完成！视频: ${data.result?.output_url || '无'}`);
+    }
+
     if (!response.ok) {
       console.error('AI Coding API Error:', data);
       return NextResponse.json(

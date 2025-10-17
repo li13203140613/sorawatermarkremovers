@@ -6,6 +6,7 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-17 | Other | Modified: check-task-status.js | check-task-status.js | AI Auto |
 | 2025-10-16 | Components | Modified: VideoGenerator.tsx | components/aicoding/VideoGenerator.tsx | AI Auto |
 | 2025-10-16 | Docs | Modified: FINAL-DESIGN.md | chrome-extension/FINAL-DESIGN.md | AI Auto |
 | 2025-10-16 | Docs | Modified: UI-DESIGN.md | chrome-extension/UI-DESIGN.md | AI Auto |

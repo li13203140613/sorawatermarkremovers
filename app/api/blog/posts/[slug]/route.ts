@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { searchParams } = new URL(request.url)
-  const lang = (searchParams.get('lang') || 'zh') as Language
+  const lang = (searchParams.get('lang') || 'en') as Language
   const { slug } = await params
 
   try {

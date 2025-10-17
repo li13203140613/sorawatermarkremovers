@@ -36,7 +36,7 @@ export default function BlogPage() {
   const searchParams = useSearchParams()
   const urlLang = searchParams.get('lang') as Language | null
 
-  const [lang, setLang] = useState<Language>('zh')
+  const [lang, setLang] = useState<Language>('en')
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -49,7 +49,7 @@ export default function BlogPage() {
   // 初始化语言
   useEffect(() => {
     const initialLang = urlLang ||
-      (document.cookie.includes('blog_lang=en') ? 'en' : 'zh')
+      (document.cookie.includes('blog_lang=zh') ? 'zh' : 'en')
     setLang(initialLang)
   }, [urlLang])
 
