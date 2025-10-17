@@ -122,7 +122,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
     if (!user) {
       setError('请先登录后再使用视频生成功能');
       setTimeout(() => {
-        router.push('/login?redirect=/test-aicoding');
+        router.push('/login?redirect=/video-generation');
       }, 2000);
       return;
     }
@@ -331,7 +331,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                       </div>
                     ) : (
                       <p className="text-sm text-yellow-800">
-                        ⚠️ 请先<a href="/login?redirect=/test-aicoding" className="underline font-bold">登录</a>后使用
+                        ⚠️ 请先<a href="/login?redirect=/video-generation" className="underline font-bold">登录</a>后使用
                       </p>
                     )}
                   </div>
@@ -543,7 +543,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                   <p className="text-gray-600 bg-red-50 rounded-lg p-4">{error}</p>
                   {!isLoggedIn ? (
                     <button
-                      onClick={() => router.push('/login?redirect=/test-aicoding')}
+                      onClick={() => router.push('/login?redirect=/video-generation')}
                       className="mt-6 px-8 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors"
                     >
                       前往登录
