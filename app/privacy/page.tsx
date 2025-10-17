@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Sora Watermark Remover',
@@ -28,7 +29,7 @@ export default function PrivacyPage() {
           {/* Introduction */}
           <section>
             <p className="text-gray-700 leading-relaxed">
-              This Privacy Policy describes how Sora Video Watermark Remover ("we", "our", or "the Extension")
+              This Privacy Policy describes how Sora Video Watermark Remover (&quot;we&quot;, &quot;our&quot;, or &quot;the Extension&quot;)
               collects, uses, and protects your personal information when you use our Chrome extension.
             </p>
           </section>
@@ -138,7 +139,7 @@ export default function PrivacyPage() {
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Google:</strong> For OAuth authentication services</li>
                 <li><strong>Supabase:</strong> Our database and authentication provider</li>
-                <li><strong>Stripe:</strong> For secure payment processing (we don't store card details)</li>
+                <li><strong>Stripe:</strong> For secure payment processing (we don&apos;t store card details)</li>
                 <li><strong>API Service:</strong> For video watermark removal processing</li>
               </ul>
             </div>
@@ -213,7 +214,7 @@ export default function PrivacyPage() {
           {/* Children's Privacy */}
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              8. Children's Privacy
+              8. Children&apos;s Privacy
             </h2>
             <p className="text-gray-700">
               Our service is not intended for users under 13 years of age. We do not knowingly collect
@@ -245,7 +246,7 @@ export default function PrivacyPage() {
               changes by:
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4 mt-3">
-              <li>Updating the "Last Updated" date at the top of this policy</li>
+              <li>Updating the &quot;Last Updated&quot; date at the top of this policy</li>
               <li>Sending an email notification for material changes</li>
               <li>Displaying a notice in the extension</li>
             </ul>
@@ -304,12 +305,12 @@ export default function PrivacyPage() {
 
         {/* Back to Home */}
         <div className="text-center mt-8">
-          <a
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     </div>
