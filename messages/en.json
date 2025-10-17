@@ -91,7 +91,23 @@
       "starter": "Starter Package",
       "standard": "Standard Package",
       "premium": "Premium Package",
-      "popular": "Popular"
+      "popular": "Most Popular"
+    },
+    "usage": {
+      "title": "What Can Credits Do?",
+      "credits": "Credits",
+      "watermark": {
+        "title": "Remove Watermark",
+        "desc": "Remove Sora video watermarks"
+      },
+      "generate": {
+        "title": "Generate Sora Video",
+        "desc": "AI-powered video generation"
+      },
+      "premium": {
+        "title": "Watermark-Free Generation",
+        "desc": "Generate videos without watermark"
+      }
     },
     "purchase": "Purchase",
     "processing": "Processing payment...",

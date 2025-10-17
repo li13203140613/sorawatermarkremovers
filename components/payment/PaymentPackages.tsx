@@ -129,7 +129,7 @@ export function PaymentPackages() {
                 {currencySymbol}{locale === 'zh' ? pkg.amountCNY : pkg.amountUSD}
               </div>
               <div className="text-2xl font-semibold text-blue-600 mb-1">
-                {pkg.credits} {tCommon('credits')}
+                {locale === 'zh' ? pkg.creditsCNY : pkg.credits} {tCommon('credits')}
               </div>
               <div className="text-sm text-gray-500 mb-4">
                 {t(`packages.${pkg.label}`)}

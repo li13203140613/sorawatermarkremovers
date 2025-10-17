@@ -91,7 +91,23 @@
       "starter": "入门套餐",
       "standard": "标准套餐",
       "premium": "超值套餐",
-      "popular": "热门"
+      "popular": "最受欢迎"
+    },
+    "usage": {
+      "title": "积分可以做什么？",
+      "credits": "积分",
+      "watermark": {
+        "title": "去除水印",
+        "desc": "去除 Sora 视频水印"
+      },
+      "generate": {
+        "title": "生成 Sora 视频",
+        "desc": "AI 驱动的视频生成"
+      },
+      "premium": {
+        "title": "无水印生成",
+        "desc": "生成无水印视频"
+      }
     },
     "purchase": "购买",
     "processing": "处理支付中...",

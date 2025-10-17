@@ -6,6 +6,20 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-17 | Payment | Updated: Payment packages & pricing | lib/payment/types.ts, lib/payment/service.ts, components/payment/* | 更新积分价格:美元$10=30/$50=400/$100=1000,人民币¥10=10/¥50=70/¥100=200;添加积分用途说明组件 |
+| 2025-10-17 | Components | Created: CreditUsage.tsx | components/payment/CreditUsage.tsx | 积分用途说明:去水印1积分,生成视频1积分,无水印生成2积分 |
+| 2025-10-17 | I18n | Updated: Translation files | messages/en.json, messages/zh.json | 添加积分用途说明的中英文翻译 |
+| 2025-10-17 | Components | Modified: CreditUsage.tsx | components/payment/CreditUsage.tsx | AI Auto |
+| 2025-10-17 | Library | Modified: service.ts | lib/payment/service.ts | AI Auto |
+| 2025-10-17 | Docs | Modified: CRAWL_SORA_PROMPTS_GUIDE.md | CRAWL_SORA_PROMPTS_GUIDE.md | AI Auto |
+| 2025-10-17 | Other | Modified: crawl-sora-prompts.js | scripts/crawl-sora-prompts.js | AI Auto |
+| 2025-10-17 | Components | Modified: VideoModal.tsx | components/prompt/VideoModal.tsx | AI Auto |
+| 2025-10-17 | Components | Modified: CategoryFilter.tsx | components/prompt/CategoryFilter.tsx | AI Auto |
+| 2025-10-17 | Components | Modified: PromptCard.tsx | components/prompt/PromptCard.tsx | AI Auto |
+| 2025-10-17 | Docs | Modified: SORA2_PROMPT_WIREFRAME_SIMPLE.md | SORA2_PROMPT_WIREFRAME_SIMPLE.md | AI Auto |
+| 2025-10-17 | Docs | Modified: CLOUDFLARE_R2_INTEGRATION.md | CLOUDFLARE_R2_INTEGRATION.md | AI Auto |
+| 2025-10-17 | Tests | Modified: TEST_PHASE1.sql | supabase/migrations/TEST_PHASE1.sql | AI Auto |
+| 2025-10-17 | Other | Modified: 20250116000000_add_subscriptions.sql | supabase/migrations/20250116000000_add_subscriptions.sql | AI Auto |
 | 2025-10-17 | Other | Modified: check-task-status.js | check-task-status.js | AI Auto |
 | 2025-10-16 | Components | Modified: VideoGenerator.tsx | components/aicoding/VideoGenerator.tsx | AI Auto |
 | 2025-10-16 | Docs | Modified: FINAL-DESIGN.md | chrome-extension/FINAL-DESIGN.md | AI Auto |

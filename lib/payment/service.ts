@@ -2,8 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createCheckoutSession } from './stripe'
 import {
-  CREDITS_PER_DOLLAR,
-  CREDITS_PER_YUAN,
+  PAYMENT_PACKAGES,
   MIN_AMOUNT_USD,
   MIN_AMOUNT_CNY
 } from './types'
@@ -17,12 +16,18 @@ export function validateAmount(amount: number, currency: 'usd' | 'cny' = 'usd'):
 }
 
 /**
- * 计算积分数量
+ * 计算积分数量（从套餐配置中查找，不再使用公式计算）
  */
 export function calculateCredits(amount: number, currency: 'usd' | 'cny' = 'usd'): number {
-  return currency === 'cny'
-    ? amount * CREDITS_PER_YUAN
-    : amount * CREDITS_PER_DOLLAR
+  const pkg = PAYMENT_PACKAGES.find(p =>
+    currency === 'cny' ? p.amountCNY === amount : p.amountUSD === amount
+  )
+
+  if (!pkg) {
+    throw new Error(`未找到匹配的套餐: ${amount} ${currency.toUpperCase()}`)
+  }
+
+  return currency === 'cny' ? pkg.creditsCNY : pkg.credits
 }
 
 /**
