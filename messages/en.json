@@ -16,6 +16,9 @@
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "removeWatermark": "Remove Watermark",
+    "videoGeneration": "Video Generation",
+    "blog": "Blog",
     "pricing": "Pricing",
     "login": "Login",
     "logout": "Logout"

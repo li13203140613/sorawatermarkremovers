@@ -1,4 +1,4 @@
-import VideoGenerator from '@/components/aicoding/VideoGenerator';
+import VideoGenerator from '@/components/video-generation/VideoGenerator';
 
 export const metadata = {
   title: 'AI 视频生成工作室 | Sora2',

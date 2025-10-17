@@ -27,12 +27,30 @@ export function NavBar() {
 
           {/* 中间：导航链接 */}
           <div className="hidden md:flex items-center gap-6">
-            <a
+            <Link
+              href="/dashboard"
+              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              {t('removeWatermark')}
+            </Link>
+            <Link
+              href="/video-generation"
+              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              {t('videoGeneration')}
+            </Link>
+            <Link
+              href="/blog"
+              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              {t('blog')}
+            </Link>
+            <Link
               href="/pricing"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
               {t('pricing')}
-            </a>
+            </Link>
           </div>
 
           {/* 右侧：积分 + 语言切换 + 用户信息 */}

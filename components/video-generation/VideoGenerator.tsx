@@ -152,7 +152,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
         requestBody.images = [base64Image];
       }
 
-      const response = await fetch('/api/aicoding/create', {
+      const response = await fetch('/api/video-generation/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
 
     pollIntervalRef.current = setInterval(async () => {
       try {
-        const response = await fetch(`/api/aicoding/status/${id}`, {
+        const response = await fetch(`/api/video-generation/status/${id}`, {
           headers: {
             ...(apiKey && { 'x-api-key': apiKey })
           }

@@ -16,6 +16,9 @@
   "nav": {
     "home": "首页",
     "dashboard": "控制台",
+    "removeWatermark": "去水印",
+    "videoGeneration": "视频生成",
+    "blog": "博客",
     "pricing": "充值",
     "login": "登录",
     "logout": "退出登录"
