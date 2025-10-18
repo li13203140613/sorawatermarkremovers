@@ -6,6 +6,8 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-18 | Docs | Modified: TROUBLESHOOTING.md | TROUBLESHOOTING.md | AI Auto |
+| 2025-10-18 | Other | Modified: next.config.js | next.config.js | AI Auto |
 | 2025-10-17 | Payment | Updated: Payment packages & pricing | lib/payment/types.ts, lib/payment/service.ts, components/payment/* | 更新积分价格:美元$10=30/$50=400/$100=1000,人民币¥10=10/¥50=70/¥100=200;添加积分用途说明组件 |
 | 2025-10-17 | Components | Created: CreditUsage.tsx | components/payment/CreditUsage.tsx | 积分用途说明:去水印1积分,生成视频1积分,无水印生成2积分 |
 | 2025-10-17 | I18n | Updated: Translation files | messages/en.json, messages/zh.json | 添加积分用途说明的中英文翻译 |
