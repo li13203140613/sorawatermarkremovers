@@ -50,8 +50,8 @@
     "welcome": "欢迎"
   },
   "dashboard": {
-    "title": "Sora 视频高清免费去水印工具",
-    "subtitle": "免费使用 · 极速处理 · 高清画质",
+    "title": "Sora 视频高清免费去水印工具 | Sora2 去水印",
+    "subtitle": "免费使用 · 极速处理 · 高清画质 · 支持 Sora 和 Sora2",
     "currentCredits": "当前积分",
     "videoProcessing": "视频处理",
     "recharge": "充值",
@@ -108,6 +108,20 @@
         "title": "无水印生成",
         "desc": "生成无水印视频"
       }
+    },
+    "features": {
+      "credits": "积分",
+      "watermark": "去除水印 {count} 次",
+      "generate": "生成视频 {count} 次",
+      "premium": "无水印生成 {count} 次",
+      "hd": "全高清画质",
+      "noWatermarkDownload": "无水印下载",
+      "priority": "优先支持",
+      "fastProcessing": "快速处理",
+      "unlimited": "每日无限去除 ♾️",
+      "allPro": "包含所有专业版功能",
+      "topPriority": "最高优先级处理队列",
+      "vipSupport": "专属 VIP 支持"
     },
     "purchase": "购买",
     "processing": "处理支付中...",

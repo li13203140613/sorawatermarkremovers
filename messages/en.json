@@ -50,8 +50,8 @@
     "welcome": "Welcome"
   },
   "dashboard": {
-    "title": "Sora Video HD Free Watermark Removal Tool",
-    "subtitle": "Free to Use · Lightning Fast · High Quality",
+    "title": "Sora Video HD Free Watermark Removal Tool | Sora2 Remove Watermark",
+    "subtitle": "Free to Use · Lightning Fast · High Quality · Support Sora & Sora2",
     "currentCredits": "Current Credits",
     "videoProcessing": "Video Processing",
     "recharge": "Recharge",
@@ -108,6 +108,20 @@
         "title": "Watermark-Free Generation",
         "desc": "Generate videos without watermark"
       }
+    },
+    "features": {
+      "credits": "Credits",
+      "watermark": "Remove Watermark {count}x",
+      "generate": "Generate Video {count}x",
+      "premium": "Watermark-Free {count}x",
+      "hd": "Full HD Quality",
+      "noWatermarkDownload": "No Watermark Download",
+      "priority": "Priority Support",
+      "fastProcessing": "Fast Processing",
+      "unlimited": "Daily Unlimited Removal ♾️",
+      "allPro": "All Pro Features Included",
+      "topPriority": "Highest Priority Queue",
+      "vipSupport": "Dedicated VIP Support"
     },
     "purchase": "Purchase",
     "processing": "Processing payment...",

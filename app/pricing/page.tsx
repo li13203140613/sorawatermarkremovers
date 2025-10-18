@@ -9,18 +9,8 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 flex flex-col">
       <div className="flex-1 flex flex-col">
-        {/* 主标题区域 */}
-        <div className="text-center pt-16 pb-8 px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-            {t('title')}
-          </h1>
-          <p className="text-base md:text-lg text-gray-600">
-            {t('subtitle')}
-          </p>
-        </div>
-
         {/* 积分用途说明区域 */}
-        <div className="px-4 max-w-6xl mx-auto w-full">
+        <div className="px-4 max-w-6xl mx-auto w-full pt-16 pb-8">
           <CreditUsage />
         </div>
 

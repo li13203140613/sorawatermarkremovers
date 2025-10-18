@@ -5,6 +5,18 @@ export interface PaymentPackage {
   creditsCNY: number // 人民币对应积分
   label: string // 显示标签
   popular?: boolean // 是否热门
+  // 美元套餐使用次数
+  usageUSD: {
+    watermark: number // 去水印次数
+    generate: number // 生成视频次数
+    premium: number // 无水印生成次数
+  }
+  // 人民币套餐使用次数
+  usageCNY: {
+    watermark: number // 去水印次数
+    generate: number // 生成视频次数
+    premium: number // 无水印生成次数
+  }
 }
 
 export interface CreateCheckoutSessionRequest {
@@ -32,6 +44,16 @@ export const PAYMENT_PACKAGES: PaymentPackage[] = [
     credits: 30,
     creditsCNY: 10,
     label: 'starter',
+    usageUSD: {
+      watermark: 30, // 30积分 = 去水印30次
+      generate: 30, // 30积分 = 生成30次
+      premium: 15, // 30积分 = 无水印生成15次
+    },
+    usageCNY: {
+      watermark: 10, // 10积分 = 去水印10次
+      generate: 10, // 10积分 = 生成10次
+      premium: 5, // 10积分 = 无水印生成5次
+    },
   },
   {
     amountUSD: 50,
@@ -40,6 +62,16 @@ export const PAYMENT_PACKAGES: PaymentPackage[] = [
     creditsCNY: 70,
     label: 'standard',
     popular: true,
+    usageUSD: {
+      watermark: 400, // 400积分 = 去水印400次
+      generate: 400, // 400积分 = 生成400次
+      premium: 200, // 400积分 = 无水印生成200次
+    },
+    usageCNY: {
+      watermark: 70, // 70积分 = 去水印70次
+      generate: 70, // 70积分 = 生成70次
+      premium: 35, // 70积分 = 无水印生成35次
+    },
   },
   {
     amountUSD: 100,
@@ -47,6 +79,16 @@ export const PAYMENT_PACKAGES: PaymentPackage[] = [
     credits: 1000,
     creditsCNY: 200,
     label: 'premium',
+    usageUSD: {
+      watermark: 1000, // 1000积分 = 去水印1000次
+      generate: 1000, // 1000积分 = 生成1000次
+      premium: 500, // 1000积分 = 无水印生成500次
+    },
+    usageCNY: {
+      watermark: 200, // 200积分 = 去水印200次
+      generate: 200, // 200积分 = 生成200次
+      premium: 100, // 200积分 = 无水印生成100次
+    },
   },
 ]
 
