@@ -6,6 +6,21 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-18 | Library | Modified: navigation.ts | lib/navigation.ts | AI Auto |
+| 2025-10-18 | Docs | Modified: QUICK_START.md | QUICK_START.md | AI Auto |
+| 2025-10-18 | Docs | Modified: SORA2_AUTOMATION_GUIDE.md | SORA2_AUTOMATION_GUIDE.md | AI Auto |
+| 2025-10-18 | Other | Modified: collect-all-content.js | scripts/collect-all-content.js | AI Auto |
+| 2025-10-18 | Other | Modified: upload-to-r2.js | scripts/upload-to-r2.js | AI Auto |
+| 2025-10-18 | Other | Modified: generate-thumbnails.js | scripts/generate-thumbnails.js | AI Auto |
+| 2025-10-18 | Other | Modified: download-videos.js | scripts/download-videos.js | AI Auto |
+| 2025-10-18 | Other | Modified: crawl-multiple-sources.js | scripts/crawl-multiple-sources.js | AI Auto |
+| 2025-10-18 | Assets | Modified: og-image.svg | public/og-image.svg | AI Auto |
+| 2025-10-18 | Tests | Modified: test-r2-connection.js | scripts/test-r2-connection.js | AI Auto |
+| 2025-10-18 | Library | Modified: client.ts | lib/r2/client.ts | AI Auto |
+| 2025-10-18 | Docs | Modified: GOOGLE_ONE_TAP_SETUP.md | GOOGLE_ONE_TAP_SETUP.md | AI Auto |
+| 2025-10-18 | Docs | Modified: R2_SETUP_GUIDE.md | R2_SETUP_GUIDE.md | AI Auto |
+| 2025-10-18 | Components | Modified: GoogleOneTap.tsx | components/auth/GoogleOneTap.tsx | AI Auto |
+| 2025-10-18 | Docs | Modified: SORA2_CONTENT_PIPELINE.md | SORA2_CONTENT_PIPELINE.md | AI Auto |
 | 2025-10-18 | Other | Modified: sora-2-remove-watermark-guide.mdx | content/blog/en/sora-2-remove-watermark-guide.mdx | AI Auto |
 | 2025-10-18 | Other | Modified: robots.ts | app/robots.ts | AI Auto |
 | 2025-10-18 | Assets | Modified: robots.txt | public/robots.txt | AI Auto |

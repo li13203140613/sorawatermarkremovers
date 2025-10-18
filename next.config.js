@@ -30,6 +30,10 @@ const nextConfig = {
       },
     ],
   },
+  // 修复 Next.js 15 的 React Server Components 问题
+  experimental: {
+    serverComponentsExternalPackages: ['next-intl'],
+  },
 }
 
 module.exports = withNextIntl(nextConfig)

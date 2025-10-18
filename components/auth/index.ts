@@ -2,3 +2,4 @@
 export { AuthForm } from './AuthForm'
 export { UserProfile } from './UserProfile'
 export { NavUserProfile } from './NavUserProfile'
+export { GoogleOneTap } from './GoogleOneTap'

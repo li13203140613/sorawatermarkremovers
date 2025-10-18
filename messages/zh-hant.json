@@ -1,0 +1,138 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "credits": "积分"
+  },
+  "credits": {
+    "credits": "积分",
+    "loginForMore": "登录获取更多",
+    "insufficient": "积分不足",
+    "free": "免费体验"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "控制台",
+    "removeWatermark": "去水印",
+    "videoGeneration": "视频生成",
+    "blog": "博客",
+    "pricing": "充值",
+    "login": "登录",
+    "logout": "退出登录"
+  },
+  "home": {
+    "title": "视频去水印",
+    "subtitle": "一键去除 Sora2 视频水印",
+    "getStarted": "开始使用",
+    "features": {
+      "title": "功能特点",
+      "fast": {
+        "title": "快速处理",
+        "description": "AI 驱动，秒级完成水印去除"
+      },
+      "quality": {
+        "title": "高质量",
+        "description": "保持原始视频质量"
+      },
+      "easy": {
+        "title": "简单易用",
+        "description": "粘贴链接即可处理"
+      }
+    }
+  },
+  "auth": {
+    "signInWithGoogle": "使用 Google 登录",
+    "signingIn": "登录中...",
+    "signOut": "退出登录",
+    "welcome": "欢迎"
+  },
+  "dashboard": {
+    "title": "Sora2 视频高清免费去水印工具",
+    "subtitle": "免费使用 · 极速处理 · 高清画质 · 支持 Sora 和 Sora2",
+    "currentCredits": "当前积分",
+    "videoProcessing": "视频处理",
+    "recharge": "充值",
+    "disclaimer": {
+      "title": "免责声明：遵守服务，与 OpenAI 无关联",
+      "content": "使用此工具即表示您确认拥有该视频的版权或已获得处理权限。此工具仅供个人使用，我们不对侵权行为负责。",
+      "limit": "免费用户: 每分钟 1 次请求"
+    },
+    "footer": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "contact": "联系我们"
+    }
+  },
+  "video": {
+    "pasteLink": "在此粘贴 Sora 分享链接 (https://sora.chatgpt.com/p/s_xxxxx)",
+    "processing": "处理中...",
+    "process": "一键去水印",
+    "result": "视频预览",
+    "download": "下载视频",
+    "copyLink": "复制链接",
+    "linkCopied": "链接已复制！",
+    "newVideo": "处理新视频",
+    "buyCredits": "购买积分",
+    "loginForMore": "登录获取更多",
+    "errors": {
+      "invalidLink": "请输入有效的分享链接",
+      "insufficientCredits": "积分不足",
+      "processingFailed": "处理失败，请重试",
+      "verificationRequired": "请完成下方验证"
+    }
+  },
+  "payment": {
+    "title": "充值积分",
+    "subtitle": "选择您的完美计划",
+    "packages": {
+      "starter": "入门套餐",
+      "standard": "标准套餐",
+      "premium": "超值套餐",
+      "popular": "最受欢迎"
+    },
+    "usage": {
+      "title": "积分可以做什么？",
+      "credits": "积分",
+      "watermark": {
+        "title": "去除水印",
+        "desc": "去除 Sora 视频水印"
+      },
+      "generate": {
+        "title": "生成 Sora 视频",
+        "desc": "AI 驱动的视频生成"
+      },
+      "premium": {
+        "title": "无水印生成",
+        "desc": "生成无水印视频"
+      }
+    },
+    "features": {
+      "credits": "积分",
+      "watermark": "去除水印 {count} 次",
+      "generate": "生成视频 {count} 次",
+      "premium": "无水印生成 {count} 次",
+      "hd": "全高清画质",
+      "noWatermarkDownload": "无水印下载",
+      "priority": "优先支持",
+      "fastProcessing": "快速处理",
+      "unlimited": "每日无限去除 ♾️",
+      "allPro": "包含所有专业版功能",
+      "topPriority": "最高优先级处理队列",
+      "vipSupport": "专属 VIP 支持"
+    },
+    "purchase": "购买",
+    "processing": "处理支付中...",
+    "success": {
+      "title": "充值成功！",
+      "description": "您的积分已经到账，可以开始使用了",
+      "backToDashboard": "返回控制台",
+      "useNow": "立即使用"
+    },
+    "errors": {
+      "failed": "支付失败，请重试"
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "credits": "Credits"
+  },
+  "credits": {
+    "credits": "Credits",
+    "loginForMore": "Login for More",
+    "insufficient": "Insufficient Credits",
+    "free": "Free Trial"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "removeWatermark": "Remove Watermark",
+    "videoGeneration": "Video Generation",
+    "blog": "Blog",
+    "pricing": "Pricing",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Video Watermark Removal",
+    "subtitle": "Remove watermarks from Sora2 videos with one click",
+    "getStarted": "Get Started",
+    "features": {
+      "title": "Features",
+      "fast": {
+        "title": "Fast Processing",
+        "description": "AI-powered watermark removal in seconds"
+      },
+      "quality": {
+        "title": "High Quality",
+        "description": "Preserve original video quality"
+      },
+      "easy": {
+        "title": "Easy to Use",
+        "description": "Simply paste the link and process"
+      }
+    }
+  },
+  "auth": {
+    "signInWithGoogle": "Sign in with Google",
+    "signingIn": "Signing in...",
+    "signOut": "Sign Out",
+    "welcome": "Welcome"
+  },
+  "dashboard": {
+    "title": "Sora2 Video HD Free Watermark Removal Tool",
+    "subtitle": "Free to Use · Lightning Fast · High Quality · Support Sora & Sora2",
+    "currentCredits": "Current Credits",
+    "videoProcessing": "Video Processing",
+    "recharge": "Recharge",
+    "disclaimer": {
+      "title": "Disclaimer: Comply with Terms of Service, No Affiliation with OpenAI",
+      "content": "By using this tool, you confirm that you own the copyright to the video or have obtained permission to process it. This tool is for personal use only, and we are not responsible for any copyright infringement.",
+      "limit": "Free users: 1 request per minute"
+    },
+    "footer": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us"
+    }
+  },
+  "video": {
+    "pasteLink": "Paste Sora share link here (https://sora.chatgpt.com/p/s_xxxxx)",
+    "processing": "Processing...",
+    "process": "Remove Watermark",
+    "result": "Video Preview",
+    "download": "Download Video",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied!",
+    "newVideo": "Process New Video",
+    "buyCredits": "Buy Credits",
+    "loginForMore": "Login for More",
+    "errors": {
+      "invalidLink": "Please enter a valid share link",
+      "insufficientCredits": "Insufficient credits.",
+      "processingFailed": "Processing failed, please try again",
+      "verificationRequired": "Please complete the verification below."
+    }
+  },
+  "payment": {
+    "title": "Recharge Credits",
+    "subtitle": "Choose Your Perfect Plan",
+    "packages": {
+      "starter": "Starter Package",
+      "standard": "Standard Package",
+      "premium": "Premium Package",
+      "popular": "Most Popular"
+    },
+    "usage": {
+      "title": "What Can Credits Do?",
+      "credits": "Credits",
+      "watermark": {
+        "title": "Remove Watermark",
+        "desc": "Remove Sora video watermarks"
+      },
+      "generate": {
+        "title": "Generate Sora Video",
+        "desc": "AI-powered video generation"
+      },
+      "premium": {
+        "title": "Watermark-Free Generation",
+        "desc": "Generate videos without watermark"
+      }
+    },
+    "features": {
+      "credits": "Credits",
+      "watermark": "Remove Watermark {count}x",
+      "generate": "Generate Video {count}x",
+      "premium": "Watermark-Free {count}x",
+      "hd": "Full HD Quality",
+      "noWatermarkDownload": "No Watermark Download",
+      "priority": "Priority Support",
+      "fastProcessing": "Fast Processing",
+      "unlimited": "Daily Unlimited Removal ♾️",
+      "allPro": "All Pro Features Included",
+      "topPriority": "Highest Priority Queue",
+      "vipSupport": "Dedicated VIP Support"
+    },
+    "purchase": "Purchase",
+    "processing": "Processing payment...",
+    "success": {
+      "title": "Recharge Successful!",
+      "description": "Your credits have been added to your account",
+      "backToDashboard": "Back to Dashboard",
+      "useNow": "Use Now"
+    },
+    "errors": {
+      "failed": "Payment failed, please try again"
+    }
+  }
+}

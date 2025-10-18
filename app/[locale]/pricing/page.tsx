@@ -1,5 +1,4 @@
 import { PaymentPackages } from '@/components/payment'
-import { CreditUsage } from '@/components/payment/CreditUsage'
 import { useTranslations } from 'next-intl'
 
 export default function PricingPage() {
@@ -9,13 +8,8 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 flex flex-col">
       <div className="flex-1 flex flex-col">
-        {/* 积分用途说明区域 */}
-        <div className="px-4 max-w-6xl mx-auto w-full pt-16 pb-8">
-          <CreditUsage />
-        </div>
-
         {/* 充值套餐区域 */}
-        <div className="flex-1 px-4 pb-12">
+        <div className="flex-1 px-4 pt-16 pb-12">
           <PaymentPackages />
         </div>
       </div>

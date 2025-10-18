@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { useCredits } from '@/hooks/useCredits';
 import { useRouter } from 'next/navigation';
+import { GoogleOneTap } from '@/components/auth';
 
 interface VideoGeneratorProps {
   apiKey?: string;
@@ -304,6 +306,9 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 py-12">
+      {/* Google One Tap - 右上角自动弹出登录 */}
+      <GoogleOneTap />
+
       {/* 主体内容 - 左右分栏 */}
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -331,7 +336,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                       </div>
                     ) : (
                       <p className="text-sm text-yellow-800">
-                        ⚠️ 请先<a href="/login?redirect=/video-generation" className="underline font-bold">登录</a>后使用
+                        ⚠️ 请先<Link href="/login?redirect=/video-generation" className="underline font-bold">登录</Link>后使用
                       </p>
                     )}
                   </div>

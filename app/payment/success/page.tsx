@@ -3,11 +3,11 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+
+// 禁用静态生成，因为这个页面需要查询参数
+export const dynamic = 'force-dynamic'
 
 function PaymentSuccessContent() {
-  const t = useTranslations('payment')
-  const tCommon = useTranslations('common')
   const searchParams = useSearchParams()
   const router = useRouter()
   const [processing, setProcessing] = useState(true)
@@ -15,7 +15,7 @@ function PaymentSuccessContent() {
 
   useEffect(() => {
     if (!sessionId) {
-      router.push('/dashboard')
+      router.push('/en/dashboard')
       return
     }
 
@@ -32,8 +32,8 @@ function PaymentSuccessContent() {
       <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h1 className="text-2xl font-bold mb-2">{t('processing')}</h1>
-          <p className="text-gray-600">{t('success.description')}</p>
+          <h1 className="text-2xl font-bold mb-2">Processing Payment</h1>
+          <p className="text-gray-600">Please wait while we confirm your payment...</p>
         </div>
       </main>
     )
@@ -58,24 +58,24 @@ function PaymentSuccessContent() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('success.title')}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
         <p className="text-gray-600 mb-6">
-          {t('success.description')}
+          Your credits have been added to your account.
         </p>
 
         <div className="space-y-3">
           <Link
-            href="/dashboard"
+            href="/en/dashboard"
             className="block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
           >
-            {t('success.backToDashboard')}
+            Back to Dashboard
           </Link>
 
           <Link
-            href="/dashboard"
+            href="/en"
             className="block w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md transition-colors"
           >
-            {t('success.useNow')}
+            Start Using
           </Link>
         </div>
       </div>
@@ -84,14 +84,12 @@ function PaymentSuccessContent() {
 }
 
 export default function PaymentSuccessPage() {
-  const tCommon = useTranslations('common')
-
   return (
     <Suspense fallback={
       <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h1 className="text-2xl font-bold mb-2">{tCommon('loading')}</h1>
+          <h1 className="text-2xl font-bold mb-2">Loading...</h1>
         </div>
       </main>
     }>

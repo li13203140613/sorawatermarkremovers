@@ -1,0 +1,92 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import "@/styles/blog.css";
+import { NextIntlClientProvider } from 'next-intl';
+import { cookies } from 'next/headers';
+import { defaultLocale, type Locale, locales } from '@/i18n';
+import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
+
+export const metadata: Metadata = {
+  title: "Sora2 Video HD Free Watermark Removal Tool | AI-Powered",
+  description: "Free online Sora & Sora2 video watermark removal service. AI-powered technology for lightning-fast processing while maintaining HD quality. No registration required - paste your Sora share link and remove watermarks with one click. Download watermark-free HD videos instantly.",
+  keywords: "Sora 2 Remove Watermark, Sora2 去水印, Sora watermark removal, AI watermark remover, video watermark removal, free watermark remover, HD video processing, Sora video download",
+  openGraph: {
+    title: "Sora2 Video HD Watermark Removal - Free & Lightning Fast",
+    description: "Remove watermarks from Sora & Sora2 videos instantly. AI-powered, HD quality, one-click processing. No registration needed. Support all Sora video formats.",
+    type: "website",
+    url: "https://www.sora-prompt.io",
+    siteName: "Sora Prompt",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://www.sora-prompt.io/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Sora2 Video HD Watermark Removal Tool - Free, Fast, AI-Powered",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sora2 Video HD Watermark Removal - Free Tool",
+    description: "🚀 Remove Sora & Sora2 watermarks instantly | ⚡ AI-powered | 🎥 HD quality | ✨ One-click processing | 🆓 No registration",
+    images: ["https://www.sora-prompt.io/og-image.svg"],
+  },
+};
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale;
+
+  // 如果没有 cookie，使用默认语言（将在客户端检测浏览器语言）
+  const locale = localeCookie && locales.includes(localeCookie) ? localeCookie : defaultLocale;
+
+  const messages = (await import(`@/messages/${locale}.json`)).default;
+
+  return (
+    <html lang={locale}>
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFC640NVZG"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-VFC640NVZG');
+            `,
+          }}
+        />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "tnbhvojfqa");
+            `,
+          }}
+        />
+      </head>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          <ClientProviders>
+            <div className="min-h-screen flex flex-col">
+              <ClientNavBar />
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </ClientProviders>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}
