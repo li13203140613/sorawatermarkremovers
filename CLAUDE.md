@@ -6,6 +6,8 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-18 | Other | Modified: robots.ts | app/robots.ts | AI Auto |
+| 2025-10-18 | Assets | Modified: robots.txt | public/robots.txt | AI Auto |
 | 2025-10-18 | Docs | Modified: TROUBLESHOOTING.md | TROUBLESHOOTING.md | AI Auto |
 | 2025-10-18 | Other | Modified: next.config.js | next.config.js | AI Auto |
 | 2025-10-17 | Payment | Updated: Payment packages & pricing | lib/payment/types.ts, lib/payment/service.ts, components/payment/* | 更新积分价格:美元$10=30/$50=400/$100=1000,人民币¥10=10/¥50=70/¥100=200;添加积分用途说明组件 |
