@@ -6,6 +6,7 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-18 | Other | Modified: sora-2-remove-watermark-guide.mdx | content/blog/en/sora-2-remove-watermark-guide.mdx | AI Auto |
 | 2025-10-18 | Other | Modified: robots.ts | app/robots.ts | AI Auto |
 | 2025-10-18 | Assets | Modified: robots.txt | public/robots.txt | AI Auto |
 | 2025-10-18 | Docs | Modified: TROUBLESHOOTING.md | TROUBLESHOOTING.md | AI Auto |
