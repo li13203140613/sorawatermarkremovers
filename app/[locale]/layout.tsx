@@ -39,7 +39,7 @@ export default async function LocaleLayout({
   }
 
   // 获取翻译消息
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale}>
