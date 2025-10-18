@@ -1,0 +1,248 @@
+{
+  "source": "https://bestsoraprompts.com/",
+  "crawlTime": "2025-10-17T15:57:57.408Z",
+  "totalCount": 13,
+  "version": "Sora 2",
+  "categories": {
+    "动物": 2,
+    "人物": 7,
+    "抽象": 3,
+    "风景": 1
+  },
+  "prompts": [
+    {
+      "id": "sora2-1",
+      "version": "Sora 2",
+      "category": "animal",
+      "categoryLabel": "动物",
+      "categoryIcon": "🐱",
+      "prompt": "figure skater performs a triple axle with a cat on her head",
+      "video": {
+        "type": "vimeo",
+        "videoId": "913331489",
+        "embedUrl": "https://player.vimeo.com/video/913331489?h=d6b3d4c2bd&badge=0&autopause=0&player_id=0&app_id=58479",
+        "watchUrl": "https://vimeo.com/913331489",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://vimeo.com/913331489",
+      "embedUrl": "https://player.vimeo.com/video/913331489?h=d6b3d4c2bd&badge=0&autopause=0&player_id=0&app_id=58479"
+    },
+    {
+      "id": "sora2-2",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "a man does a backflip on a paddleboard",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/paddleboard.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/paddleboard.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/paddleboard.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/paddleboard.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/paddleboard.mp4"
+    },
+    {
+      "id": "sora2-3",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "a person is standing on 2 horses with legs spread. make it not slowmo also realistic. the guy fell off pretty hard in the end. single shot",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250929_1800_New%20Video_simple_compose_01k6c25b5jf6d950z61a8sgs9g.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250929_1800_New%20Video_simple_compose_01k6c25b5jf6d950z61a8sgs9g.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250929_1800_New%20Video_simple_compose_01k6c25b5jf6d950z61a8sgs9g.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250929_1800_New%20Video_simple_compose_01k6c25b5jf6d950z61a8sgs9g.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250929_1800_New%20Video_simple_compose_01k6c25b5jf6d950z61a8sgs9g.mp4"
+    },
+    {
+      "id": "sora2-4",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "in the style of a japanese anime, a melancholy scene under the fireworks of a night sky. the world is so happy, but not the two star-crossed protagonists of this gorgeous japanese town in the middle of a festival. film-caliber sakuga japanese animation, close-up shots of the characters having a conversation in japanese, beautiful fluid hand-drawn animation",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/anime_fireworks%20(1).mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/anime_fireworks%20(1).mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/anime_fireworks%20(1).mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/anime_fireworks%20(1).mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/anime_fireworks%20(1).mp4"
+    },
+    {
+      "id": "sora2-5",
+      "version": "Sora 2",
+      "category": "animal",
+      "categoryLabel": "动物",
+      "categoryIcon": "🐱",
+      "prompt": "an astronaut golden retriever named Sora levitates around an intergalactic pup-themed space station with a tiny jet back that propels him. gorgeous specular lighting and comets fly through the sky, retro-future astro-themed music plays in the background. light glimmers off the dog's eyes. the dog initially propels towards the space station with the doors opening to let him in. the shot then changes. now inside the space station, many tennis balls are flying around in zero gravity. the dog's astronaut helmet opens up so he can grab one. 35mm film, the intricate details and texturing of the dog's hair are clearly visible and the light of the comets shimmers off the fur.",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250922_1557_an%20astronaut%20golden%20retriever%20named%20_Sora_%20levitates%20around%20an%20intergalactic%20pup-themed%20space%20statio_simple_compose_01k5sta9hmegr9axrpbty5sxva%20(1).mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250922_1557_an%20astronaut%20golden%20retriever%20named%20_Sora_%20levitates%20around%20an%20intergalactic%20pup-themed%20space%20statio_simple_compose_01k5sta9hmegr9axrpbty5sxva%20(1).mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250922_1557_an%20astronaut%20golden%20retriever%20named%20_Sora_%20levitates%20around%20an%20intergalactic%20pup-themed%20space%20statio_simple_compose_01k5sta9hmegr9axrpbty5sxva%20(1).mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250922_1557_an%20astronaut%20golden%20retriever%20named%20_Sora_%20levitates%20around%20an%20intergalactic%20pup-themed%20space%20statio_simple_compose_01k5sta9hmegr9axrpbty5sxva%20(1).mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final/golden/6eda9a57-5d6d-4890-90ee-61f89e999719/20250922_1557_an%20astronaut%20golden%20retriever%20named%20_Sora_%20levitates%20around%20an%20intergalactic%20pup-themed%20space%20statio_simple_compose_01k5sta9hmegr9axrpbty5sxva%20(1).mp4"
+    },
+    {
+      "id": "sora2-6",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "a guy does a backflip",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2154_New%20Video_simple_compose_01k5zkjk6cewmbdna01qtg293g.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2154_New%20Video_simple_compose_01k5zkjk6cewmbdna01qtg293g.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2154_New%20Video_simple_compose_01k5zkjk6cewmbdna01qtg293g.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2154_New%20Video_simple_compose_01k5zkjk6cewmbdna01qtg293g.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2154_New%20Video_simple_compose_01k5zkjk6cewmbdna01qtg293g.mp4"
+    },
+    {
+      "id": "sora2-7",
+      "version": "Sora 2",
+      "category": "abstract",
+      "categoryLabel": "抽象",
+      "categoryIcon": "✨",
+      "prompt": "a gymnast flips on a balance beam. cinematic",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2249_New%20Video_simple_compose_01k5zpppg5ev8swe27vvj9en08.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2249_New%20Video_simple_compose_01k5zpppg5ev8swe27vvj9en08.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2249_New%20Video_simple_compose_01k5zpppg5ev8swe27vvj9en08.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2249_New%20Video_simple_compose_01k5zpppg5ev8swe27vvj9en08.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2249_New%20Video_simple_compose_01k5zpppg5ev8swe27vvj9en08.mp4"
+    },
+    {
+      "id": "sora2-8",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "man does a cannonball off diving board",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2256_New%20Video_simple_compose_01k5zq3n4dfzyv7bje2smkq1tm.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2256_New%20Video_simple_compose_01k5zq3n4dfzyv7bje2smkq1tm.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2256_New%20Video_simple_compose_01k5zq3n4dfzyv7bje2smkq1tm.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2256_New%20Video_simple_compose_01k5zq3n4dfzyv7bje2smkq1tm.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250924_2256_New%20Video_simple_compose_01k5zq3n4dfzyv7bje2smkq1tm.mp4"
+    },
+    {
+      "id": "sora2-9",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "a man rides a horse which is on another horse",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0337_New%20Video_simple_compose_01k6agr8ctey29mze208t29w38%20(1).mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0337_New%20Video_simple_compose_01k6agr8ctey29mze208t29w38%20(1).mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0337_New%20Video_simple_compose_01k6agr8ctey29mze208t29w38%20(1).mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0337_New%20Video_simple_compose_01k6agr8ctey29mze208t29w38%20(1).mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0337_New%20Video_simple_compose_01k6agr8ctey29mze208t29w38%20(1).mp4"
+    },
+    {
+      "id": "sora2-10",
+      "version": "Sora 2",
+      "category": "people",
+      "categoryLabel": "人物",
+      "categoryIcon": "👤",
+      "prompt": "a group people playing volleyball",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0404_New%20Video_simple_compose_01k6aja0rpe0yt9cge2743tb8r.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0404_New%20Video_simple_compose_01k6aja0rpe0yt9cge2743tb8r.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0404_New%20Video_simple_compose_01k6aja0rpe0yt9cge2743tb8r.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0404_New%20Video_simple_compose_01k6aja0rpe0yt9cge2743tb8r.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/20250929_0404_New%20Video_simple_compose_01k6aja0rpe0yt9cge2743tb8r.mp4"
+    },
+    {
+      "id": "sora2-11",
+      "version": "Sora 2",
+      "category": "abstract",
+      "categoryLabel": "抽象",
+      "categoryIcon": "✨",
+      "prompt": "skateboarder does a kickflip",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/Copy%20of%2020250925_2005_New%20Video_simple_compose_01k61zpe8yfshs06fb6e768v88.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/Copy%20of%2020250925_2005_New%20Video_simple_compose_01k61zpe8yfshs06fb6e768v88.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/Copy%20of%2020250925_2005_New%20Video_simple_compose_01k61zpe8yfshs06fb6e768v88.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/Copy%20of%2020250925_2005_New%20Video_simple_compose_01k61zpe8yfshs06fb6e768v88.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/Copy%20of%2020250925_2005_New%20Video_simple_compose_01k61zpe8yfshs06fb6e768v88.mp4"
+    },
+    {
+      "id": "sora2-12",
+      "version": "Sora 2",
+      "category": "abstract",
+      "categoryLabel": "抽象",
+      "categoryIcon": "✨",
+      "prompt": "a dalmatian deftly walks runs and hops his way through a complex obstacle course in burano italy",
+      "video": {
+        "type": "direct",
+        "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/dalmation_gymnastics.mp4",
+        "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/dalmation_gymnastics.mp4",
+        "watchUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/dalmation_gymnastics.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/dalmation_gymnastics.mp4",
+      "embedUrl": "https://openaiassets.blob.core.windows.net/$web/nf2/blog-final2/dalmation_gymnastics.mp4"
+    },
+    {
+      "id": "sora2-13",
+      "version": "Sora 2",
+      "category": "landscape",
+      "categoryLabel": "风景",
+      "categoryIcon": "🌄",
+      "prompt": "A bright, inviting Mediterranean villa exterior bathed in warm, natural sunlight during a clear late afternoon in Mallorca. The villa features whitewashed walls, terracotta roof tiles, and lush greenery with vibrant bougainvillea climbing the facade. A happy family of four—parents in casual summer attire and two children playing near a sparkling turquoise pool—enjoys their relaxed holiday. The camera begins with a wide establishing shot at eye level, slowly dollying in to a medium shot focusing on the children laughing and splashing in the pool. Soft shadows fall across the scene, with warm amber sunlight complemented by accents of the brand’s signature blue (#5bc0de) on pool floats, cushions, and beach towels. Gentle sea breeze animates the leaves and curtains fluttering from open windows. Mood is joyful, welcoming, and family-friendly, evoking a luxurious yet approachable vacation atmosphere.  \r\n\r\nActions:  \r\n- Children splash water playfully, parents smile and watch from nearby lounge chairs.  \r\n- Close-up on a beach bag with VillasMediterranean.com logo, highlighting the brand blue (#5bc0de).  \r\n- Mother pours fresh lemonade from a carafe, father raises a glass in a toast.  \r\n- Family waves happily as the camera slowly pulls back to reveal the full villa and surrounding scenic landscape.  \r\n\r\nBackground Sound:  \r\nSoft ambient sounds of gentle waves, distant seagulls, light laughter, and relaxed acoustic guitar music underscore the scene.  \r\n\r\nDialogue (optional):  \r\nChild: \"This is the best holiday ever!\"  \r\nParent: \"VillasMediterranean.com made it so easy to find our perfect home.\r\n              Note: This video was generated with PropertyDescriptionAI using OpenAI Sora 2 API and the prompt was generated using the PropertyDescriptionAI's Improve Prompt feature.",
+      "video": {
+        "type": "direct",
+        "videoUrl": "/images/videos/propertydescriptionai.com_video_68ecd2764b348193b258560455811ce801c8b009084f4d32.mp4",
+        "embedUrl": "/images/videos/propertydescriptionai.com_video_68ecd2764b348193b258560455811ce801c8b009084f4d32.mp4",
+        "watchUrl": "/images/videos/propertydescriptionai.com_video_68ecd2764b348193b258560455811ce801c8b009084f4d32.mp4",
+        "thumbnailUrl": null
+      },
+      "thumbnailUrl": null,
+      "videoUrl": "/images/videos/propertydescriptionai.com_video_68ecd2764b348193b258560455811ce801c8b009084f4d32.mp4",
+      "embedUrl": "/images/videos/propertydescriptionai.com_video_68ecd2764b348193b258560455811ce801c8b009084f4d32.mp4"
+    }
+  ]
+}
