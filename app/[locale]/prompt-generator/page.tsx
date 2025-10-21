@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { GoogleOneTap } from '@/components/auth'
 import { VideoType, PromptCount, GeneratedPrompt } from '@/lib/prompt-generator/types';
 import { generatePrompts } from '@/lib/prompt-generator/api';
 import PromptGeneratorForm from '@/components/prompt-generator/PromptGeneratorForm';
@@ -12,8 +11,8 @@ import SoraIntroduction from '@/components/prompt-generator/SoraIntroduction';
 import ProductAdvantages from '@/components/prompt-generator/ProductAdvantages';
 import FAQ from '@/components/prompt-generator/FAQ';
 
-export default function Home() {
-  const t = useTranslations('home');
+export default function PromptGeneratorPage() {
+  const t = useTranslations('promptGenerator');
   const [loading, setLoading] = useState(false);
   const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -51,13 +50,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Google One Tap */}
-      <GoogleOneTap />
-
       {/* Hero Section */}
       <div className="bg-gray-50 py-16 px-4 text-center border-b border-gray-200">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          {t('hero.title')}
+          <span className="block">✨ 使用我们的免费生成器创建</span>
+          <span className="block mt-2">精彩的 Sora AI 视频提示词</span>
         </h1>
       </div>
 
@@ -92,5 +89,5 @@ export default function Home() {
       {/* FAQ Section */}
       <FAQ />
     </div>
-  )
+  );
 }

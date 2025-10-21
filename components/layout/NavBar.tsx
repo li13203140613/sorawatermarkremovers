@@ -28,28 +28,34 @@ export function NavBar() {
           {/* 中间：导航链接 */}
           <div className="hidden md:flex items-center gap-6">
             <Link
+              href="/prompt-generator"
+              className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+            >
+              {t('promptGenerator', { default: 'Prompt Generator' })}
+            </Link>
+            <Link
               href="/dashboard"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
-              {t('removeWatermark')}
+              {t('removeWatermark', { default: 'Remove Watermark' })}
             </Link>
             <Link
               href="/video-generation"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
-              {t('videoGeneration')}
+              {t('videoGeneration', { default: 'Video Generation' })}
             </Link>
             <Link
               href="/blog"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
-              {t('blog')}
+              {t('blog', { default: 'Blog' })}
             </Link>
             <Link
               href="/pricing"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
-              {t('pricing')}
+              {t('pricing', { default: 'Pricing' })}
             </Link>
           </div>
 

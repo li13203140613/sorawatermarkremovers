@@ -1095,6 +1095,107 @@ CREDITS_COST = { VIDEO_WATERMARK_REMOVAL: 1, VIDEO_GENERATION_PRO: 2 }
 
 **维护者**: Claude AI
 **最后更新**: 2025-10-21
-**文档版本**: 2.1 (Phase 1 重构完成)
+**文档版本**: 2.2 (文档清理完成)
 
 如有任何问题，请联系项目维护者或查阅相关文档。
+
+---
+
+## 文档清理历史
+
+### 文档清理 (2025-10-21)
+
+#### 🎯 清理目标
+- 删除临时和已完成功能文档
+- 合并重复内容的文档
+- 归档设计资源
+- 保持项目文档简洁高效
+
+#### ❌ 删除的文档 (30+ 个文件)
+
+**临时总结文档**:
+- AI_VIDEO_GENERATION_SUMMARY.md
+- ADMIN_SETUP.md
+
+**设计稿和线框图**:
+- sora_prompt_wireframe (3).html
+- SORA2_PROMPT_WIREFRAME.md
+- SORA2_PROMPT_WIREFRAME_SIMPLE.md
+- SORA2_PROMPT_PAGE_COMPLETE.md
+
+**测试脚本**:
+- test_refactoring.py
+
+**开发过程文档**:
+- PLUGIN-IMPLEMENTATION-COMPLETE.md
+- BUTTON-INJECTION-FIX.md
+- SORA2_AUTOMATION_GUIDE.md
+- SORA2_CONTENT_PIPELINE.md
+- SORA2_CRAWLER_SOLUTION.md
+
+**临时 HTML 测试页面**:
+- data/sora-prompts-page.html
+- public/test-extension.html
+
+**Chrome 扩展冗余文档 (8个)**:
+- chrome-extension/CHROME_STORE_PUBLISH_GUIDE.md
+- chrome-extension/DEVELOPMENT_GUIDE.md
+- chrome-extension/FINAL-DESIGN.md
+- chrome-extension/icons/ICON_GUIDE.md
+- chrome-extension/icons/create-icons.html
+- chrome-extension/PRD.md
+- chrome-extension/RELOAD_INSTRUCTIONS.md
+- chrome-extension/UI-DESIGN.md
+- chrome-extension/WIREFRAME.md
+
+**部署和配置指南 (6个)**:
+- DEPLOYMENT_GUIDE.md
+- CLOUDFLARE_R2_INTEGRATION.md
+- R2_SETUP_GUIDE.md
+- AICODING_INTEGRATION.md
+- CRAWL_SORA_PROMPTS_GUIDE.md
+- scripts/TRANSLATE_GUIDE.md
+
+**Phase 1 分析报告 (2个)**:
+- 项目分析报告_代码复用建议.md
+- 项目分析报告_代码优化建议.md
+
+#### ✨ 创建/合并的文档
+
+**GOOGLE_AUTH.md** (新建):
+- 合并了 GOOGLE_ONE_TAP_SETUP.md
+- 合并了 GOOGLE_ONE_TAP_TESTING.md
+- 合并了 GOOGLE_ONE_TAP_LOCALHOST_FIX.md
+- 统一的 Google One Tap 登录完整指南
+
+#### 📦 归档的资源
+
+**archive/design/** (新建目录):
+- public/sora2-canvas-poster.html
+- public/sora2-poster.html
+- public/sora2-poster-philosophy.md
+- scripts/create-sora2-poster.py
+
+#### 📊 清理效果
+- **删除**: 30+ 个文件
+- **合并**: 3 个文档 → 1 个 (GOOGLE_AUTH.md)
+- **归档**: 4 个设计文件
+- **保留**: 核心文档 (CLAUDE.md, COMPONENT_RULES.md, GOOGLE_AUTH.md 等)
+- **文档结构**: 更简洁、更易维护
+
+#### 🎯 当前核心文档列表
+
+**必读文档**:
+- **CLAUDE.md** - 完整项目文档 (本文档)
+- **COMPONENT_RULES.md** - 组件使用规则
+- **GOOGLE_AUTH.md** - Google 登录完整指南
+
+**功能文档**:
+- **BLOG_AI_GUIDE.md** - 博客创建指南
+- **QUICK_START.md** - 快速开始
+- **TROUBLESHOOTING.md** - 故障排查
+- **seo.md** - SEO 优化
+
+**开发文档**:
+- **chrome-extension/README.md** - Chrome 扩展说明
+- **scripts/README.md** - 脚本工具说明

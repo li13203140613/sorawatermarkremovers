@@ -16,6 +16,7 @@
   "nav": {
     "home": "首页",
     "dashboard": "控制台",
+    "promptGenerator": "提示词生成器",
     "removeWatermark": "去水印",
     "videoGeneration": "视频生成",
     "blog": "博客",
@@ -24,6 +25,10 @@
     "logout": "退出登录"
   },
   "home": {
+    "hero": {
+      "title": "Sora AI 提示词免费生成器",
+      "subtitle": "您的 AI 驱动视频和内容创作平台"
+    },
     "title": "视频去水印",
     "subtitle": "一键去除 Sora2 视频水印",
     "getStarted": "开始使用",
@@ -133,6 +138,87 @@
     },
     "errors": {
       "failed": "支付失败，请重试"
+    }
+  },
+  "promptGenerator": {
+    "hero": {
+      "title": "使用我们的免费生成器创建令人惊叹的 Sora AI 视频提示词",
+      "subtitle": "在几秒钟内生成专业级 AI 视频提示词"
+    },
+    "form": {
+      "title": "开始使用 Sora 提示词生成器 - 输入您的视频创意",
+      "videoIdea": {
+        "label": "输入您的视频创意",
+        "placeholder": "示例：一只狗喝可乐"
+      },
+      "videoType": {
+        "label": "选择视频类型",
+        "placeholder": "-- 选择类型 --",
+        "animation": "动画",
+        "realistic": "写实",
+        "cartoon": "卡通",
+        "movie": "电影"
+      },
+      "promptCount": {
+        "label": "生成提示词数量",
+        "options": {
+          "1": "1 - 单个提示词",
+          "2": "2 - 两个变体",
+          "3": "3 - 三个变体",
+          "4": "4 - 四个变体",
+          "5": "5 - 五个变体",
+          "6": "6 - 六个变体",
+          "7": "7 - 七个变体",
+          "8": "8 - 八个变体",
+          "9": "9 - 九个变体"
+        }
+      },
+      "generate": "生成 AI 提示词",
+      "generating": "生成中..."
+    },
+    "results": {
+      "title": "您优化的 Sora AI 提示词结果 - 专业级 Sora 提示词",
+      "promptNumber": "提示词 #",
+      "copy": "复制",
+      "copied": "已复制！",
+      "share": "分享",
+      "download": "下载"
+    },
+    "gallery": {
+      "title": "最佳 Sora 提示词画廊 - 免费 AI 视频提示词库",
+      "subtitle": "浏览热门 Sora 提示词，获取最佳 Sora 提示词实践灵感"
+    },
+    "introduction": {
+      "title": "什么是 Sora 2？- 完整的 AI 视频生成器指南",
+      "subtitle": "Sora 2 AI 视频生成器 - OpenAI 最新技术",
+      "content": "Sora 2 是 OpenAI 最新推出的 AI 视频生成模型。您只需输入简单的文字描述，Sora 2 就能根据您的 Sora 提示词生成高质量的视频内容。无论是电影级特效、真实场景还是创意动画，我们的 Sora 提示词生成器都能帮您创建最完美的 Sora 提示词。"
+    },
+    "advantages": {
+      "title": "为什么选择 Sora-Prompt 提示词生成器？",
+      "speed": {
+        "title": "超快速 Sora 提示词生成",
+        "description": "仅需 3 秒生成专业级 Sora 提示词，比手动输入快 100 倍"
+      },
+      "customization": {
+        "title": "高度定制化提示词",
+        "description": "根据您的创意需求精确生成优化的 Sora AI 提示词"
+      },
+      "viral": {
+        "title": "走红内容优化",
+        "description": "AI 分析帮助您生成更容易走红的 Sora 视频提示词"
+      },
+      "free": {
+        "title": "100% 免费使用",
+        "description": "免费 Sora 提示词生成器，无需付费，无隐藏成本"
+      }
+    },
+    "faq": {
+      "title": "常见问题 - Sora 提示词生成器 FAQ"
+    },
+    "errors": {
+      "videoIdeaRequired": "请输入您的视频创意",
+      "videoTypeRequired": "请选择视频类型",
+      "generationFailed": "生成提示词失败，请重试。"
     }
   }
 }

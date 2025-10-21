@@ -16,6 +16,7 @@
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "promptGenerator": "Prompt Generator",
     "removeWatermark": "Remove Watermark",
     "videoGeneration": "Video Generation",
     "blog": "Blog",
@@ -24,6 +25,10 @@
     "logout": "Logout"
   },
   "home": {
+    "hero": {
+      "title": "Free Sora AI Prompt Generator",
+      "subtitle": "Your AI-powered video and content creation platform"
+    },
     "title": "Video Watermark Removal",
     "subtitle": "Remove watermarks from Sora2 videos with one click",
     "getStarted": "Get Started",
@@ -133,6 +138,87 @@
     },
     "errors": {
       "failed": "Payment failed, please try again"
+    }
+  },
+  "promptGenerator": {
+    "hero": {
+      "title": "Create Amazing Sora AI Video Prompts with Our Free Generator",
+      "subtitle": "Generate professional-grade AI video prompts in seconds"
+    },
+    "form": {
+      "title": "Start Using Sora Prompt Generator - Enter Your Video Idea",
+      "videoIdea": {
+        "label": "Enter Your Video Idea",
+        "placeholder": "Example: A dog drinks coke"
+      },
+      "videoType": {
+        "label": "Select Video Type",
+        "placeholder": "-- Select Type --",
+        "animation": "Animation",
+        "realistic": "Realistic",
+        "cartoon": "Cartoon",
+        "movie": "Movie"
+      },
+      "promptCount": {
+        "label": "Number of Prompts to Generate",
+        "options": {
+          "1": "1 - Single prompt",
+          "2": "2 - Two variations",
+          "3": "3 - Three variations",
+          "4": "4 - Four variations",
+          "5": "5 - Five variations",
+          "6": "6 - Six variations",
+          "7": "7 - Seven variations",
+          "8": "8 - Eight variations",
+          "9": "9 - Nine variations"
+        }
+      },
+      "generate": "Generate AI Prompt",
+      "generating": "Generating..."
+    },
+    "results": {
+      "title": "Your Optimized Sora AI Prompt Results - Professional Grade Sora Prompts",
+      "promptNumber": "Prompt #",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "share": "Share",
+      "download": "Download"
+    },
+    "gallery": {
+      "title": "Best Sora Prompts Gallery - Free AI Video Prompt Library",
+      "subtitle": "Browse popular Sora prompts and get inspiration for best Sora prompt practices"
+    },
+    "introduction": {
+      "title": "What is Sora 2? - Complete AI Video Generator Guide",
+      "subtitle": "Sora 2 AI Video Generator - OpenAI Latest Technology",
+      "content": "Sora 2 is the latest AI video generation model from OpenAI. You only need to enter a simple text description, and Sora 2 will generate high-quality video content based on your Sora prompt. Whether it's movie-level special effects, realistic scenes, or creative animations, our Sora prompt generator can help you create the perfect Sora prompts."
+    },
+    "advantages": {
+      "title": "Why Choose Sora-Prompt Prompt Generator?",
+      "speed": {
+        "title": "Ultra-Fast Sora Prompt Generation",
+        "description": "Generate professional-grade Sora prompts in just 3 seconds, 100x faster than manual input"
+      },
+      "customization": {
+        "title": "Highly Customized Prompts",
+        "description": "Generate optimized Sora AI prompts based on your creative needs"
+      },
+      "viral": {
+        "title": "Viral Content Optimization",
+        "description": "AI analysis helps you generate more viral-friendly Sora video prompts"
+      },
+      "free": {
+        "title": "100% Free to Use",
+        "description": "Free Sora prompt generator, no payment needed, no hidden costs"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions - Sora Prompt Generator FAQ"
+    },
+    "errors": {
+      "videoIdeaRequired": "Please enter your video idea",
+      "videoTypeRequired": "Please select a video type",
+      "generationFailed": "Failed to generate prompts. Please try again."
     }
   }
 }
