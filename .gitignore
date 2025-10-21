@@ -41,3 +41,10 @@ next-env.d.ts
 
 # claude
 .claude
+
+# test files (prevent committing test scripts with hardcoded credentials)
+test-*.js
+test-*.html
+check-task-status.js
+create-user-profile.js
+_archived_tests*/
