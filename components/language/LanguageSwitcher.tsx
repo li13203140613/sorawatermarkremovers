@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useTransition, useState } from 'react'
-import { locales, localeNames, type Locale } from '@/i18n'
+import { displayLocales, localeNames, type Locale } from '@/i18n'
 
 export default function LanguageSwitcher() {
   const router = useRouter()
@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
           />
           <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
-            {locales.map((locale) => (
+            {displayLocales.map((locale) => (
               <button
                 key={locale}
                 onClick={() => handleLanguageChange(locale)}

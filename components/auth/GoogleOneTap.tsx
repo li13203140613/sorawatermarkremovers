@@ -102,13 +102,23 @@ export function GoogleOneTap() {
 
   // 初始化 Google One Tap
   const initializeGoogleOneTap = useCallback(async () => {
-    if (!window.google || !isReady) return
+    console.log('[GoogleOneTap] Initializing...', {
+      hasGoogle: !!window.google,
+      isReady,
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+    })
+
+    if (!window.google || !isReady) {
+      console.log('[GoogleOneTap] Not ready yet')
+      return
+    }
 
     try {
       // 生成并存储 nonce
       const nonce = generateNonce()
       const hashedNonce = await hashNonce(nonce)
       sessionStorage.setItem('google_nonce', nonce)
+      console.log('[GoogleOneTap] Nonce generated')
 
       // 初始化 Google One Tap
       window.google.accounts.id.initialize({
@@ -119,24 +129,36 @@ export function GoogleOneTap() {
         nonce: hashedNonce,
         use_fedcm_for_prompt: true, // Chrome 隐私沙盒兼容
       })
+      console.log('[GoogleOneTap] Initialized successfully')
 
       // 显示 One Tap 提示
       window.google.accounts.id.prompt((notification) => {
+        console.log('[GoogleOneTap] Prompt callback triggered')
         if (notification.isNotDisplayed()) {
-          console.log('One Tap not displayed:', notification.getNotDisplayedReason())
+          console.warn('[GoogleOneTap] ⚠️ Not displayed:', notification.getNotDisplayedReason())
         } else if (notification.isSkippedMoment()) {
-          console.log('One Tap skipped:', notification.getSkippedReason())
+          console.warn('[GoogleOneTap] ⚠️ Skipped:', notification.getSkippedReason())
+        } else if (notification.isDismissedMoment()) {
+          console.warn('[GoogleOneTap] ⚠️ Dismissed:', notification.getDismissedReason())
+        } else if (notification.isDisplayed()) {
+          console.log('[GoogleOneTap] ✅ Displayed successfully!')
         }
       })
+      console.log('[GoogleOneTap] Prompt called')
     } catch (err) {
-      console.error('Failed to initialize Google One Tap:', err)
+      console.error('[GoogleOneTap] ❌ Failed to initialize:', err)
     }
   }, [isReady, generateNonce, hashNonce, handleCredentialResponse])
 
   // 组件挂载时初始化
   useEffect(() => {
+    console.log('[GoogleOneTap] useEffect triggered', { user: !!user, isReady })
+
     // 如果已登录，不显示 One Tap
-    if (user) return
+    if (user) {
+      console.log('[GoogleOneTap] User already logged in, skipping')
+      return
+    }
 
     if (isReady) {
       initializeGoogleOneTap()
@@ -144,6 +166,7 @@ export function GoogleOneTap() {
 
     // 清理函数
     return () => {
+      console.log('[GoogleOneTap] Cleanup')
       if (window.google) {
         window.google.accounts.id.cancel()
       }
@@ -151,9 +174,19 @@ export function GoogleOneTap() {
     }
   }, [user, isReady, initializeGoogleOneTap])
 
+  // Google One Tap 在 localhost 不工作,只在生产环境启用
+  const isProduction = typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    !window.location.hostname.startsWith('127.0.0.1')
+
   // 检查环境变量
   if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
     console.error('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured')
+    return null
+  }
+
+  if (!isProduction) {
+    console.log('[GoogleOneTap] Disabled in development environment (localhost)')
     return null
   }
 
