@@ -1,9 +1,11 @@
-import { PaymentPackages } from '@/components/payment'
-import { getTranslations } from 'next-intl/server'
+'use client'
 
-export default async function PricingPage() {
-  const t = await getTranslations('payment')
-  const tDashboard = await getTranslations('dashboard')
+import { PaymentPackages } from '@/components/payment'
+import { useTranslations } from 'next-intl'
+
+export default function PricingPage() {
+  const t = useTranslations('payment')
+  const tDashboard = useTranslations('dashboard')
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 flex flex-col">
