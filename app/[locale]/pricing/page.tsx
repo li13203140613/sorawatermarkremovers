@@ -1,9 +1,9 @@
 import { PaymentPackages } from '@/components/payment'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export default function PricingPage() {
-  const t = useTranslations('payment')
-  const tDashboard = useTranslations('dashboard')
+export default async function PricingPage() {
+  const t = await getTranslations('payment')
+  const tDashboard = await getTranslations('dashboard')
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 flex flex-col">
