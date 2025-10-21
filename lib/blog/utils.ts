@@ -60,41 +60,6 @@ export function getPostBySlug(slug: string, lang: Language): BlogPost | null {
   }
 }
 
-/**
- * 获取所有文章的 slug（用于静态生成）
- */
-export function getAllPostSlugs(lang: Language): string[] {
-  const langDir = path.join(contentDirectory, lang)
-
-  if (!fs.existsSync(langDir)) {
-    return []
-  }
-
-  const files = fs.readdirSync(langDir).filter(file => file.endsWith('.mdx'))
-  return files.map(filename => filename.replace('.mdx', ''))
-}
-
-/**
- * 根据标签筛选文章
- */
-export function getPostsByTag(tag: string, lang: Language): BlogPost[] {
-  const allPosts = getAllPosts(lang)
-  return allPosts.filter(post => post.tags.includes(tag))
-}
-
-/**
- * 搜索文章（标题、描述、标签）
- */
-export function searchPosts(query: string, lang: Language): BlogPost[] {
-  const allPosts = getAllPosts(lang)
-  const lowerQuery = query.toLowerCase()
-
-  return allPosts.filter(post =>
-    post.title.toLowerCase().includes(lowerQuery) ||
-    post.description.toLowerCase().includes(lowerQuery) ||
-    post.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
-  )
-}
 
 /**
  * 获取相关文章（基于标签）

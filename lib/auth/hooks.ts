@@ -59,37 +59,3 @@ export function useUserCredits() {
   return { credits, loading }
 }
 
-/**
- * 获取完整用户信息的 Hook
- */
-export function useUserProfile() {
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
-
-  useEffect(() => {
-    async function fetchProfile() {
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        setLoading(false)
-        return
-      }
-
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single()
-
-      if (!error && data) {
-        setProfile(data)
-      }
-      setLoading(false)
-    }
-
-    fetchProfile()
-  }, [supabase])
-
-  return { profile, loading }
-}
