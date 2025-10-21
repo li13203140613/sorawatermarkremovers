@@ -6,6 +6,14 @@ This file provides guidance to Claude Code when working with this codebase.
 
 | Date | Module | Changes | Scope | Note |
 |------|----------|----------|----------|------|
+| 2025-10-20 | Assets | Modified: sora2-canvas-poster.html | /c/Users/LILI/hongchuang/xiaohongshu-material-system/RemoveWM/public/sora2-canvas-poster.html | AI Auto |
+| 2025-10-20 | Other | Modified: create-sora2-poster.py | /c/Users/LILI/hongchuang/xiaohongshu-material-system/RemoveWM/scripts/create-sora2-poster.py | AI Auto |
+| 2025-10-20 | Assets | Modified: sora2-poster-philosophy.md | /c/Users/LILI/hongchuang/xiaohongshu-material-system/RemoveWM/public/sora2-poster-philosophy.md | AI Auto |
+| 2025-10-20 | Assets | Modified: sora2-poster.html | /c/Users/LILI/hongchuang/xiaohongshu-material-system/RemoveWM/public/sora2-poster.html | AI Auto |
+| 2025-10-20 | Assets | Modified: sora2-icon.svg | public/sora2-icon.svg | AI Auto |
+| 2025-10-19 | Components | Modified: IntlProvider.tsx | components/providers/IntlProvider.tsx | AI Auto |
+| 2025-10-19 | Other | Modified: providers.tsx | app/[locale]/providers.tsx | AI Auto |
+| 2025-10-18 | Other | Modified: LayoutContent.tsx | app/[locale]/LayoutContent.tsx | AI Auto |
 | 2025-10-18 | Library | Modified: navigation.ts | lib/navigation.ts | AI Auto |
 | 2025-10-18 | Docs | Modified: QUICK_START.md | QUICK_START.md | AI Auto |
 | 2025-10-18 | Docs | Modified: SORA2_AUTOMATION_GUIDE.md | SORA2_AUTOMATION_GUIDE.md | AI Auto |

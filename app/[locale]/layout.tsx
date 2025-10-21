@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import "../globals.css";
 import "@/styles/blog.css";
 import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
+import { IntlProvider } from '@/components/providers/IntlProvider';
 
 export const metadata: Metadata = {
   title: "Sora2 Video HD Free Watermark Removal Tool",
@@ -38,8 +37,8 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // 获取翻译消息
-  const messages = await getMessages({ locale });
+  // 直接导入翻译文件，避免使用 getMessages() 导致客户端组件问题
+  const messages = (await import(`@/messages/${locale}.json`)).default;
 
   return (
     <html lang={locale}>
@@ -69,7 +68,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <IntlProvider messages={messages} locale={locale}>
           <ClientProviders>
             <div className="min-h-screen flex flex-col">
               <ClientNavBar />
@@ -78,7 +77,7 @@ export default async function LocaleLayout({
               </main>
             </div>
           </ClientProviders>
-        </NextIntlClientProvider>
+        </IntlProvider>
       </body>
     </html>
   );

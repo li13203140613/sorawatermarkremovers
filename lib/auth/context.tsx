@@ -55,9 +55,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async (customRedirect?: string) => {
     try {
+      // 获取当前 locale (从 URL 路径中提取, 例如 /en 或 /zh)
+      const locale = window.location.pathname.split('/')[1] || 'en'
+
       const redirectTo = customRedirect
         ? `${window.location.origin}${customRedirect}`
-        : `${window.location.origin}/auth/callback`
+        : `${window.location.origin}/${locale}/auth/callback`
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
