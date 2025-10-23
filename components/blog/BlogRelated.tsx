@@ -33,7 +33,7 @@ export default function BlogRelated({ posts, lang }: BlogRelatedProps) {
             href={`/blog/${post.slug}?lang=${lang}`}
             className="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-shadow"
           >
-            <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+            <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400">
               {post.title}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">

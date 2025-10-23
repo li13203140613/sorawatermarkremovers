@@ -198,17 +198,12 @@ Actions:
 
 Sound: Rain pattering, ticking clock, soft mechanical hum, faint bulb sizzle`;
 
-  // 用户输入（组合用户提供的所有信息）
+  // scene已经是完整的结构化prompt，直接使用
   let userPrompt = input.scene;
 
-  // 如果用户提供了额外参数，添加到描述中
-  const additionalInfo: string[] = [];
-  if (input.style) additionalInfo.push(`风格：${input.style}`);
-  if (input.duration) additionalInfo.push(`时长：${input.duration}`);
-  if (input.mood) additionalInfo.push(`氛围：${input.mood}`);
-
-  if (additionalInfo.length > 0) {
-    userPrompt += '\n\n' + additionalInfo.join('\n');
+  // 只添加时长（如果有）
+  if (input.duration) {
+    userPrompt += `\n时长：${input.duration}`;
   }
 
   const messages = [
@@ -219,20 +214,17 @@ Sound: Rain pattering, ticking clock, soft mechanical hum, faint bulb sizzle`;
   try {
     const temperature = input.temperature ?? 0.8; // 默认温度0.8
 
-    // 📤 日志：发送的请求
-    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('📤 [DeepSeek API] 发送请求');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('🎯 用户输入:');
-    console.log(`   场景: ${input.scene}`);
-    if (input.style) console.log(`   风格: ${input.style}`);
-    if (input.duration) console.log(`   时长: ${input.duration}`);
-    if (input.mood) console.log(`   氛围: ${input.mood}`);
-    console.log(`   语言: ${input.language || 'zh'}`);
-    console.log(`   温度: ${temperature}`);
-    console.log('\n📝 完整用户提示词:');
+    // 🔍 日志：完整的DeepSeek API请求参数
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🤖 [DeepSeek API] 请求详情');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📤 完整Prompt:\n');
     console.log(userPrompt);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+    console.log('\n🎛️ 参数:');
+    console.log(`   模型: ${MODEL}`);
+    console.log(`   温度: ${temperature}`);
+    console.log(`   最大Token: 800`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
 
     const response = await callDeepSeekAPI(messages, 800, temperature);
 

@@ -49,7 +49,7 @@ export default function LogsFilter({ filter, onChange }: Props) {
         />
         <button
           onClick={handleSearch}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
         >
           搜索
         </button>
@@ -69,7 +69,7 @@ export default function LogsFilter({ filter, onChange }: Props) {
             onClick={() => handleStatusChange('all')}
             className={`px-3 py-1 text-sm rounded ${
               filter.status === 'all'
-                ? 'bg-blue-600 text-white'
+                ? 'bg-purple-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >

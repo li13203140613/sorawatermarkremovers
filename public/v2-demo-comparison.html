@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator - V2 vs Production 对比</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .page-frame {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .frame-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 20px;
+      font-weight: 600;
+    }
+
+    .frame-header.v2 {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .frame-info {
+      background: #f8f9fa;
+      padding: 12px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .frame-info strong {
+      color: #333;
+    }
+
+    .url-link {
+      display: block;
+      padding: 10px 20px;
+      background: #fff;
+      border-bottom: 2px solid #e0e0e0;
+      text-decoration: none;
+      color: #667eea;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .url-link:hover {
+      background: #f0f0f0;
+    }
+
+    .url-link.v2 {
+      color: #f5576c;
+    }
+
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+    }
+
+    .features {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .features h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .feature-column h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .feature-column.v2 h3 {
+      color: #f5576c;
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .feature-list li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    .highlight {
+      background: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    .note {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      border-radius: 4px;
+    }
+
+    .note strong {
+      color: #1976d2;
+    }
+
+    @media (max-width: 1200px) {
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+
+      iframe {
+        height: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎨 Prompt Generator - V2 演示 vs 生产版本对比</h1>
+
+    <div class="comparison">
+      <!-- V2 Demo Page -->
+      <div class="page-frame">
+        <div class="frame-header v2">
+          ✨ V2 演示页面 (V0 风格)
+        </div>
+        <div class="frame-info">
+          <strong>状态:</strong> 演示页面（纯前端，不调用 API）<br>
+          <strong>特点:</strong> 基于 V0 生成的设计，使用 shadcn/ui 组件
+        </div>
+        <a href="http://localhost:3000/zh/prompt-v2" target="_blank" class="url-link v2">
+          🔗 在新标签页打开: http://localhost:3000/zh/prompt-v2
+        </a>
+        <iframe src="http://localhost:3000/zh/prompt-v2"></iframe>
+      </div>
+
+      <!-- Production Page -->
+      <div class="page-frame">
+        <div class="frame-header">
+          🚀 生产页面 (当前版本)
+        </div>
+        <div class="frame-info">
+          <strong>状态:</strong> 生产环境<br>
+          <strong>特点:</strong> 完整功能，集成 DeepSeek API
+        </div>
+        <a href="http://localhost:3000/zh/prompt-generator" target="_blank" class="url-link">
+          🔗 在新标签页打开: http://localhost:3000/zh/prompt-generator
+        </a>
+        <iframe src="http://localhost:3000/zh/prompt-generator"></iframe>
+      </div>
+    </div>
+
+    <div class="features">
+      <h2>📊 核心差异对比</h2>
+      <div class="feature-grid">
+        <div class="feature-column v2">
+          <h3>✨ V2 演示版 (左侧)</h3>
+          <ul class="feature-list">
+            <li><span class="highlight">Tabs 组件</span> - shadcn/ui 标签切换</li>
+            <li><span class="highlight">响应式网格</span> - 2/3/4 列自适应布局</li>
+            <li><span class="highlight">32×32px 按钮</span> - 紧凑的数量控件 (h-8 w-8)</li>
+            <li><span class="highlight">语义化颜色</span> - primary/secondary/muted 系统</li>
+            <li><span class="highlight">lucide-react 图标</span> - Film, Mountain, User 等组件</li>
+            <li><span class="highlight">bg-secondary/30</span> - 半透明背景设计</li>
+            <li><span class="highlight">text-2xl</span> - 数量显示字体 (非 3xl)</li>
+            <li><span class="highlight">min-h-[160px]</span> - 固定文本框高度</li>
+          </ul>
+        </div>
+
+        <div class="feature-column">
+          <h3>🚀 生产版 (右侧)</h3>
+          <ul class="feature-list">
+            <li>自定义模式切换按钮</li>
+            <li>4+3 对称网格布局</li>
+            <li>48×48px 按钮 (w-12 h-12)</li>
+            <li>传统颜色系统 (灰色为主)</li>
+            <li>Emoji + Font Awesome 图标</li>
+            <li>实心背景设计</li>
+            <li>text-3xl 数量显示</li>
+            <li>rows={5} 文本框</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>💡 关键改进点:</strong><br>
+        • V2 版本的按钮从 48×48px 减小到 32×32px，更紧凑<br>
+        • 使用响应式网格 (sm:grid-cols-3 md:grid-cols-4) 替代固定布局<br>
+        • 采用 shadcn/ui Tabs 组件，UI 更统一<br>
+        • 语义化颜色系统，主题切换更容易
+      </div>
+    </div>
+
+    <div class="note" style="margin-top: 20px; background: #f3e5f5; border-color: #9c27b0;">
+      <strong>📋 下一步操作:</strong><br>
+      1. 在浏览器中对比两个页面的视觉效果<br>
+      2. 确认 V2 演示版符合您的预期<br>
+      3. 确认后，我将把 V2 的设计应用到生产页面<br>
+      4. 删除 sora-tools-optimized 临时文件夹
+    </div>
+  </div>
+
+</body>
+</html>

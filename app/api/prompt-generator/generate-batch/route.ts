@@ -25,51 +25,68 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 验证生成数量
+    // 验证生成数量（循环次数，1-5次）
     const count = body.count || 1;
-    if (![1, 3, 5].includes(count)) {
-      console.error(`❌ 验证失败: 无效的数量 ${count}`);
+    if (count < 1 || count > 5) {
+      console.error(`❌ 验证失败: 无效的数量 ${count}，必须在 1-5 之间`);
       return NextResponse.json(
-        { error: 'Count must be 1, 3, or 5' },
+        { error: 'Count must be between 1 and 5' },
         { status: 400 }
       );
     }
+    console.log(`✅ 生成数量: ${count} 个（将调用 ${count} 次 DeepSeek API）\n`);
 
-    // 获取分类配置
-    let categoryStyle = '';
-    let categoryMood = '';
-    if (body.category) {
+    // 使用前端传来的风格名称（优先）或从配置获取
+    let styleName = body.style || '';
+
+    if (!styleName && body.category) {
       const categoryConfig = getCategoryByKey(body.category);
       if (categoryConfig) {
-        categoryStyle = categoryConfig.style;
-        categoryMood = categoryConfig.defaultMood;
-        console.log(`✅ 使用分类: ${categoryConfig.label} (${body.category})`);
-        console.log(`   风格: ${categoryStyle}`);
-        console.log(`   氛围: ${categoryMood}\n`);
+        styleName = categoryConfig.label;
       }
     }
 
+    if (styleName) {
+      console.log(`✅ 使用风格: ${styleName} (${body.category || '未指定'})\n`);
+    }
+
+    // 构建结构化的prompt
+    const structuredPrompt = styleName
+      ? `风格：${styleName}\n写入提示词是：${body.scene}`
+      : `写入提示词是：${body.scene}`;
+
     // 构建基础输入参数
     const baseInput: SoraPromptInput = {
-      scene: body.scene,
-      style: body.style || categoryStyle || undefined,
+      scene: structuredPrompt,
+      style: undefined,
       duration: body.duration,
-      mood: body.mood || categoryMood || undefined,
+      mood: undefined,
       language: body.language || 'zh'
     };
 
     // 温度值设置（用于生成多样性）
-    const temperatures = count === 1
-      ? [0.8]
-      : count === 3
-        ? [0.7, 0.8, 0.9]
-        : [0.7, 0.75, 0.8, 0.85, 0.9];
+    // 为每次生成设置不同的温度，增加结果多样性
+    const baseTemperature = body.temperature || 0.8;
+    const temperatures: number[] = [];
 
-    console.log(`🎲 温度设置: [${temperatures.slice(0, count).join(', ')}]`);
-    console.log(`🚀 开始生成 ${count} 个提示词...\n`);
+    for (let i = 0; i < count; i++) {
+      // 在基础温度附近浮动 ±0.1
+      const variation = (i - Math.floor(count / 2)) * 0.05;
+      temperatures.push(Math.max(0.1, Math.min(1.0, baseTemperature + variation)));
+    }
 
-    // 批量生成提示词
-    const generatePromises = temperatures.slice(0, count).map(async (temperature, index) => {
+    console.log(`🎲 温度设置: [${temperatures.join(', ')}]`);
+
+    // 📤 显示发送给DeepSeek的完整内容
+    console.log('\n📤 发送给DeepSeek的完整内容:');
+    console.log('─'.repeat(50));
+    console.log(structuredPrompt);
+    console.log('─'.repeat(50));
+
+    console.log(`\n🚀 开始生成 ${count} 个提示词（每次独立调用 DeepSeek API）...\n`);
+
+    // 批量生成提示词 - 每次独立调用
+    const generatePromises = temperatures.map(async (temperature, index) => {
       console.log(`⏳ [提示词 #${index + 1}] 开始生成 (温度: ${temperature})...`);
 
       try {

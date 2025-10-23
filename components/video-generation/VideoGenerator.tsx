@@ -353,98 +353,77 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
 
                 {/* 模型选择 - 左右布局 */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <span className="text-xl">📹</span>
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     视频模型
                   </label>
                   <div className="grid grid-cols-2 gap-3">
-                    <label className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                      model === 'sora2'
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}>
-                      <input
-                        type="radio"
-                        name="model"
-                        value="sora2"
-                        checked={model === 'sora2'}
-                        onChange={(e) => setModel(e.target.value as 'sora2')}
-                        disabled={loading}
-                        className="hidden"
-                      />
-                      <div className="text-center">
-                        <div className="font-bold text-gray-800 mb-2">标准版</div>
-                        <div className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
-                          1 积分/个
-                        </div>
-                      </div>
-                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setModel('sora2')}
+                      disabled={loading}
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                        model === 'sora2'
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      }`}
+                    >
+                      <div className={`font-bold ${model === 'sora2' ? 'text-white' : 'text-gray-800'}`}>有水印版</div>
+                    </button>
 
-                    <label className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                      model === 'sora2-unwm'
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}>
-                      <input
-                        type="radio"
-                        name="model"
-                        value="sora2-unwm"
-                        checked={model === 'sora2-unwm'}
-                        onChange={(e) => setModel(e.target.value as 'sora2-unwm')}
-                        disabled={loading}
-                        className="hidden"
-                      />
-                      <div className="text-center">
-                        <div className="font-bold text-gray-800 mb-2">专业版</div>
-                        <div className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
-                          2 积分/个
-                        </div>
-                      </div>
-                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setModel('sora2-unwm')}
+                      disabled={loading}
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                        model === 'sora2-unwm'
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      }`}
+                    >
+                      <div className={`font-bold ${model === 'sora2-unwm' ? 'text-white' : 'text-gray-800'}`}>去水印版</div>
+                    </button>
                   </div>
                 </div>
 
                 {/* 生成数量选择 - 紧凑版 */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                    <span className="text-xl">🎬</span>
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     生成数量
                   </label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
                       onClick={() => setVideoCount(1)}
                       disabled={loading}
-                      className={`p-2 border-2 rounded-lg text-sm font-medium transition-all ${
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
                         videoCount === 1
-                          ? 'border-purple-500 bg-purple-50 text-purple-800'
-                          : 'border-gray-200 hover:border-purple-300 text-gray-700'
-                      } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                      1个视频 ({creditsPerVideo}积分)
+                      <div className={`font-bold ${videoCount === 1 ? 'text-white' : 'text-gray-800'}`}>1个</div>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setVideoCount(6)}
                       disabled={loading}
-                      className={`p-2 border-2 rounded-lg text-sm font-medium transition-all ${
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
                         videoCount === 6
-                          ? 'border-purple-500 bg-purple-50 text-purple-800'
-                          : 'border-gray-200 hover:border-purple-300 text-gray-700'
-                      } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                      6个视频 ({creditsPerVideo * 6}积分)
+                      <div className={`font-bold ${videoCount === 6 ? 'text-white' : 'text-gray-800'}`}>6个</div>
                     </button>
                   </div>
                 </div>
 
-                {/* 提示词输入与图片上传 - 左右布局 */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 提示词输入与图片上传 - 上下布局 */}
+                <div className="grid grid-cols-1 gap-4">
                   {/* 左侧：提示词 */}
                   <div className="md:col-span-1">
-                    <label className="block text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                      <span className="text-xl">✍️</span>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">
                       视频描述
                     </label>
                     <textarea
@@ -462,8 +441,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
 
                   {/* 右侧：图片上传 */}
                   <div className="md:col-span-1">
-                    <label className="block text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                      <span className="text-xl">🖼️</span>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">
                       参考图片（可选）
                     </label>
 
@@ -514,7 +492,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                   <button
                     type="submit"
                     disabled={loading || !prompt || !isLoggedIn || credits < requiredCredits}
-                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {loading ? (
                       <span className="flex items-center justify-center gap-2">
@@ -633,7 +611,7 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                     {taskStatuses.map((task, index) => (
                       task.status === 'completed' && task.result?.output_url && (
                         <div key={taskIds[index]} className="rounded-2xl overflow-hidden shadow-xl bg-white">
-                          <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500">
+                          <div className="p-3 bg-gradient-to-r from-purple-500 to-indigo-500">
                             <p className="text-white font-bold text-sm text-center">视频 #{index + 1}</p>
                           </div>
 

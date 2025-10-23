@@ -21,7 +21,7 @@ export function UserProfile() {
 
       <div className="text-center px-4 border-l">
         <p className="text-sm text-gray-600">{tCommon('credits')}</p>
-        <p className="text-xl font-bold text-blue-600">
+        <p className="text-xl font-bold text-purple-600">
           {loading ? '...' : credits ?? 0}
         </p>
       </div>

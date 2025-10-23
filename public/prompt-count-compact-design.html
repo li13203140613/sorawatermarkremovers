@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成数量控件 - 紧凑版设计对比</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #1f2937;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .design-card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .design-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .status.current {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .status.new {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* 当前版本 - 大按钮 */
+    .current-design {
+      background: #fafafa;
+      padding: 24px;
+      border-radius: 10px;
+      border: 2px solid #e5e5e5;
+    }
+
+    .current-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .current-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .current-btn {
+      width: 48px;
+      height: 48px;
+      border: 2px solid #8b5cf6;
+      border-radius: 8px;
+      background: white;
+      color: #8b5cf6;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .current-btn:hover:not(:disabled) {
+      background: #8b5cf6;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .current-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .current-display {
+      min-width: 80px;
+      height: 56px;
+      background: white;
+      border: 3px solid #8b5cf6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #8b5cf6;
+    }
+
+    /* 紧凑版本 - 小按钮 */
+    .compact-design {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #e5e5e5;
+    }
+
+    .compact-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .compact-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .compact-btn {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #8b5cf6;
+      border-radius: 6px;
+      background: white;
+      color: #8b5cf6;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .compact-btn:hover:not(:disabled) {
+      background: #8b5cf6;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .compact-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .compact-display {
+      min-width: 60px;
+      height: 40px;
+      background: #f9fafb;
+      border: 2px solid #8b5cf6;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #8b5cf6;
+    }
+
+    /* 尺寸对比表格 */
+    .size-comparison {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 40px;
+    }
+
+    .size-comparison h3 {
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .highlight {
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .recommendation {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 40px;
+    }
+
+    .recommendation h3 {
+      color: #1e40af;
+      margin-bottom: 12px;
+    }
+
+    .recommendation ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .recommendation li {
+      margin-bottom: 8px;
+      padding-left: 24px;
+      position: relative;
+      color: #1e3a8a;
+    }
+
+    .recommendation li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎨 生成数量控件 - 设计对比</h1>
+
+    <div class="comparison">
+      <!-- 当前版本 -->
+      <div class="design-card">
+        <h2 class="design-title">
+          当前版本
+          <span class="status current">线上</span>
+        </h2>
+
+        <div class="current-design">
+          <div class="current-label">生成提示词数量</div>
+          <div class="current-control">
+            <button class="current-btn" id="currentDec">−</button>
+            <div class="current-display" id="currentCount">3</div>
+            <button class="current-btn" id="currentInc">+</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 16px; background: #fef2f2; border-radius: 8px; border: 2px solid #ef4444;">
+          <p style="color: #991b1b; font-size: 14px; font-weight: 600; margin-bottom: 8px;">❌ 问题：</p>
+          <ul style="color: #7f1d1d; font-size: 13px; line-height: 1.6; padding-left: 20px;">
+            <li>按钮太大 (48x48px)</li>
+            <li>数字显示框太大 (80x56px)</li>
+            <li>整体视觉重量过重</li>
+            <li>占用过多垂直空间</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 紧凑版本 -->
+      <div class="design-card">
+        <h2 class="design-title">
+          紧凑版本
+          <span class="status new">推荐</span>
+        </h2>
+
+        <div class="compact-design">
+          <div class="compact-label">生成提示词数量</div>
+          <div class="compact-control">
+            <button class="compact-btn" id="compactDec">−</button>
+            <div class="compact-display" id="compactCount">3</div>
+            <button class="compact-btn" id="compactInc">+</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 16px; background: #f0fdf4; border-radius: 8px; border: 2px solid #22c55e;">
+          <p style="color: #166534; font-size: 14px; font-weight: 600; margin-bottom: 8px;">✅ 优势：</p>
+          <ul style="color: #15803d; font-size: 13px; line-height: 1.6; padding-left: 20px;">
+            <li>按钮适中 (32x32px) <strong>减少33%</strong></li>
+            <li>数字框紧凑 (60x40px) <strong>减少46%</strong></li>
+            <li>视觉更轻盈，不抢眼</li>
+            <li>节省垂直空间</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 尺寸对比表格 -->
+    <div class="size-comparison">
+      <h3>📐 详细尺寸对比</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>元素</th>
+            <th>当前版本</th>
+            <th>紧凑版本</th>
+            <th>减少幅度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>按钮尺寸</td>
+            <td>48 × 48 px</td>
+            <td>32 × 32 px</td>
+            <td><span class="highlight">-33%</span></td>
+          </tr>
+          <tr>
+            <td>数字显示框</td>
+            <td>80 × 56 px</td>
+            <td>60 × 40 px</td>
+            <td><span class="highlight">-46%</span></td>
+          </tr>
+          <tr>
+            <td>数字字号</td>
+            <td>32px (text-3xl)</td>
+            <td>24px (text-2xl)</td>
+            <td><span class="highlight">-25%</span></td>
+          </tr>
+          <tr>
+            <td>按钮字号</td>
+            <td>24px</td>
+            <td>16px</td>
+            <td><span class="highlight">-33%</span></td>
+          </tr>
+          <tr>
+            <td>间距 (gap)</td>
+            <td>16px</td>
+            <td>12px</td>
+            <td><span class="highlight">-25%</span></td>
+          </tr>
+          <tr>
+            <td>外层 padding</td>
+            <td>24px</td>
+            <td>20px</td>
+            <td><span class="highlight">-17%</span></td>
+          </tr>
+          <tr>
+            <td>边框粗细</td>
+            <td>3px (数字框)</td>
+            <td>2px</td>
+            <td><span class="highlight">-33%</span></td>
+          </tr>
+          <tr>
+            <td><strong>总高度估算</strong></td>
+            <td><strong>~130px</strong></td>
+            <td><strong>~100px</strong></td>
+            <td><span class="highlight">-23%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 推荐方案 -->
+    <div class="recommendation">
+      <h3>💡 推荐实施方案</h3>
+      <ul>
+        <li>使用紧凑版设计，整体更协调</li>
+        <li>保持所有交互逻辑不变（+/− 按钮、禁用状态）</li>
+        <li>背景色从灰色 (#fafafa) 改为白色，边框改为浅色 (#e5e5e5)</li>
+        <li>数字显示框背景使用浅灰 (#f9fafb) 增加层次感</li>
+        <li>减少视觉重量，让"生成提示词"按钮更突出</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    // 当前版本交互
+    let currentCount = 3;
+    const currentDec = document.getElementById('currentDec');
+    const currentInc = document.getElementById('currentInc');
+    const currentDisplay = document.getElementById('currentCount');
+
+    function updateCurrent() {
+      currentDisplay.textContent = currentCount;
+      currentDec.disabled = currentCount <= 1;
+      currentInc.disabled = currentCount >= 5;
+    }
+
+    currentDec.addEventListener('click', () => {
+      if (currentCount > 1) {
+        currentCount--;
+        updateCurrent();
+      }
+    });
+
+    currentInc.addEventListener('click', () => {
+      if (currentCount < 5) {
+        currentCount++;
+        updateCurrent();
+      }
+    });
+
+    updateCurrent();
+
+    // 紧凑版本交互
+    let compactCount = 3;
+    const compactDec = document.getElementById('compactDec');
+    const compactInc = document.getElementById('compactInc');
+    const compactDisplay = document.getElementById('compactCount');
+
+    function updateCompact() {
+      compactDisplay.textContent = compactCount;
+      compactDec.disabled = compactCount <= 1;
+      compactInc.disabled = compactCount >= 5;
+    }
+
+    compactDec.addEventListener('click', () => {
+      if (compactCount > 1) {
+        compactCount--;
+        updateCompact();
+      }
+    });
+
+    compactInc.addEventListener('click', () => {
+      if (compactCount < 5) {
+        compactCount++;
+        updateCompact();
+      }
+    });
+
+    updateCompact();
+  </script>
+
+</body>
+</html>

@@ -26,7 +26,7 @@ export const MDXComponents = {
   a: ({ children, href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <Link
       href={href || '#'}
-      className="text-blue-600 hover:text-blue-800 underline dark:text-blue-400"
+      className="text-purple-600 hover:text-purple-800 underline dark:text-purple-400"
       {...props}
     >
       {children}
@@ -65,7 +65,7 @@ export const MDXComponents = {
   ),
   blockquote: ({ children, ...props }: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="border-l-4 border-blue-500 pl-4 italic my-4 text-gray-600 dark:text-gray-400"
+      className="border-l-4 border-purple-500 pl-4 italic my-4 text-gray-600 dark:text-gray-400"
       {...props}
     >
       {children}

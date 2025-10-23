@@ -32,7 +32,7 @@ export default function VideoTaskCard({ task, index, onDownload, onRetry }: Vide
         );
       case 'creating':
         return (
-          <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">
+          <span className="inline-flex items-center gap-1 bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs font-semibold">
             <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -84,7 +84,7 @@ export default function VideoTaskCard({ task, index, onDownload, onRetry }: Vide
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-purple-200 transition-all">
       {/* 卡片头部 */}
-      <div className="bg-gradient-to-r from-purple-50 to-blue-50 px-4 py-3 border-b border-gray-100">
+      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-3 border-b border-gray-100">
         <div className="flex items-center justify-between">
           <span className="text-sm font-bold text-gray-700">视频 #{index + 1}</span>
           {getStatusBadge()}
@@ -178,7 +178,7 @@ export default function VideoTaskCard({ task, index, onDownload, onRetry }: Vide
                     navigator.clipboard.writeText(task.videoUrl || '');
                     alert('✅ 视频链接已复制！');
                   }}
-                  className="flex-shrink-0 text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                  className="flex-shrink-0 text-xs px-2 py-1 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors"
                   title="复制链接"
                 >
                   📋

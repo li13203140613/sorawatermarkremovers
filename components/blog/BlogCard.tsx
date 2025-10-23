@@ -36,7 +36,7 @@ export default function BlogCard({ post, lang }: BlogCardProps) {
         </div>
 
         <Link href={`/blog/${post.slug}?lang=${lang}`}>
-          <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
             {post.title}
           </h2>
         </Link>
@@ -50,7 +50,7 @@ export default function BlogCard({ post, lang }: BlogCardProps) {
             {post.tags.slice(0, 3).map(tag => (
               <span
                 key={tag}
-                className="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
+                className="px-3 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full"
               >
                 {tag}
               </span>
@@ -59,7 +59,7 @@ export default function BlogCard({ post, lang }: BlogCardProps) {
 
           <Link
             href={`/blog/${post.slug}?lang=${lang}`}
-            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium text-sm transition-colors"
+            className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 font-medium text-sm transition-colors"
           >
             {text.readMore} →
           </Link>

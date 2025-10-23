@@ -102,7 +102,7 @@ export default function VideoTestPage() {
                   setTestVideos([...testVideos, url]);
                   setVideoUrl('');
                 }}
-                className="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
+                className="px-3 py-1 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors"
               >
                 示例 {i + 1}
               </button>
@@ -133,9 +133,9 @@ export default function VideoTestPage() {
         </div>
 
         {/* 缓存说明 */}
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 mb-8">
-          <h3 className="font-bold text-blue-800 mb-2">💡 使用说明:</h3>
-          <ul className="text-sm text-blue-700 space-y-1">
+        <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4 mb-8">
+          <h3 className="font-bold text-purple-800 mb-2">💡 使用说明:</h3>
+          <ul className="text-sm text-purple-700 space-y-1">
             <li>1. 粘贴视频URL并点击&quot;添加&quot;</li>
             <li>2. 首次加载会显示加载时间 (5-10秒)</li>
             <li>3. 点击&quot;刷新页面&quot;按钮重新加载</li>
@@ -167,7 +167,7 @@ export default function VideoTestPage() {
                   className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-gray-100 hover:border-purple-200 transition-all"
                 >
                   {/* 卡片头部 */}
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 px-4 py-3 border-b border-gray-100">
+                  <div className="bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-3 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-bold text-gray-700">
                         视频 #{index + 1}
@@ -210,7 +210,7 @@ export default function VideoTestPage() {
                           video.src = `/api/video/proxy?url=${encodeURIComponent(url)}`;
                           video.load();
                         }}
-                        className="flex-1 px-3 py-2 bg-blue-500 text-white rounded-lg text-xs font-semibold hover:bg-blue-600 transition-colors"
+                        className="flex-1 px-3 py-2 bg-purple-500 text-white rounded-lg text-xs font-semibold hover:bg-purple-600 transition-colors"
                       >
                         🔄 重新加载
                       </button>
@@ -263,8 +263,8 @@ export default function VideoTestPage() {
                 </div>
                 <div className="text-sm text-gray-600 mt-1">网络加载</div>
               </div>
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <div className="text-3xl font-bold text-blue-600">
+              <div className="text-center p-4 bg-purple-50 rounded-lg">
+                <div className="text-3xl font-bold text-purple-600">
                   {loadTimes.size > 0
                     ? Math.round(
                         Array.from(loadTimes.values()).reduce((a, b) => a + b, 0) /

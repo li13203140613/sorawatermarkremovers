@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator 布局 V2 - 线框图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 896px; /* max-w-4xl */
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* 标题区域 */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* 分类选择区域 */
+    .categories {
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 32px;
+      background: #fafafa;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .category-btn {
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-btn:hover {
+      border-color: #999;
+    }
+
+    .category-btn.active {
+      border: 2px solid #8b5cf6;
+      background: #f5f3ff;
+      color: #8b5cf6;
+      font-weight: 600;
+    }
+
+    .category-bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    /* 模式切换 - 居中显示 */
+    .mode-toggle-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+      padding: 20px 0;
+      border: 3px solid #ff6b6b;
+      border-radius: 8px;
+      background: #fff5f5;
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .mode-btn {
+      padding: 12px 32px;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    }
+
+    .annotation {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff6b6b;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .mode-toggle-wrapper {
+      position: relative;
+    }
+
+    /* 表单区域 */
+    .form-section {
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 24px;
+      background: #fafafa;
+    }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      border: 2px dashed #ccc;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: white;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* 生成数量选择 */
+    .count-selector {
+      margin: 24px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid #e5e5e5;
+    }
+
+    .count-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .count-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .count-option {
+      border: 2px dashed #ccc;
+      border-radius: 6px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      background: white;
+    }
+
+    /* 操作按钮 */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      flex: 1;
+      padding: 14px;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      padding: 14px 24px;
+      background: white;
+      color: #666;
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* 注释标签 */
+    .note {
+      position: absolute;
+      background: #22c55e;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .note::after {
+      content: '';
+      position: absolute;
+      border: 6px solid transparent;
+    }
+
+    .note.top::after {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: #22c55e;
+    }
+
+    .note.left::after {
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 页面标题 -->
+    <div class="header">
+      <h2>选择提示风格</h2>
+      <p>从下方选择一个分类开始创作</p>
+    </div>
+
+    <!-- 分类选择区域 -->
+    <div class="categories">
+      <div class="category-title">选择提示风格</div>
+
+      <div class="category-grid">
+        <div class="category-btn">🎬 电影叙事</div>
+        <div class="category-btn">🌄 自然风光</div>
+        <div class="category-btn">👤 人物肖像</div>
+        <div class="category-btn">📦 产品展示</div>
+      </div>
+
+      <div class="category-bottom">
+        <div class="category-btn active">⚡ 动作运动</div>
+        <div class="category-btn">🎨 抽象艺术</div>
+        <div class="category-btn">📸 生活记录</div>
+      </div>
+    </div>
+
+    <!-- 模式切换 - 居中显示 -->
+    <div class="mode-toggle-wrapper">
+      <div class="annotation">✅ 放中间 - 居中显示</div>
+      <div class="mode-toggle">
+        <button class="mode-btn active">快速模式</button>
+        <button class="mode-btn">专业模式</button>
+      </div>
+    </div>
+
+    <!-- 表单区域 -->
+    <div class="form-section">
+
+      <!-- 创意描述 -->
+      <div class="form-field">
+        <label class="form-label">描述您的创意 <span style="color: #ef4444;">*</span></label>
+        <textarea
+          class="form-textarea"
+          placeholder="例如：一只橘猫在雨天的街道上行走，镜头缓缓推进..."
+        >运动、跑酷、极限挑战，捕捉快节奏动态</textarea>
+      </div>
+
+      <!-- 快速模式下的简化字段 -->
+      <div class="form-field">
+        <label class="form-label">镜头类型</label>
+        <input
+          type="text"
+          class="form-input"
+          list="shotTypes"
+          placeholder="选择或输入镜头类型..."
+        />
+        <datalist id="shotTypes">
+          <option value="特写 (Close-up)">
+          <option value="中景 (Medium shot)">
+          <option value="广角 (Wide shot)">
+        </datalist>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">光照效果</label>
+        <input
+          type="text"
+          class="form-input"
+          list="lighting"
+          placeholder="选择或输入光照..."
+        />
+      </div>
+
+    </div>
+
+    <!-- 生成数量选择 -->
+    <div class="count-selector">
+      <div class="count-label">生成数量</div>
+      <div class="count-options">
+        <div class="count-option">1 个提示词</div>
+        <div class="count-option" style="border-color: #8b5cf6; background: #f5f3ff; color: #8b5cf6; font-weight: 600;">3 个提示词</div>
+        <div class="count-option">5 个提示词</div>
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="actions">
+      <button class="btn-primary">生成提示词</button>
+      <button class="btn-secondary">重置</button>
+    </div>
+
+  </div>
+
+  <div style="text-align: center; margin-top: 40px; color: #999; font-size: 14px;">
+    <p><strong>布局调整说明：</strong></p>
+    <p>✅ 移除了"创建您的提示词"标题区域</p>
+    <p>✅ 模式切换按钮居中显示（放在分类和表单之间）</p>
+    <p>✅ 整体宽度调整为 max-w-4xl (896px)</p>
+  </div>
+
+</body>
+</html>

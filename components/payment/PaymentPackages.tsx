@@ -150,13 +150,13 @@ export function PaymentPackages() {
               key={index}
               className={`relative rounded-xl p-8 transition-all hover:shadow-xl ${
                 pkg.popular
-                  ? 'border-2 border-blue-500 shadow-lg bg-white'
-                  : 'border border-gray-200 bg-white hover:border-blue-300'
+                  ? 'border-2 border-purple-500 shadow-lg bg-white'
+                  : 'border border-gray-200 bg-white hover:border-purple-300'
               }`}
             >
               {pkg.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md">
+                  <span className="bg-gradient-to-r from-purple-600 to-indigo-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md">
                     🏆 {t('packages.popular')}
                   </span>
                 </div>
@@ -170,7 +170,7 @@ export function PaymentPackages() {
                 </div>
 
                 {/* 2. 积分数量 */}
-                <div className="text-4xl font-bold text-blue-600 mb-3">
+                <div className="text-4xl font-bold text-purple-600 mb-3">
                   {credits} {tCommon('credits')}
                 </div>
 
@@ -198,7 +198,7 @@ export function PaymentPackages() {
                 disabled={loading !== null}
                 className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${
                   pkg.popular
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg'
+                    ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-md hover:shadow-lg'
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
               >

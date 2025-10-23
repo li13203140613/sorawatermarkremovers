@@ -2,7 +2,7 @@
 
 > 一个基于 Next.js 15 的 Sora2 视频去水印与 AI 视频生成平台
 >
-> **版本**: 1.0.0 | **最后更新**: 2025-10-21 | **技术栈**: Next.js 15, React 19, TypeScript, Supabase, Stripe
+> **版本**: 2.0.0 | **最后更新**: 2025-10-23 | **技术栈**: Next.js 15, React 19, TypeScript, Supabase, Stripe, DeepSeek API
 
 ---
 
@@ -26,9 +26,11 @@
 ### 核心业务
 RemoveWM 是一个提供 Sora2 视频处理服务的 SaaS 平台，主要功能包括：
 - **视频去水印**：移除 Sora2 生成视频的水印
-- **AI 视频生成**：基于文本提示词和参考图片生成视频
-- **Prompt 展示**：Sora2 提示词库与分类展示
+- **AI 视频生成**：基于文本提示词和参考图片生成视频（单个/批量）
+- **Prompt 生成器**：智能 AI 提示词生成工具（基于 DeepSeek API）
+- **Prompt 展示**：Sora2 提示词库与分类展示（SoraPrompting 爬虫数据）
 - **积分系统**：双轨积分（数据库 + Cookie）
+- **视频缓存优化**：Vercel CDN 强缓存加速
 - **多语言支持**：i18n 支持（中文/英文为主）
 
 ### 技术特色
@@ -43,7 +45,281 @@ RemoveWM 是一个提供 Sora2 视频处理服务的 SaaS 平台，主要功能�
 
 ## 核心功能模块
 
-### 1. 视频去水印系统
+### 1. Prompt 生成器（NEW）
+
+**路径**: `app/[locale]/prompt-generator/*`, `lib/prompt-generator/*`
+
+#### 功能概述
+基于 DeepSeek API 的智能提示词生成工具，作为网站首页功能，帮助用户快速生成高质量的 Sora AI 视频提示词。
+
+#### 核心特性
+- **7 大分类**：电影叙事、自然风光、人物肖像、产品展示、动作运动、抽象艺术、生活记录
+- **184+ 预设选项**：镜头类型、光照、环境等精选配置
+- **智能模板生成**：基于用户选择自动组合提示词
+- **AI 优化增强**：调用 DeepSeek API 进行润色和扩展
+- **批量生成**：一次生成多个变体提示词
+- **实时预览**：边填边看，即时反馈
+- **多格式导出**：TXT、JSON 格式导出
+
+#### 核心流程
+```
+用户选择分类（如"电影叙事"）
+  → 填写表单字段（镜头类型、主体、动作等）
+  → 实时预览基础提示词
+  → 点击"生成"按钮
+  → 调用 DeepSeek API 优化
+  → 返回 3-5 个优化版本
+  → 复制/下载/直接用于视频生成
+```
+
+#### DeepSeek API 集成
+```typescript
+// lib/prompt-generator/deepseek.ts
+export async function generateWithDeepSeek(
+  basicPrompt: string,
+  category: string,
+  count: number = 3
+): Promise<string[]> {
+  const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert at creating Sora AI video prompts...'
+        },
+        {
+          role: 'user',
+          content: `Enhance this ${category} prompt: ${basicPrompt}`
+        }
+      ],
+      temperature: 0.8,
+      max_tokens: 500
+    })
+  });
+
+  // 解析并返回优化后的提示词
+}
+```
+
+#### 配置系统
+```typescript
+// lib/prompt-generator/config.json
+{
+  "categories": [
+    {
+      "id": "cinematic",
+      "name": "电影叙事",
+      "icon": "🎬",
+      "template": "{shotType} of {subject} {action}, {environment}, {lighting}, {cameraMovement}, {camera}, {mood}",
+      "fields": [
+        {
+          "name": "shotType",
+          "label": "镜头类型",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "value": "Close-up", "label": "特写 - 聚焦细节" },
+            { "value": "Wide shot", "label": "广角 - 展示全景" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### 关键文件
+| 文件 | 职责 |
+|------|------|
+| `lib/prompt-generator/config.json` | 完整的分类和字段配置（184个选项） |
+| `lib/prompt-generator/deepseek.ts` | DeepSeek API 调用逻辑 |
+| `lib/prompt-generator/utils.ts` | 提示词生成、验证、导出工具 |
+| `lib/prompt-generator/types.ts` | TypeScript 类型定义 |
+| `components/prompt-generator/PromptGeneratorForm.tsx` | 主表单组件 |
+| `components/prompt-generator/PromptResultsDisplay.tsx` | 结果展示组件 |
+| `app/api/prompt-generator/generate/route.ts` | 生成 API 端点 |
+| `app/api/prompt-generator/generate-batch/route.ts` | 批量生成 API 端点 |
+
+#### 数据统计
+- **总分类数**: 7 个
+- **总字段数**: 49 个
+- **总下拉选项**: 184 个
+- **总示例数**: 21 个
+
+---
+
+### 2. 批量视频生成系统（NEW）
+
+**路径**: `components/video-generation/MultiVideoGenerator.tsx`
+
+#### 功能概述
+支持一次性生成 6 个视频的批量生成功能，适合需要大量视频素材的用户。
+
+#### 核心特性
+- **批量任务管理**：同时创建 6 个视频生成任务
+- **独立任务追踪**：每个任务独立状态、进度、错误处理
+- **智能积分计算**：自动计算所需总积分（6或12积分）
+- **并行轮询**：6 个任务并行轮询状态
+- **单独重试**：失败任务可单独重试
+- **批量下载**：支持一键下载所有完成的视频
+
+#### 核心流程
+```
+用户输入提示词 + 选择模型
+  → 检查总积分（6 或 12 积分）
+  → 创建 6 个任务（同时调用 API 6 次）
+  → 每个任务独立轮询状态
+  → 任务完成后显示视频预览
+  → 支持批量下载或单独下载
+```
+
+#### 任务卡片状态
+```typescript
+type TaskStatus = 'idle' | 'creating' | 'processing' | 'completed' | 'failed';
+
+interface VideoTask {
+  id: string;                    // 任务唯一 ID
+  status: TaskStatus;            // 当前状态
+  progress: number;              // 进度（0-100）
+  taskId?: string;               // AICoding 任务 ID
+  videoUrl?: string;             // 视频 URL
+  error?: string;                // 错误信息
+}
+```
+
+#### 关键文件
+| 文件 | 职责 |
+|------|------|
+| `components/video-generation/MultiVideoGenerator.tsx` | 批量生成主组件（664行） |
+| `components/video-generation/VideoTaskCard.tsx` | 单个任务卡片组件 |
+
+---
+
+### 3. SoraPrompting 展示系统（NEW）
+
+**路径**: `app/[locale]/soraprompting/*`, `components/soraprompting/*`
+
+#### 功能概述
+展示从 SoraPrompting.com 爬取的高质量 Sora 提示词库，包含视频预览和详细提示词。
+
+#### 数据来源
+- **爬虫脚本**: `scripts/crawl-soraprompting.js`
+- **存储方式**: Cloudflare R2 存储（生产环境）/ 本地 JSON（开发环境）
+- **数据格式**:
+  ```json
+  {
+    "prompts": [
+      {
+        "title": "视频标题",
+        "prompt": "完整的提示词文本",
+        "category": "分类",
+        "videoUrl": "原始视频 URL",
+        "r2VideoUrl": "R2 CDN URL（可选）"
+      }
+    ]
+  }
+  ```
+
+#### 核心特性
+- **瀑布流布局**：响应式卡片网格
+- **视频预览**：支持视频播放和暂停
+- **提示词复制**：一键复制提示词文本
+- **分类筛选**：按类别筛选显示
+- **R2 优化**：视频通过 R2 CDN 加速
+
+#### 爬虫配置
+```javascript
+// scripts/crawl-soraprompting.js
+const BASE_URL = 'https://www.soraprompting.com';
+const OUTPUT_FILE = 'data/soraprompting/prompts.json';
+const VIDEO_DOWNLOAD_DIR = 'data/soraprompting/videos';
+
+// 爬取流程
+1. 访问主页获取所有提示词链接
+2. 遍历每个提示词详情页
+3. 提取标题、提示词、视频 URL
+4. 下载视频到本地（可选）
+5. 保存为 JSON 文件
+6. 上传到 Cloudflare R2（可选）
+```
+
+#### 关键文件
+| 文件 | 职责 |
+|------|------|
+| `scripts/crawl-soraprompting.js` | 完整爬虫脚本 |
+| `scripts/crawl-soraprompting-simple.js` | 简化版（只爬文本） |
+| `scripts/upload-soraprompting-to-r2.js` | R2 上传脚本 |
+| `app/[locale]/soraprompting/page.tsx` | 展示页面 |
+| `components/soraprompting/PromptGrid.tsx` | 网格布局组件 |
+| `components/soraprompting/PromptCard.tsx` | 提示词卡片组件 |
+
+---
+
+### 4. 视频缓存优化系统（NEW）
+
+**路径**: `app/api/video/proxy/route.ts`, `lib/video/cache-config.ts`
+
+#### 功能概述
+通过 Vercel CDN 和强缓存策略优化视频加载速度，减少源服务器压力。
+
+#### 核心特性
+- **代理转发**：视频请求通过代理服务器转发
+- **强缓存头**：浏览器缓存 1 年（`max-age=31536000, immutable`）
+- **CDN 缓存**：Vercel CDN 缓存 1 年
+- **断点续传**：支持 Range 请求
+- **跨域支持**：CORS 头配置
+
+#### 缓存策略
+```typescript
+// lib/video/cache-config.ts
+export const CACHE_DURATIONS = {
+  ONE_YEAR: 31536000,      // 1年（视频内容不变）
+  ONE_MONTH: 2592000,      // 1个月
+  ONE_WEEK: 604800,        // 1周
+  ONE_DAY: 86400           // 1天
+};
+
+export function getCacheControlHeader(): string {
+  return `public, max-age=${CACHE_DURATIONS.ONE_YEAR}, immutable`;
+}
+
+export function getCDNCacheControlHeader(): string {
+  return `public, max-age=${CACHE_DURATIONS.ONE_YEAR}, s-maxage=${CACHE_DURATIONS.ONE_YEAR}, stale-while-revalidate`;
+}
+```
+
+#### 使用方式
+```typescript
+// 客户端使用代理 URL
+const proxyUrl = `/api/video/proxy?url=${encodeURIComponent(originalVideoUrl)}`;
+
+// 响应头
+Cache-Control: public, max-age=31536000, immutable
+CDN-Cache-Control: public, max-age=31536000, s-maxage=31536000
+Access-Control-Allow-Origin: *
+Accept-Ranges: bytes
+```
+
+#### 性能优化效果
+- **首次访问**: ~3-5秒（从源服务器获取）
+- **后续访问**: ~100-300ms（从 CDN 缓存读取）
+- **浏览器缓存**: 0ms（本地缓存）
+
+#### 关键文件
+| 文件 | 职责 |
+|------|------|
+| `app/api/video/proxy/route.ts` | 视频代理 API（105行） |
+| `lib/video/cache-config.ts` | 缓存配置常量 |
+
+---
+
+### 5. 视频去水印系统
 
 **路径**: `lib/video/*`, `app/api/video/process/route.ts`
 
@@ -83,7 +359,7 @@ lib/video/service.ts: processWithCookieCredits()
 
 ---
 
-### 2. AI 视频生成系统
+### 6. AI 视频生成系统
 
 **路径**: `app/api/video-generation/*`, `components/video-generation/*`
 
@@ -123,7 +399,7 @@ pollIntervalRef.current = setInterval(async () => {
 
 ---
 
-### 3. 用户认证系统
+### 7. 用户认证系统
 
 **路径**: `lib/auth/*`, `components/auth/*`
 
@@ -160,7 +436,7 @@ useEffect(() => {
 
 ---
 
-### 4. 积分系统
+### 8. 积分系统
 
 **路径**: `lib/credits/*`, `contexts/CreditsContext.tsx`
 
@@ -218,7 +494,7 @@ export class CookieCreditsManager {
 
 ---
 
-### 5. 支付系统
+### 9. 支付系统
 
 **路径**: `lib/payment/*`, `app/api/payment/*`
 
@@ -264,7 +540,7 @@ if (event.type === 'checkout.session.completed') {
 
 ---
 
-### 6. 博客系统
+### 10. 博客系统
 
 **路径**: `lib/blog/*`, `app/[locale]/blog/*`
 
@@ -310,7 +586,7 @@ export function getAllPosts(lang: Language): BlogPost[] {
 
 ---
 
-### 7. 国际化系统
+### 11. 国际化系统
 
 **路径**: `i18n.ts`, `i18n.config.ts`, `messages/*`
 
@@ -346,9 +622,11 @@ const t = useTranslations('video');
 
 ---
 
-### 8. Sora2 Prompt 展示系统
+### 12. Sora2 Prompt 展示系统（旧版）
 
 **路径**: `app/[locale]/sora2prompt/*`, `components/prompt/*`
+
+> **注意**: 此为旧版 Prompt 展示系统，新版已迁移至 SoraPrompting 展示系统（模块3）
 
 #### 数据来源
 - 从 Cloudflare R2 存储加载 JSON 数据
@@ -369,7 +647,7 @@ const t = useTranslations('video');
 
 ---
 
-### 9. 管理后台
+### 13. 管理后台
 
 **路径**: `app/admin/*`, `lib/admin/*`
 
@@ -399,7 +677,7 @@ export async function isAdmin(): Promise<boolean> {
 
 ---
 
-### 10. Chrome 扩展
+### 14. Chrome 扩展
 
 **路径**: `chrome-extension/*`
 
@@ -591,7 +869,10 @@ RemoveWM/
 │   └── migrations/               # 数据库迁移脚本
 │
 ├── scripts/                      # 脚本工具
-│   ├── crawl-sora-prompts.js     # 爬取 Prompt
+│   ├── crawl-soraprompting.js    # 爬取 SoraPrompting（NEW）
+│   ├── crawl-soraprompting-simple.js  # 简化版爬虫（NEW）
+│   ├── upload-soraprompting-to-r2.js  # R2 上传脚本（NEW）
+│   ├── crawl-sora-prompts.js     # 爬取 Prompt（旧版）
 │   ├── create-blog-post.js       # 创建博客文章
 │   └── test-r2-connection.js     # 测试 R2 连接
 │
@@ -643,6 +924,8 @@ interface CreditsContextValue {
 ```
 
 ### 组件状态
+- **PromptGeneratorForm**: 分类选择、字段值、生成结果、加载状态
+- **MultiVideoGenerator**: 6个任务状态、独立轮询、批量管理
 - **VideoProcessor**: 表单状态、加载状态、错误状态、视频 URL
 - **VideoGenerator**: 任务状态轮询、进度条、模型选择
 - **PaymentPackages**: 选中套餐、加载状态
@@ -651,16 +934,23 @@ interface CreditsContextValue {
 
 ## API 端点
 
+### Prompt 生成器（NEW）
+| 端点 | 方法 | 认证 | 说明 |
+|------|------|------|------|
+| `/api/prompt-generator/generate` | POST | - | 生成单个提示词（调用 DeepSeek API） |
+| `/api/prompt-generator/generate-batch` | POST | - | 批量生成提示词（3-5个变体） |
+
 ### 视频处理
 | 端点 | 方法 | 认证 | 说明 |
 |------|------|------|------|
 | `/api/video/process` | POST | Bearer/Cookie | 视频去水印 |
-| `/api/video/download` | GET | - | 视频下载代理 |
+| `/api/video/download` | GET | - | 视频下载代理（已弃用） |
+| `/api/video/proxy` | GET | - | **视频代理（NEW）** - 支持 CDN 缓存 |
 
 ### AI 视频生成
 | 端点 | 方法 | 认证 | 说明 |
 |------|------|------|------|
-| `/api/video-generation/create` | POST | Cookie | 创建生成任务 |
+| `/api/video-generation/create` | POST | Cookie | 创建生成任务（单个/批量） |
 | `/api/video-generation/status/[taskId]` | GET | Cookie | 查询任务状态 |
 
 ### 支付
@@ -779,6 +1069,26 @@ $$ LANGUAGE plpgsql;
 
 ## 关键组件说明
 
+### PromptGeneratorForm（NEW）
+**路径**: `components/prompt-generator/PromptGeneratorForm.tsx`
+
+核心逻辑：
+- 7大分类动态表单生成
+- 实时提示词预览
+- 调用 DeepSeek API 生成优化版本
+- 支持批量生成（3-5个变体）
+- 多格式导出（TXT、JSON）
+
+### MultiVideoGenerator（NEW）
+**路径**: `components/video-generation/MultiVideoGenerator.tsx`
+
+核心逻辑：
+- 批量创建 6 个视频任务
+- 独立任务状态管理（idle/creating/processing/completed/failed）
+- 并行轮询任务状态
+- 单独重试失败任务
+- 批量下载完成视频
+
 ### VideoProcessor
 **路径**: `components/video/VideoProcessor.tsx`
 
@@ -833,6 +1143,9 @@ SORA_API_KEY=xxx
 # AICoding API (视频生成)
 AICODING_API_KEY=xxx
 
+# DeepSeek API (Prompt 生成器) ✨ NEW
+DEEPSEEK_API_KEY=sk-xxx
+
 # Stripe
 STRIPE_SECRET_KEY=sk_xxx
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_xxx
@@ -847,6 +1160,7 @@ R2_ACCOUNT_ID=xxx
 R2_ACCESS_KEY_ID=xxx
 R2_SECRET_ACCESS_KEY=xxx
 R2_BUCKET_NAME=xxx
+R2_PUBLIC_URL=https://xxx.r2.dev  # R2 公开访问 URL ✨ NEW
 
 # 管理员邮箱
 ADMIN_EMAILS=admin@example.com,admin2@example.com
@@ -1094,10 +1408,55 @@ CREDITS_COST = { VIDEO_WATERMARK_REMOVAL: 1, VIDEO_GENERATION_PRO: 2 }
 ---
 
 **维护者**: Claude AI
-**最后更新**: 2025-10-21
-**文档版本**: 2.2 (文档清理完成)
+**最后更新**: 2025-10-23
+**文档版本**: 3.0 (新增 4 大功能模块)
 
 如有任何问题，请联系项目维护者或查阅相关文档。
+
+---
+
+## 更新历史
+
+### Version 2.0 - 主要功能更新 (2025-10-23)
+
+#### ✨ 新增功能
+
+**1. Prompt 生成器系统（首页功能）**
+- 基于 DeepSeek API 的智能提示词生成
+- 7 大分类，184+ 预设选项
+- 支持批量生成（3-5个变体）
+- 实时预览 + 多格式导出
+- 完整的配置系统和 API 封装
+
+**2. 批量视频生成系统**
+- 一次性生成 6 个视频
+- 独立任务状态追踪
+- 并行轮询 + 单独重试
+- 智能积分计算（6或12积分）
+
+**3. SoraPrompting 展示系统**
+- 从 SoraPrompting.com 爬取高质量提示词
+- 瀑布流布局 + 视频预览
+- 支持 R2 CDN 加速
+- 完整的爬虫和上传脚本
+
+**4. 视频缓存优化系统**
+- Vercel CDN 强缓存策略
+- 浏览器缓存 1 年 + CDN 缓存 1 年
+- 性能提升：首次 3-5s → 后续 100-300ms
+- 支持断点续传和跨域访问
+
+#### 🔧 技术改进
+- 新增 40+ shadcn/ui 组件库
+- 完善的 TypeScript 类型系统
+- 统一的 API 工具层和日志系统
+- 优化的项目结构和代码组织
+
+#### 📊 数据统计
+- **新增文件**: 50+ 个
+- **新增代码**: 3000+ 行
+- **新增 API 端点**: 3 个
+- **新增页面**: 2 个（Prompt 生成器、SoraPrompting）
 
 ---
 

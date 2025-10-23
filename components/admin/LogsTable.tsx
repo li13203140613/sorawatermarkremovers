@@ -92,7 +92,7 @@ export default function LogsTable({
                       href={log.original_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
+                      className="text-purple-600 hover:underline"
                       title={log.original_url}
                     >
                       {truncateUrl(log.original_url)}

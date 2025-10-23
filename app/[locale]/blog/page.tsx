@@ -114,7 +114,7 @@ export default function BlogPage() {
           <div className="flex justify-end mb-4">
             <button
               onClick={() => switchLanguage(lang === 'zh' ? 'en' : 'zh')}
-              className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
             >
               {lang === 'zh' ? text.switchToEn : text.switchToZh}
             </button>
@@ -145,7 +145,7 @@ export default function BlogPage() {
               onClick={() => setSelectedTag('all')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedTag === 'all'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-purple-600 text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
               }`}
             >
@@ -157,7 +157,7 @@ export default function BlogPage() {
                 onClick={() => setSelectedTag(tag)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   selectedTag === tag
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-purple-600 text-white'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
                 }`}
               >

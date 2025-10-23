@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GoogleOneTap } from '@/components/auth'
-import PromptGeneratorForm from '@/components/prompt-generator/PromptGeneratorForm';
+import PromptGeneratorV2 from '@/components/prompt-generator/PromptGeneratorV2';
 import PromptResultsDisplay from '@/components/prompt-generator/PromptResultsDisplay';
 import PromptGallery from '@/components/prompt-generator/PromptGallery';
 import SoraIntroduction from '@/components/prompt-generator/SoraIntroduction';
@@ -33,7 +33,9 @@ export default function Home() {
 
       {/* Input Section */}
       <div className="bg-white py-10 border-b border-gray-200">
-        <PromptGeneratorForm onGenerated={handleGenerated} />
+        <div className="container mx-auto px-4 max-w-4xl">
+          <PromptGeneratorV2 onGenerated={handleGenerated} />
+        </div>
       </div>
 
       {/* Results Section */}

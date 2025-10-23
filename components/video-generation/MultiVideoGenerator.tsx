@@ -436,61 +436,41 @@ export default function MultiVideoGenerator({ apiKey }: MultiVideoGeneratorProps
 
                 {/* 模型选择 */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <span className="text-xl">📹</span>
+                  <label className="block text-sm font-bold text-gray-800 mb-4">
                     视频模型
                   </label>
-                  <div className="space-y-3">
-                    <label className={`flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                      model === 'sora2'
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}>
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
-                          name="model"
-                          value="sora2"
-                          checked={model === 'sora2'}
-                          onChange={(e) => setModel(e.target.value as 'sora2')}
-                          disabled={isGenerating}
-                          className="w-5 h-5 text-purple-600"
-                        />
-                        <span className="ml-3 font-medium text-gray-800">标准版</span>
-                      </div>
-                      <span className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
-                        1 积分/个
-                      </span>
-                    </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setModel('sora2')}
+                      disabled={isGenerating}
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                        model === 'sora2'
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      }`}
+                    >
+                      <div className={`font-bold ${model === 'sora2' ? 'text-white' : 'text-gray-800'}`}>有水印版</div>
+                    </button>
 
-                    <label className={`flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                      model === 'sora2-unwm'
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}>
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
-                          name="model"
-                          value="sora2-unwm"
-                          checked={model === 'sora2-unwm'}
-                          onChange={(e) => setModel(e.target.value as 'sora2-unwm')}
-                          disabled={isGenerating}
-                          className="w-5 h-5 text-purple-600"
-                        />
-                        <span className="ml-3 font-medium text-gray-800">专业版（无水印）</span>
-                      </div>
-                      <span className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
-                        2 积分/个
-                      </span>
-                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setModel('sora2-unwm')}
+                      disabled={isGenerating}
+                      className={`flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                        model === 'sora2-unwm'
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent'
+                          : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      }`}
+                    >
+                      <div className={`font-bold ${model === 'sora2-unwm' ? 'text-white' : 'text-gray-800'}`}>去水印版</div>
+                    </button>
                   </div>
                 </div>
 
                 {/* 提示词输入 */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <span className="text-xl">✍️</span>
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     视频描述
                   </label>
                   <textarea
@@ -508,8 +488,7 @@ export default function MultiVideoGenerator({ apiKey }: MultiVideoGeneratorProps
 
                 {/* 图片上传 */}
                 <div>
-                  <label className="block text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <span className="text-xl">🖼️</span>
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     参考图片（可选）
                   </label>
 
@@ -555,8 +534,8 @@ export default function MultiVideoGenerator({ apiKey }: MultiVideoGeneratorProps
                 </div>
 
                 {/* 积分消耗提示 */}
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
-                  <p className="text-sm text-blue-800">
+                <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4">
+                  <p className="text-sm text-purple-800">
                     <span className="font-bold">💳 积分消耗:</span>
                     {' '}{requiredCreditsPerVideo} 积分/个 × {TOTAL_VIDEOS} 个 = <span className="font-bold text-lg">{totalRequiredCredits}</span> 积分
                   </p>
@@ -574,7 +553,7 @@ export default function MultiVideoGenerator({ apiKey }: MultiVideoGeneratorProps
                   <button
                     type="submit"
                     disabled={isGenerating || !prompt || !isLoggedIn || credits < totalRequiredCredits}
-                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {isGenerating ? (
                       <span className="flex items-center justify-center gap-2">

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator 最终优化方案 - 线框图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 896px; /* max-w-4xl */
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Hero Section - 减少padding */
+    .hero {
+      background: linear-gradient(135deg, #f3e7ff 0%, #ffffff 50%, #e7f9f0 100%);
+      padding: 32px 16px;  /* 从 py-12 (48px) 减少到 32px */
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 32px;
+    }
+
+    /* Category Section */
+    .category-section {
+      margin-bottom: 32px;
+    }
+
+    .category-title {
+      font-size: 28px;  /* text-2xl - 更大更醒目 */
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);  /* 改为4列 */
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .category-btn {
+      padding: 14px 20px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 15px;
+      color: #374151;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .category-btn:hover {
+      border-color: #a78bfa;
+      background: #f5f3ff;
+    }
+
+    .category-btn.active {
+      border-color: #8b5cf6;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      font-weight: 700;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    }
+
+    .category-bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 75%;  /* 3列只占75%宽度，让它居中 */
+      margin: 0 auto;
+    }
+
+    /* Mode Toggle - 居中 */
+    .mode-toggle-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+      margin-top: 24px;
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      background: #f3f4f6;
+      border-radius: 10px;
+      padding: 4px;
+    }
+
+    .mode-btn {
+      padding: 12px 32px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    }
+
+    /* Form Card */
+    .form-card {
+      background: white;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    /* 删除分类描述 */
+
+    /* Input Area */
+    .input-group {
+      margin-bottom: 24px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .required {
+      color: #ef4444;
+    }
+
+    .input-textarea {
+      width: 100%;
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: none;
+      min-height: 140px;  /* 增加高度 */
+      transition: border-color 0.2s;
+    }
+
+    .input-textarea:focus {
+      outline: none;
+      border-color: #8b5cf6;
+    }
+
+    .input-meta {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .char-count {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    /* 删除AI提示文字 */
+
+    /* Count Selector - 新设计 */
+    .count-selector {
+      margin-bottom: 28px;
+      padding: 24px;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 2px solid #e5e5e5;
+    }
+
+    .count-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .count-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .count-btn {
+      width: 48px;
+      height: 48px;
+      border: 2px solid #8b5cf6;
+      border-radius: 8px;
+      background: white;
+      color: #8b5cf6;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .count-btn:hover {
+      background: #8b5cf6;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .count-btn:active {
+      transform: scale(0.95);
+    }
+
+    .count-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .count-display {
+      min-width: 80px;
+      height: 56px;
+      background: white;
+      border: 3px solid #8b5cf6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #8b5cf6;
+    }
+
+    /* Generate Button - 居中 */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .btn-generate {
+      padding: 16px 64px;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+      transition: all 0.3s;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* Annotations */
+    .annotation {
+      position: absolute;
+      background: #10b981;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .note-box {
+      position: relative;
+      border: 3px dashed #10b981;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    /* Summary */
+    .summary {
+      margin-top: 40px;
+      padding: 28px;
+      background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+      border-radius: 12px;
+      border: 3px solid #3b82f6;
+    }
+
+    .summary h3 {
+      color: #1e40af;
+      margin-bottom: 16px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .summary-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      list-style: none;
+      font-size: 14px;
+      color: #1e3a8a;
+      line-height: 1.8;
+    }
+
+    .summary-list li {
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .summary-list li::before {
+      content: '✅';
+      position: absolute;
+      left: 0;
+      font-size: 16px;
+    }
+
+    .summary-list li.remove::before {
+      content: '❌';
+    }
+
+    .interactive-demo {
+      text-align: center;
+      margin: 20px 0;
+      padding: 20px;
+      background: #fff3cd;
+      border-radius: 8px;
+      border: 2px solid #ffc107;
+    }
+
+    .interactive-demo h4 {
+      color: #856404;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Hero Section - 减少padding -->
+    <div class="hero">
+      <h1>Sora AI 提示词免费生成器</h1>
+    </div>
+
+    <div class="main-content">
+
+      <!-- Category Section -->
+      <div class="category-section">
+        <h3 class="category-title">🎬 选择您的视频风格</h3>
+
+        <!-- 4列布局 -->
+        <div class="category-grid">
+          <div class="category-btn active">
+            <span style="margin-right: 6px;">🎬</span> 电影叙事
+          </div>
+          <div class="category-btn">
+            <span style="margin-right: 6px;">🌄</span> 自然风光
+          </div>
+          <div class="category-btn">
+            <span style="margin-right: 6px;">👤</span> 人物肖像
+          </div>
+          <div class="category-btn">
+            <span style="margin-right: 6px;">📦</span> 产品展示
+          </div>
+        </div>
+
+        <!-- 3列居中 -->
+        <div class="category-bottom">
+          <div class="category-btn">
+            <span style="margin-right: 6px;">⚡</span> 动作运动
+          </div>
+          <div class="category-btn">
+            <span style="margin-right: 6px;">🎨</span> 抽象艺术
+          </div>
+          <div class="category-btn">
+            <span style="margin-right: 6px;">📸</span> 生活记录
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Toggle -->
+      <div class="mode-toggle-wrapper">
+        <div class="mode-toggle">
+          <button class="mode-btn active">
+            <i style="margin-right: 6px;">⚡</i> 快速模式
+          </button>
+          <button class="mode-btn">
+            <i style="margin-right: 6px;">⚙️</i> 专业模式
+          </button>
+        </div>
+      </div>
+
+      <!-- Form Card -->
+      <div class="form-card">
+
+        <!-- ❌ 删除分类描述 -->
+        <!-- <p>适合故事性、情绪化的镜头，强调电影感和叙事氛围</p> -->
+
+        <!-- Input Group -->
+        <div class="input-group">
+          <label class="input-label">
+            描述您的创意 <span class="required">*</span>
+          </label>
+          <textarea
+            class="input-textarea"
+            placeholder="例如：一只橘猫在雨天的街道上行走，镜头缓缓推进..."
+          >运动、跑酷、极限挑战，捕捉快节奏动态</textarea>
+
+          <div class="input-meta">
+            <span class="char-count">41 字</span>
+          </div>
+        </div>
+
+        <!-- ❌ 删除AI提示 -->
+        <!-- <p>AI 将自动配置最佳拍摄参数</p> -->
+
+        <!-- Count Selector - 新设计 -->
+        <div class="count-selector note-box" style="position: relative;">
+          <div class="annotation" style="top: -18px; left: 50%; transform: translateX(-50%);">
+            ✨ 新设计：加减控件
+          </div>
+          <div class="count-label">生成提示词数量</div>
+          <div class="count-control">
+            <button class="count-btn" id="decreaseBtn">−</button>
+            <div class="count-display" id="countDisplay">3</div>
+            <button class="count-btn" id="increaseBtn">+</button>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="action-buttons">
+          <button class="btn-generate">
+            <span style="margin-right: 8px;">✨</span>
+            生成提示词
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Interactive Demo -->
+  <div class="interactive-demo">
+    <h4>🎮 交互演示：点击 + / − 按钮测试数量控制</h4>
+    <p style="font-size: 13px; color: #856404;">范围：1-5 个提示词</p>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <h3>📋 本次优化清单</h3>
+    <ul class="summary-list">
+      <li>Hero padding 减少（48px → 32px）</li>
+      <li>分类标题改为 "🎬 选择您的视频风格"</li>
+      <li>标题字号增大（text-lg → text-2xl）</li>
+      <li>分类布局改为 4+3 对称排列</li>
+      <li class="remove">删除分类描述文字</li>
+      <li class="remove">删除 "AI 将自动配置" 提示</li>
+      <li>保留字数统计，右下角显示</li>
+      <li>"生成数量" → "生成提示词数量"</li>
+      <li>数量选择器改为加减控件（−/数字/+）</li>
+      <li>输入框高度增加到 140px</li>
+      <li>生成按钮样式更醒目（渐变+阴影）</li>
+      <li>与生成数量选择器视觉区分明显</li>
+    </ul>
+  </div>
+
+  <script>
+    // 交互演示
+    let count = 3;
+    const countDisplay = document.getElementById('countDisplay');
+    const decreaseBtn = document.getElementById('decreaseBtn');
+    const increaseBtn = document.getElementById('increaseBtn');
+
+    function updateCount(newCount) {
+      count = Math.max(1, Math.min(5, newCount));
+      countDisplay.textContent = count;
+
+      // 禁用按钮状态
+      decreaseBtn.disabled = count <= 1;
+      increaseBtn.disabled = count >= 5;
+    }
+
+    decreaseBtn.addEventListener('click', () => updateCount(count - 1));
+    increaseBtn.addEventListener('click', () => updateCount(count + 1));
+
+    // 初始化
+    updateCount(3);
+  </script>
+
+</body>
+</html>

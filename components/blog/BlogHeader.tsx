@@ -55,7 +55,7 @@ export default function BlogHeader({ post, lang }: BlogHeaderProps) {
         {post.tags.map(tag => (
           <span
             key={tag}
-            className="px-3 py-1 text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
+            className="px-3 py-1 text-sm font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full"
           >
             {tag}
           </span>

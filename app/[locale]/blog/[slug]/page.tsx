@@ -119,7 +119,7 @@ export default function BlogPostPage() {
         <p className="text-gray-600 dark:text-gray-400 text-xl mb-4">{text.notFound}</p>
         <Link
           href={`/blog?lang=${lang}`}
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+          className="text-purple-600 hover:text-purple-800 dark:text-purple-400"
         >
           {text.backToBlog}
         </Link>
@@ -134,14 +134,14 @@ export default function BlogPostPage() {
         <div className="flex justify-between items-center mb-8">
           <Link
             href={`/blog?lang=${lang}`}
-            className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+            className="text-purple-600 hover:text-purple-800 dark:text-purple-400"
           >
             {text.backToBlog}
           </Link>
 
           <button
             onClick={() => switchLanguage(lang === 'zh' ? 'en' : 'zh')}
-            className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            className="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
           >
             {lang === 'zh' ? text.switchToEn : text.switchToZh}
           </button>
