@@ -149,11 +149,29 @@ export default function PromptGeneratorForm({ onGenerated, loading: loadingProp 
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Category Tabs */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-          选择风格
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+          🎬 选择您的视频风格
         </h3>
-        <div className="flex flex-wrap gap-2 justify-center">
-          {categories.map((cat) => (
+        <div className="grid grid-cols-4 gap-3 mb-3">
+          {categories.slice(0, 4).map((cat) => (
+            <Button
+              key={cat.id}
+              variant={selectedCategory === cat.id ? 'default' : 'outline'}
+              onClick={() => handleCategoryChange(cat.id)}
+              disabled={loading}
+              className={`px-6 py-3 transition-all ${
+                selectedCategory === cat.id
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent scale-105 font-bold'
+                  : 'hover:border-purple-300 hover:bg-purple-50'
+              }`}
+            >
+              <span className="mr-2">{cat.icon}</span>
+              {cat.name}
+            </Button>
+          ))}
+        </div>
+        <div className="grid grid-cols-3 gap-3 max-w-[75%] mx-auto">
+          {categories.slice(4).map((cat) => (
             <Button
               key={cat.id}
               variant={selectedCategory === cat.id ? 'default' : 'outline'}
@@ -203,11 +221,7 @@ export default function PromptGeneratorForm({ onGenerated, loading: loadingProp 
       </div>
 
       <Card className="shadow-lg">
-        <CardHeader className="space-y-0 pb-4">
-          <p className="text-gray-600">{currentCategory.description}</p>
-        </CardHeader>
-
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pt-6">
           {/* Simple Mode */}
           {mode === 'simple' && (
             <div className="space-y-4">
@@ -221,15 +235,11 @@ export default function PromptGeneratorForm({ onGenerated, loading: loadingProp 
                   placeholder="例如：一只橘猫在雨天的街道上行走，镜头缓缓推进..."
                   value={simpleIdea}
                   onChange={(e) => setSimpleIdea(e.target.value)}
-                  rows={4}
+                  rows={5}
                   className="resize-none"
                   disabled={loading}
                 />
-                <div className="flex items-center justify-between mt-2">
-                  <p className="text-sm text-gray-500">
-                    <i className="fas fa-lightbulb text-yellow-500 mr-1"></i>
-                    AI 将自动配置最佳拍摄参数
-                  </p>
+                <div className="flex justify-end mt-2">
                   <span className="text-sm text-gray-400">{simpleIdea.length} 字</span>
                 </div>
               </div>
@@ -250,14 +260,13 @@ export default function PromptGeneratorForm({ onGenerated, loading: loadingProp 
                   placeholder="例如：一只橘猫在雨天的街道上行走，镜头缓缓推进..."
                   value={advancedIdea}
                   onChange={(e) => setAdvancedIdea(e.target.value)}
-                  rows={4}
+                  rows={5}
                   className="resize-none"
                   disabled={loading}
                 />
-                <p className="text-sm text-gray-500 mt-2">
-                  <i className="fas fa-lightbulb text-yellow-500 mr-1"></i>
-                  在专业模式下，您可以同时填写创意描述和详细参数
-                </p>
+                <div className="flex justify-end mt-2">
+                  <span className="text-sm text-gray-400">{advancedIdea.length} 字</span>
+                </div>
               </div>
 
               {/* 详细参数 */}
@@ -451,26 +460,39 @@ export default function PromptGeneratorForm({ onGenerated, loading: loadingProp 
           )}
 
           {/* Prompt Count */}
-          <div>
-            <Label className="text-sm font-medium text-gray-700 mb-3 block">
-              生成数量
+          <div className="bg-gray-50 p-6 rounded-lg border-2 border-gray-200">
+            <Label className="text-sm font-medium text-gray-700 mb-4 block text-center">
+              生成提示词数量
             </Label>
-            <div className="flex gap-3">
-              {[1, 3, 5].map((count) => (
-                <Button
-                  key={count}
-                  variant="outline"
-                  onClick={() => setPromptCount(count)}
-                  disabled={loading}
-                  className={`flex-1 px-6 py-3 transition-all ${
-                    promptCount === count
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 border-transparent scale-105 font-bold'
-                      : 'hover:border-purple-300 hover:bg-purple-50'
-                  }`}
-                >
-                  {count} 个提示词
-                </Button>
-              ))}
+            <div className="flex justify-center items-center gap-4">
+              {/* Decrease Button */}
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setPromptCount(Math.max(1, promptCount - 1))}
+                disabled={loading || promptCount <= 1}
+                className="w-12 h-12 border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <i className="fas fa-minus"></i>
+              </Button>
+
+              {/* Count Display */}
+              <div className="min-w-20 h-14 flex items-center justify-center border-3 border-purple-600 rounded-lg bg-white">
+                <span className="text-3xl font-bold text-purple-600">
+                  {promptCount}
+                </span>
+              </div>
+
+              {/* Increase Button */}
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setPromptCount(Math.min(5, promptCount + 1))}
+                disabled={loading || promptCount >= 5}
+                className="w-12 h-12 border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <i className="fas fa-plus"></i>
+              </Button>
             </div>
           </div>
 
