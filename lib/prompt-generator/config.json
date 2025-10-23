@@ -1,0 +1,695 @@
+{
+  "categories": [
+    {
+      "id": "cinematic",
+      "name": "电影叙事",
+      "nameEn": "Cinematic",
+      "icon": "🎬",
+      "description": "适合故事性、情绪化的镜头，强调电影感和叙事氛围",
+      "template": "{shotType} of {subject} {action}, {environment}, {lighting}, {cameraMovement}, shot on {camera}, {mood}",
+      "fields": [
+        {
+          "name": "shotType",
+          "label": "镜头类型",
+          "labelEn": "Shot Type",
+          "type": "select",
+          "required": true,
+          "description": "选择镜头的景别和拍摄角度",
+          "options": [
+            { "value": "Close-up", "label": "特写 - 聚焦细节" },
+            { "value": "Extreme close-up", "label": "大特写 - 极致细节（眼睛、手指）" },
+            { "value": "Medium shot", "label": "中景 - 半身镜头" },
+            { "value": "Medium close-up", "label": "中近景 - 胸部以上" },
+            { "value": "Wide shot", "label": "全景 - 展现环境" },
+            { "value": "Extreme wide shot", "label": "大全景 - 广阔场景" },
+            { "value": "Aerial shot", "label": "航拍 - 俯瞰视角" },
+            { "value": "POV shot", "label": "第一人称 - 主观视角" },
+            { "value": "Over-the-shoulder", "label": "过肩镜头 - 对话场景" },
+            { "value": "Dutch angle", "label": "倾斜镜头 - 不稳定感" }
+          ]
+        },
+        {
+          "name": "subject",
+          "label": "主体描述",
+          "labelEn": "Subject",
+          "type": "text",
+          "required": true,
+          "description": "描述画面的主要人物或物体",
+          "placeholder": "例如: a young woman in a red dress"
+        },
+        {
+          "name": "action",
+          "label": "动作描述",
+          "labelEn": "Action",
+          "type": "text",
+          "required": true,
+          "description": "描述主体的动作，用'1-2-3'节奏分解",
+          "placeholder": "例如: walking slowly through fog, then stops and looks back"
+        },
+        {
+          "name": "environment",
+          "label": "环境场景",
+          "labelEn": "Environment",
+          "type": "text",
+          "required": true,
+          "description": "描述拍摄的地点和背景",
+          "placeholder": "例如: empty city street at night, neon lights reflecting on wet pavement"
+        },
+        {
+          "name": "lighting",
+          "label": "光线类型",
+          "labelEn": "Lighting",
+          "type": "select",
+          "required": true,
+          "description": "选择光线风格",
+          "options": [
+            { "value": "golden hour sunlight", "label": "黄金时刻 - 温暖柔和" },
+            { "value": "blue hour twilight", "label": "蓝调时刻 - 清冷静谧" },
+            { "value": "dramatic shadows", "label": "戏剧光影 - 强烈对比" },
+            { "value": "soft window light", "label": "柔和窗光 - 自然舒适" },
+            { "value": "harsh direct sunlight", "label": "强烈直射光 - 高对比" },
+            { "value": "neon lights", "label": "霓虹灯光 - 都市夜景" },
+            { "value": "backlit", "label": "逆光 - 轮廓光" },
+            { "value": "studio lighting", "label": "影棚灯光 - 专业均匀" },
+            { "value": "candlelight", "label": "烛光 - 温馨浪漫" },
+            { "value": "moonlight", "label": "月光 - 神秘冷色" },
+            { "value": "firelight", "label": "火光 - 跳动温暖" },
+            { "value": "overcast diffused light", "label": "阴天漫射光 - 柔和无影" }
+          ]
+        },
+        {
+          "name": "cameraMovement",
+          "label": "镜头运动",
+          "labelEn": "Camera Movement",
+          "type": "select",
+          "required": false,
+          "description": "选择相机的运动方式",
+          "defaultValue": "static shot",
+          "options": [
+            { "value": "static shot", "label": "静止镜头" },
+            { "value": "camera pushing in", "label": "推进 - 向前移动" },
+            { "value": "camera pulling out", "label": "拉远 - 向后移动" },
+            { "value": "tracking shot", "label": "跟踪拍摄 - 跟随主体" },
+            { "value": "orbiting around subject", "label": "环绕 - 围绕主体" },
+            { "value": "slow pan left to right", "label": "水平摇移 - 左右扫视" },
+            { "value": "tilt up", "label": "向上倾斜" },
+            { "value": "tilt down", "label": "向下倾斜" },
+            { "value": "crane up", "label": "升降 - 垂直上升" },
+            { "value": "crane down", "label": "升降 - 垂直下降" },
+            { "value": "handheld shaky", "label": "手持晃动 - 纪实感" },
+            { "value": "steady dolly", "label": "稳定移动 - 平滑轨道" }
+          ]
+        },
+        {
+          "name": "camera",
+          "label": "相机/胶片风格",
+          "labelEn": "Camera Style",
+          "type": "select",
+          "required": false,
+          "description": "选择拍摄设备或胶片风格",
+          "defaultValue": "digital cinema",
+          "options": [
+            { "value": "digital cinema", "label": "现代数字电影" },
+            { "value": "shot on 35mm film", "label": "35mm 胶片 - 经典电影感" },
+            { "value": "shot on 16mm film", "label": "16mm 胶片 - 纪录片风格" },
+            { "value": "shot on ARRI Alexa", "label": "ARRI Alexa - 高端数字电影" },
+            { "value": "vintage Super 8", "label": "Super 8 - 复古怀旧" },
+            { "value": "anamorphic lens", "label": "变形镜头 - 宽银幕" },
+            { "value": "VHS tape", "label": "VHS 录像带 - 80年代风格" },
+            { "value": "Polaroid", "label": "宝丽来 - 即时成像" },
+            { "value": "shot on RED camera", "label": "RED 摄影机 - 高分辨率" }
+          ]
+        },
+        {
+          "name": "mood",
+          "label": "情绪氛围",
+          "labelEn": "Mood",
+          "type": "text",
+          "required": false,
+          "description": "整体的情感基调",
+          "placeholder": "例如: cinematic and moody, melancholic, suspenseful"
+        }
+      ],
+      "examples": [
+        "Close-up of a young woman with tears streaming down her cheeks, golden hour sunlight filtering through a window, shallow depth of field, camera slowly pushing in, shot on 35mm film, cinematic and emotional",
+        "Wide shot of a lone figure walking through a misty forest at dawn, soft diffused light, tracking shot following from behind, shot on ARRI Alexa, ethereal and mysterious",
+        "Aerial shot of ocean waves crashing against rugged cliffs, dramatic storm clouds, camera circling the coastline, shot on digital cinema, epic and powerful"
+      ]
+    },
+    {
+      "id": "nature",
+      "name": "自然风光",
+      "nameEn": "Nature",
+      "icon": "🏞️",
+      "description": "山川湖海、四季变化，强调自然环境的壮丽与宁静",
+      "template": "{viewAngle} of {location}, {season} {weather}, {naturalElements}, {colorPalette}, {timeOfDay}",
+      "fields": [
+        {
+          "name": "viewAngle",
+          "label": "视角类型",
+          "labelEn": "View Angle",
+          "type": "select",
+          "required": true,
+          "description": "选择拍摄视角",
+          "options": [
+            { "value": "Aerial drone shot", "label": "航拍视角 - 俯瞰全景" },
+            { "value": "Wide landscape shot", "label": "广角风光 - 展现辽阔" },
+            { "value": "Time-lapse", "label": "延时摄影 - 时间流逝" },
+            { "value": "Macro close-up", "label": "微距特写 - 细节捕捉" },
+            { "value": "Ground-level perspective", "label": "地面视角 - 平视角度" },
+            { "value": "Bird's eye view", "label": "鸟瞰图 - 垂直俯视" },
+            { "value": "Low angle looking up", "label": "仰拍 - 向上仰视" }
+          ]
+        },
+        {
+          "name": "location",
+          "label": "地点描述",
+          "labelEn": "Location",
+          "type": "text",
+          "required": true,
+          "description": "描述自然景观的地点",
+          "placeholder": "例如: misty mountains with pine forests"
+        },
+        {
+          "name": "season",
+          "label": "季节",
+          "labelEn": "Season",
+          "type": "select",
+          "required": true,
+          "description": "选择季节",
+          "options": [
+            { "value": "spring", "label": "春季 - 万物复苏" },
+            { "value": "summer", "label": "夏季 - 生机盎然" },
+            { "value": "autumn", "label": "秋季 - 金色丰收" },
+            { "value": "winter", "label": "冬季 - 冰雪世界" },
+            { "value": "transition between seasons", "label": "季节交替 - 变化之美" }
+          ]
+        },
+        {
+          "name": "weather",
+          "label": "天气条件",
+          "labelEn": "Weather",
+          "type": "select",
+          "required": true,
+          "description": "选择天气状况",
+          "options": [
+            { "value": "clear blue sky", "label": "晴空万里" },
+            { "value": "dramatic storm clouds", "label": "风暴将至" },
+            { "value": "morning mist", "label": "晨雾缭绕" },
+            { "value": "heavy rain", "label": "大雨倾盆" },
+            { "value": "light snow falling", "label": "飘雪" },
+            { "value": "sunset glow", "label": "晚霞满天" },
+            { "value": "foggy", "label": "浓雾" },
+            { "value": "rainbow after rain", "label": "雨后彩虹" },
+            { "value": "partly cloudy", "label": "多云" },
+            { "value": "lightning storm", "label": "雷暴" }
+          ]
+        },
+        {
+          "name": "naturalElements",
+          "label": "自然元素动态",
+          "labelEn": "Natural Elements",
+          "type": "text",
+          "required": true,
+          "description": "描述自然元素的运动和变化",
+          "placeholder": "例如: fog slowly rolling through valleys, leaves swirling in wind"
+        },
+        {
+          "name": "colorPalette",
+          "label": "色彩风格",
+          "labelEn": "Color Palette",
+          "type": "select",
+          "required": false,
+          "description": "选择色彩基调",
+          "defaultValue": "vibrant warm tones",
+          "options": [
+            { "value": "vibrant warm tones", "label": "鲜艳暖色" },
+            { "value": "cool blue hues", "label": "冷色调蓝" },
+            { "value": "golden and amber", "label": "金色琥珀" },
+            { "value": "pastel colors", "label": "粉彩柔和" },
+            { "value": "monochrome", "label": "黑白" },
+            { "value": "deep green forest tones", "label": "深绿森林" },
+            { "value": "purple and pink sunset", "label": "紫粉晚霞" },
+            { "value": "earth tones", "label": "大地色系" }
+          ]
+        },
+        {
+          "name": "timeOfDay",
+          "label": "时间段",
+          "labelEn": "Time of Day",
+          "type": "select",
+          "required": false,
+          "description": "选择拍摄时间",
+          "options": [
+            { "value": "at sunrise", "label": "日出时分" },
+            { "value": "at sunset", "label": "日落时分" },
+            { "value": "golden hour", "label": "黄金时刻" },
+            { "value": "midday", "label": "正午" },
+            { "value": "twilight", "label": "黄昏" },
+            { "value": "night with stars", "label": "星空夜晚" },
+            { "value": "dawn", "label": "黎明" },
+            { "value": "dusk", "label": "傍晚" }
+          ]
+        }
+      ],
+      "examples": [
+        "Aerial drone shot of misty mountains at sunrise, autumn colors, fog slowly rolling through valleys, golden and amber tones, peaceful and majestic",
+        "Wide landscape shot of dramatic storm clouds over ocean, summer, waves crashing violently against rocks, cool blue hues with dark grays, powerful and raw",
+        "Time-lapse of snow-covered pine forest, winter morning mist, sunbeams breaking through trees creating god rays, cool blue hues with warm light rays, serene and magical"
+      ]
+    },
+    {
+      "id": "portrait",
+      "name": "人物肖像",
+      "nameEn": "Portrait",
+      "icon": "👤",
+      "description": "人物特写、表情捕捉，聚焦人物情感和细节",
+      "template": "{shotType} of {characterDescription}, {expression}, {clothing}, {background}, {lighting}, {mood}",
+      "fields": [
+        {
+          "name": "shotType",
+          "label": "镜头景别",
+          "labelEn": "Shot Type",
+          "type": "select",
+          "required": true,
+          "description": "选择人物镜头类型",
+          "options": [
+            { "value": "Close-up portrait", "label": "面部特写 - 聚焦表情" },
+            { "value": "Extreme close-up on eyes", "label": "眼部大特写 - 情感细节" },
+            { "value": "Medium portrait", "label": "半身肖像 - 胸部以上" },
+            { "value": "Full-body portrait", "label": "全身肖像 - 完整人物" },
+            { "value": "Profile shot", "label": "侧面肖像 - 轮廓美" },
+            { "value": "Three-quarter view", "label": "四分之三侧面 - 经典角度" }
+          ]
+        },
+        {
+          "name": "characterDescription",
+          "label": "人物描述",
+          "labelEn": "Character Description",
+          "type": "text",
+          "required": true,
+          "description": "描述人物的外观特征",
+          "placeholder": "例如: an elderly man with weathered face and white beard"
+        },
+        {
+          "name": "expression",
+          "label": "表情/动作",
+          "labelEn": "Expression",
+          "type": "text",
+          "required": true,
+          "description": "描述人物的表情和动作",
+          "placeholder": "例如: gently smiling while looking at the camera"
+        },
+        {
+          "name": "clothing",
+          "label": "服装/造型",
+          "labelEn": "Clothing",
+          "type": "text",
+          "required": false,
+          "description": "描述服装和造型细节",
+          "placeholder": "例如: wearing a wool sweater and glasses"
+        },
+        {
+          "name": "background",
+          "label": "背景",
+          "labelEn": "Background",
+          "type": "select",
+          "required": true,
+          "description": "选择背景类型",
+          "options": [
+            { "value": "blurred bokeh background", "label": "虚化背景 - 突出人物" },
+            { "value": "cozy library", "label": "温馨书房 - 文艺氛围" },
+            { "value": "urban street", "label": "城市街道 - 现代感" },
+            { "value": "minimalist white background", "label": "极简白背景 - 干净简洁" },
+            { "value": "natural outdoor setting", "label": "自然户外 - 生动自然" },
+            { "value": "vintage interior", "label": "复古室内 - 怀旧风格" },
+            { "value": "studio backdrop", "label": "影棚背景 - 专业感" },
+            { "value": "sunset sky", "label": "日落天空 - 温暖浪漫" }
+          ]
+        },
+        {
+          "name": "lighting",
+          "label": "光线",
+          "labelEn": "Lighting",
+          "type": "select",
+          "required": true,
+          "description": "选择光线类型",
+          "options": [
+            { "value": "soft window light", "label": "柔和窗光 - 自然舒适" },
+            { "value": "Rembrandt lighting", "label": "伦勃朗光 - 三角光经典" },
+            { "value": "rim lighting", "label": "轮廓光 - 勾勒边缘" },
+            { "value": "butterfly lighting", "label": "蝴蝶光 - 正面顶光" },
+            { "value": "natural outdoor light", "label": "自然户外光 - 真实自然" },
+            { "value": "dramatic side lighting", "label": "戏剧侧光 - 强烈对比" },
+            { "value": "backlit silhouette", "label": "逆光剪影 - 轮廓美" },
+            { "value": "golden hour glow", "label": "黄金时刻光 - 温暖柔和" }
+          ]
+        },
+        {
+          "name": "mood",
+          "label": "情绪氛围",
+          "labelEn": "Mood",
+          "type": "text",
+          "required": false,
+          "description": "描述整体情绪基调",
+          "placeholder": "例如: warm and nostalgic, contemplative"
+        }
+      ],
+      "examples": [
+        "Close-up portrait of an elderly man with weathered face, gently smiling while looking at camera, wearing a wool sweater, cozy library background, soft window light, warm and nostalgic",
+        "Medium portrait of a young ballerina, elegant pose with arms raised, white tutu, minimalist white background, rim lighting creating dramatic silhouette, graceful and ethereal",
+        "Extreme close-up on eyes of a child, wide-eyed wonder and curiosity, natural outdoor light, blurred bokeh background, innocent and heartwarming"
+      ]
+    },
+    {
+      "id": "product",
+      "name": "产品展示",
+      "nameEn": "Product",
+      "icon": "📦",
+      "description": "商业拍摄、产品特写，突出产品细节和质感",
+      "template": "{cameraMovement} around {productDescription}, {material}, {detailFocus}, {background}, {lighting}, commercial photography style",
+      "fields": [
+        {
+          "name": "cameraMovement",
+          "label": "镜头运动",
+          "labelEn": "Camera Movement",
+          "type": "select",
+          "required": true,
+          "description": "选择产品展示的镜头运动",
+          "options": [
+            { "value": "360-degree rotation", "label": "360度旋转展示 - 全方位呈现" },
+            { "value": "Slow push in", "label": "缓慢推进 - 聚焦细节" },
+            { "value": "Overhead shot", "label": "俯视静态 - 平面展示" },
+            { "value": "Sliding reveal", "label": "滑动揭示 - 渐进呈现" },
+            { "value": "Static close-up", "label": "静态特写 - 稳定聚焦" },
+            { "value": "Dolly around", "label": "轨道环绕 - 平滑移动" },
+            { "value": "Crane shot", "label": "升降镜头 - 动态视角" }
+          ]
+        },
+        {
+          "name": "productDescription",
+          "label": "产品描述",
+          "labelEn": "Product Description",
+          "type": "text",
+          "required": true,
+          "description": "描述产品的外观和特点",
+          "placeholder": "例如: a sleek smartphone with edge-to-edge display"
+        },
+        {
+          "name": "material",
+          "label": "材质/颜色",
+          "labelEn": "Material",
+          "type": "text",
+          "required": true,
+          "description": "描述产品的材质和颜色",
+          "placeholder": "例如: matte black aluminum finish with glass back"
+        },
+        {
+          "name": "detailFocus",
+          "label": "展示细节",
+          "labelEn": "Detail Focus",
+          "type": "text",
+          "required": true,
+          "description": "描述重点展示的细节",
+          "placeholder": "例如: camera focusing on edge details and screen reflection"
+        },
+        {
+          "name": "background",
+          "label": "背景",
+          "labelEn": "Background",
+          "type": "select",
+          "required": true,
+          "description": "选择产品背景",
+          "options": [
+            { "value": "minimalist white background", "label": "极简白背景 - 纯净专业" },
+            { "value": "dark gradient backdrop", "label": "深色渐变 - 高端神秘" },
+            { "value": "natural wood surface", "label": "天然木质表面 - 温暖自然" },
+            { "value": "marble countertop", "label": "大理石台面 - 奢华质感" },
+            { "value": "infinity curve backdrop", "label": "无限弯曲背景 - 无缝过渡" },
+            { "value": "reflective surface", "label": "反光表面 - 镜面效果" },
+            { "value": "textured fabric", "label": "纹理织物 - 柔和质感" }
+          ]
+        },
+        {
+          "name": "lighting",
+          "label": "光线设置",
+          "labelEn": "Lighting",
+          "type": "select",
+          "required": true,
+          "description": "选择打光方式",
+          "options": [
+            { "value": "studio lighting with soft reflections", "label": "影棚灯+柔和反光" },
+            { "value": "dramatic side lighting", "label": "戏剧侧光 - 强烈对比" },
+            { "value": "backlit glow", "label": "逆光发光 - 轮廓光" },
+            { "value": "natural daylight", "label": "自然日光 - 真实柔和" },
+            { "value": "colored gel lighting", "label": "彩色凝胶灯 - 创意色彩" },
+            { "value": "ring light", "label": "环形灯 - 均匀无影" },
+            { "value": "key light with fill", "label": "主光+补光 - 专业布光" }
+          ]
+        }
+      ],
+      "examples": [
+        "360-degree rotation around a sleek smartphone, matte black aluminum finish, camera focusing on edge details and screen reflection, minimalist white background, studio lighting with soft reflections, Apple-style product video",
+        "Slow push in on luxury watch, stainless steel with sapphire crystal, highlighting intricate dial details and rotating bezel, dark gradient backdrop, dramatic side lighting creating depth, premium and sophisticated",
+        "Overhead shot of skincare product bottles, frosted glass with gold caps, arranged in geometric pattern, marble countertop, natural daylight with soft shadows, clean and luxurious"
+      ]
+    },
+    {
+      "id": "action",
+      "name": "动作运动",
+      "nameEn": "Action",
+      "icon": "🏃",
+      "description": "运动、跑酷、极限挑战，捕捉快节奏动态",
+      "template": "{cameraStyle} following {subject} as {action}, {environment}, {speedEffect}, {visualEffect}, high-energy and dynamic",
+      "fields": [
+        {
+          "name": "cameraStyle",
+          "label": "运镜方式",
+          "labelEn": "Camera Style",
+          "type": "select",
+          "required": true,
+          "description": "选择拍摄方式",
+          "options": [
+            { "value": "Tracking shot", "label": "跟踪拍摄 - 跟随主体" },
+            { "value": "POV first-person", "label": "第一人称视角 - 沉浸体验" },
+            { "value": "Slow-motion capture", "label": "慢动作捕捉 - 细节展现" },
+            { "value": "Drone chase", "label": "无人机追踪 - 航拍跟随" },
+            { "value": "GoPro-style", "label": "GoPro风格 - 运动相机" },
+            { "value": "Gimbal stabilized", "label": "稳定器拍摄 - 平滑流畅" },
+            { "value": "Handheld dynamic", "label": "手持动态 - 真实感" }
+          ]
+        },
+        {
+          "name": "subject",
+          "label": "主体",
+          "labelEn": "Subject",
+          "type": "text",
+          "required": true,
+          "description": "描述运动的主体",
+          "placeholder": "例如: a skateboarder performing tricks"
+        },
+        {
+          "name": "action",
+          "label": "动作描述",
+          "labelEn": "Action",
+          "type": "text",
+          "required": true,
+          "description": "详细描述动作过程，用节奏分解",
+          "placeholder": "例如: launching off ramp, spinning 360 degrees in mid-air, landing smoothly"
+        },
+        {
+          "name": "environment",
+          "label": "环境",
+          "labelEn": "Environment",
+          "type": "text",
+          "required": true,
+          "description": "描述运动场景",
+          "placeholder": "例如: urban skate park with graffiti walls"
+        },
+        {
+          "name": "speedEffect",
+          "label": "速度感描述",
+          "labelEn": "Speed Effect",
+          "type": "select",
+          "required": false,
+          "description": "选择速度效果",
+          "options": [
+            { "value": "motion blur", "label": "运动模糊 - 速度感" },
+            { "value": "speed ramping", "label": "变速效果 - 快慢切换" },
+            { "value": "freeze frame moment", "label": "定格瞬间 - 关键时刻" },
+            { "value": "real-time speed", "label": "实时速度 - 真实感" },
+            { "value": "bullet time", "label": "子弹时间 - 360度慢动作" }
+          ]
+        },
+        {
+          "name": "visualEffect",
+          "label": "视觉效果",
+          "labelEn": "Visual Effect",
+          "type": "text",
+          "required": false,
+          "description": "描述特殊视觉元素",
+          "placeholder": "例如: dust particles in air, dramatic lighting, sweat droplets flying"
+        }
+      ],
+      "examples": [
+        "Tracking shot following a skateboarder performing tricks, launching off ramp and spinning 360, urban skate park with graffiti walls, motion blur on wheels, dust particles in air, high-energy and dynamic",
+        "POV first-person of mountain biker descending steep trail, weaving through trees at high speed, dense forest with dappled sunlight, speed ramping through tight turns, branches whipping past camera, adrenaline-pumping and intense",
+        "Slow-motion capture of parkour athlete jumping between rooftops, perfect flip in mid-air, city skyline at sunset, freeze frame at peak of jump with arms extended, cinematic and breathtaking"
+      ]
+    },
+    {
+      "id": "abstract",
+      "name": "抽象艺术",
+      "nameEn": "Abstract",
+      "icon": "🎨",
+      "description": "色彩、纹理、实验性视觉艺术",
+      "template": "{visualStyle} showing {theme}, {colorCombination}, {movement}, {artisticReference}, abstract and mesmerizing",
+      "fields": [
+        {
+          "name": "visualStyle",
+          "label": "视觉风格",
+          "labelEn": "Visual Style",
+          "type": "select",
+          "required": true,
+          "description": "选择抽象艺术类型",
+          "options": [
+            { "value": "Fluid art style", "label": "流体艺术 - 液体流动" },
+            { "value": "Particle simulation", "label": "粒子模拟 - 数字艺术" },
+            { "value": "Geometric patterns", "label": "几何图案 - 规则形状" },
+            { "value": "Light refraction", "label": "光线折射 - 棱镜效果" },
+            { "value": "Macro liquid", "label": "微距液体 - 细节纹理" },
+            { "value": "Kaleidoscope", "label": "万花筒效果 - 对称美" },
+            { "value": "Smoke art", "label": "烟雾艺术 - 飘渺流动" },
+            { "value": "Ink in water", "label": "水墨扩散 - 有机形态" }
+          ]
+        },
+        {
+          "name": "theme",
+          "label": "主题",
+          "labelEn": "Theme",
+          "type": "text",
+          "required": true,
+          "description": "描述抽象主题",
+          "placeholder": "例如: colorful ink diffusing in water"
+        },
+        {
+          "name": "colorCombination",
+          "label": "色彩组合",
+          "labelEn": "Color Combination",
+          "type": "text",
+          "required": true,
+          "description": "描述色彩搭配",
+          "placeholder": "例如: purple and gold swirls with iridescent highlights"
+        },
+        {
+          "name": "movement",
+          "label": "运动/变化",
+          "labelEn": "Movement",
+          "type": "select",
+          "required": true,
+          "description": "描述运动方式",
+          "options": [
+            { "value": "slow hypnotic movement", "label": "缓慢催眠运动" },
+            { "value": "explosive burst", "label": "爆炸性迸发" },
+            { "value": "gentle undulation", "label": "温和起伏" },
+            { "value": "rhythmic pulsation", "label": "节奏性脉动" },
+            { "value": "chaotic turbulence", "label": "混沌湍流" },
+            { "value": "spiral rotation", "label": "螺旋旋转" },
+            { "value": "wave propagation", "label": "波浪传播" },
+            { "value": "morphing transformation", "label": "形态变换" }
+          ]
+        },
+        {
+          "name": "artisticReference",
+          "label": "艺术风格参考",
+          "labelEn": "Artistic Reference",
+          "type": "text",
+          "required": false,
+          "description": "参考的艺术家或艺术风格",
+          "placeholder": "例如: inspired by James Turrell, Kandinsky style"
+        }
+      ],
+      "examples": [
+        "Fluid art style showing colorful ink diffusing in water, purple and gold swirls with iridescent highlights, slow hypnotic movement, macro lens, inspired by James Turrell, abstract and mesmerizing",
+        "Particle simulation of glowing orbs, electric blue and neon pink particles, explosive burst then gentle floating, dark background with light trails, futuristic and ethereal",
+        "Kaleidoscope of geometric patterns, rainbow spectrum shifting through shapes, rhythmic pulsation, symmetrical and infinite, inspired by Islamic art, trippy and psychedelic"
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "name": "生活记录",
+      "nameEn": "Lifestyle",
+      "icon": "📸",
+      "description": "日常、纪实、温馨瞬间",
+      "template": "{perspective} of {dailyScene}, {interaction}, {environmentDetails}, natural lighting, authentic and relatable",
+      "fields": [
+        {
+          "name": "perspective",
+          "label": "视角",
+          "labelEn": "Perspective",
+          "type": "select",
+          "required": true,
+          "description": "选择拍摄视角",
+          "options": [
+            { "value": "Handheld shot", "label": "手持拍摄 - 纪实感" },
+            { "value": "Over-the-shoulder", "label": "过肩视角 - 参与感" },
+            { "value": "Wide establishing shot", "label": "建立镜头 - 展现环境" },
+            { "value": "Medium intimate shot", "label": "中景亲密镜头 - 温馨感" },
+            { "value": "Candid documentary style", "label": "抓拍纪录风格 - 自然真实" },
+            { "value": "Observational perspective", "label": "观察视角 - 第三者" }
+          ]
+        },
+        {
+          "name": "dailyScene",
+          "label": "日常场景",
+          "labelEn": "Daily Scene",
+          "type": "text",
+          "required": true,
+          "description": "描述日常生活场景",
+          "placeholder": "例如: a family cooking together in kitchen"
+        },
+        {
+          "name": "interaction",
+          "label": "人物互动",
+          "labelEn": "Interaction",
+          "type": "text",
+          "required": true,
+          "description": "描述人物之间的互动",
+          "placeholder": "例如: children helping to mix ingredients, parents laughing"
+        },
+        {
+          "name": "environmentDetails",
+          "label": "环境细节",
+          "labelEn": "Environment Details",
+          "type": "text",
+          "required": true,
+          "description": "描述环境氛围和细节",
+          "placeholder": "例如: morning sunlight through windows, cozy home atmosphere"
+        },
+        {
+          "name": "mood",
+          "label": "情绪基调",
+          "labelEn": "Mood",
+          "type": "select",
+          "required": false,
+          "description": "选择整体情绪",
+          "options": [
+            { "value": "warm and cozy", "label": "温暖舒适" },
+            { "value": "joyful and playful", "label": "欢乐有趣" },
+            { "value": "peaceful and calm", "label": "平静安详" },
+            { "value": "nostalgic", "label": "怀旧" },
+            { "value": "intimate", "label": "亲密" },
+            { "value": "energetic", "label": "活力充沛" },
+            { "value": "contemplative", "label": "沉思" },
+            { "value": "heartwarming", "label": "温馨感人" }
+          ]
+        }
+      ],
+      "examples": [
+        "Handheld shot of a family cooking together in kitchen, children helping to mix ingredients while parents laugh, morning sunlight through windows creating cozy atmosphere, natural lighting, authentic and relatable, warm and joyful",
+        "Candid documentary style of elderly couple walking hand-in-hand through park, autumn leaves falling around them, gentle breeze, natural outdoor light, intimate and nostalgic",
+        "Medium intimate shot of friends gathering around campfire at night, sharing stories and roasting marshmallows, warm firelight on faces, starry sky above, peaceful and heartwarming"
+      ]
+    }
+  ]
+}
