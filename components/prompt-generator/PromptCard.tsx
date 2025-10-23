@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { GeneratedPrompt, copyToClipboard, exportAsText } from '@/lib/prompt-generator';
+import type { GeneratedPrompt } from '@/lib/prompt-generator/types';
 
 interface PromptCardProps {
   prompt: GeneratedPrompt;
@@ -13,10 +13,12 @@ export default function PromptCard({ prompt, index }: PromptCardProps) {
   const [shared, setShared] = useState(false);
 
   const handleCopy = async () => {
-    const success = await copyToClipboard(prompt.prompt);
-    if (success) {
+    try {
+      await navigator.clipboard.writeText(prompt.prompt);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
     }
   };
 
@@ -40,8 +42,8 @@ export default function PromptCard({ prompt, index }: PromptCardProps) {
   };
 
   const handleDownload = () => {
-    const textContent = exportAsText(prompt);
-    const blob = new Blob([textContent], { type: 'text/plain' });
+    const textContent = `Sora 提示词 #${index}\n\n温度: ${prompt.temperature}\nTokens: ${prompt.usage.totalTokens}\n成本: ¥${prompt.cost.totalCost.toFixed(6)}\n\n${prompt.prompt}`;
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -52,21 +54,48 @@ export default function PromptCard({ prompt, index }: PromptCardProps) {
     URL.revokeObjectURL(url);
   };
 
+  // 如果生成失败
+  if (!prompt.success) {
+    return (
+      <div className="bg-red-50 border-2 border-red-200 rounded-lg p-6 shadow-md">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm font-bold text-red-600">
+            Prompt #{prompt.index}
+          </span>
+          <span className="text-xs text-red-500">
+            生成失败
+          </span>
+        </div>
+        <div className="text-sm text-red-700">
+          {prompt.error || '生成失败，请重试'}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-      {/* Prompt Number */}
+      {/* Prompt Number & Stats */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-bold text-gray-500">
-          Prompt #{index}
+          Prompt #{prompt.index}
         </span>
-        <span className="text-xs text-gray-400">
-          {prompt.categoryName}
-        </span>
+        <div className="flex items-center gap-2 text-xs text-gray-400">
+          <span title={`温度: ${prompt.temperature}`}>
+            🌡️ {prompt.temperature}
+          </span>
+          <span title={`Tokens: ${prompt.usage.totalTokens}`}>
+            📊 {prompt.usage.totalTokens}
+          </span>
+          <span title={`成本: ¥${prompt.cost.totalCost.toFixed(6)} (${(prompt.cost.totalCost * 100).toFixed(4)}分)`}>
+            💰 {(prompt.cost.totalCost * 100).toFixed(2)}分
+          </span>
+        </div>
       </div>
 
       {/* Prompt Content with left border */}
       <div className="border-l-4 border-green-500 pl-4 mb-6">
-        <div className="text-sm text-gray-800 leading-relaxed min-h-[100px]">
+        <div className="text-sm text-gray-800 leading-relaxed min-h-[100px] whitespace-pre-wrap">
           {prompt.prompt}
         </div>
       </div>

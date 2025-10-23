@@ -6,7 +6,7 @@
 import type {
   CategoryConfig,
   PromptFormData,
-  GeneratedPrompt,
+  GeneratedPromptOld,
   FormValidation,
   FieldValidation,
 } from './types';
@@ -86,7 +86,7 @@ export function validateForm(
  * 生成提示词
  * 核心逻辑：用用户填写的值替换模板中的占位符
  */
-export function generatePrompt(formData: PromptFormData): GeneratedPrompt {
+export function generatePrompt(formData: PromptFormData): GeneratedPromptOld {
   const category = getCategoryById(formData.category);
 
   if (!category) {
@@ -154,7 +154,7 @@ export function fillFromExample(
 /**
  * 导出提示词为纯文本
  */
-export function exportAsText(generated: GeneratedPrompt): string {
+export function exportAsText(generated: GeneratedPromptOld): string {
   return `# ${generated.categoryName} 提示词
 
 生成时间: ${generated.generatedAt.toLocaleString('zh-CN')}
@@ -172,7 +172,7 @@ ${Object.entries(generated.fields)
 /**
  * 导出提示词为 JSON
  */
-export function exportAsJSON(generated: GeneratedPrompt): string {
+export function exportAsJSON(generated: GeneratedPromptOld): string {
   return JSON.stringify(generated, null, 2);
 }
 
@@ -226,14 +226,14 @@ export function getCategoryStats(category: CategoryConfig) {
 export function generatePromptVariants(
   formData: PromptFormData,
   count: number = 3
-): GeneratedPrompt[] {
+): GeneratedPromptOld[] {
   const category = getCategoryById(formData.category);
 
   if (!category) {
     throw new Error(`分类 ${formData.category} 不存在`);
   }
 
-  const variants: GeneratedPrompt[] = [];
+  const variants: GeneratedPromptOld[] = [];
 
   // Variant 1: 原始提示词（用户填写的值）
   const basePrompt = generatePrompt(formData);

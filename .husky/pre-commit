@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Run build before commit (lint disabled temporarily)
-# pnpm lint && \
+# Run build before commit to verify all code compiles
+echo "🔨 Running build before commit..."
 pnpm build
+
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed! Please fix errors before committing."
+  exit 1
+fi
+
+echo "✅ Build successful! Proceeding with commit..."

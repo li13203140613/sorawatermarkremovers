@@ -13,6 +13,7 @@ export type {
   PromptGeneratorConfig,
   PromptFormData,
   GeneratedPrompt,
+  GeneratedPromptOld,
   FieldValidation,
   FormValidation,
 } from './types';

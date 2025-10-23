@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sora2 提示词生成器 - 简单版本线框图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .version-toggle {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .toggle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .toggle-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            gap: 12px;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .toggle-btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: #22c55e;
+            color: white;
+            box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+        }
+
+        .toggle-btn:not(.active) {
+            background: transparent;
+            color: #666;
+        }
+
+        .toggle-btn:not(.active):hover {
+            background: #e0e0e0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .version-label {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #22c55e;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        /* 简单版本样式 */
+        .simple-form {
+            display: block;
+        }
+
+        .detailed-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .label-icon {
+            font-size: 18px;
+        }
+
+        .required {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+
+        textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .submit-section {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #22c55e;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* 详细版本样式 */
+        .category-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .category-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .category-tab:hover {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .category-tab.active {
+            border-color: #22c55e;
+            background: #22c55e;
+            color: white;
+        }
+
+        .tab-icon {
+            font-size: 24px;
+        }
+
+        .tab-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .fields-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 1024px) {
+            .fields-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .fields-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toggle-buttons {
+                width: 100%;
+            }
+
+            .toggle-btn {
+                flex: 1;
+            }
+        }
+
+        .note {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin-top: 24px;
+            border-radius: 6px;
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .note-content {
+            font-size: 14px;
+            color: #1e3a8a;
+            line-height: 1.6;
+        }
+
+        .comparison {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-top: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .check {
+            color: #22c55e;
+            font-size: 18px;
+        }
+
+        .cross {
+            color: #ef4444;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 40px; color: #111; font-size: 32px;">
+            Sora2 提示词生成器 - 简单/详细版本切换设计
+        </h1>
+
+        <!-- 版本切换器 -->
+        <div class="version-toggle">
+            <div class="toggle-header">
+                <div class="toggle-title">💡 选择生成模式</div>
+                <div class="toggle-buttons">
+                    <button class="toggle-btn active" onclick="switchVersion('simple')">
+                        ✨ 简单版本
+                    </button>
+                    <button class="toggle-btn" onclick="switchVersion('detailed')">
+                        🎨 详细版本
+                    </button>
+                </div>
+            </div>
+            <div style="font-size: 14px; color: #666; margin-top: 12px;">
+                <strong>简单版本</strong>：快速生成，只需输入基本创意<br>
+                <strong>详细版本</strong>：精细控制，自定义所有参数
+            </div>
+        </div>
+
+        <!-- ==================== 简单版本表单 ==================== -->
+        <div id="simple-version" class="form-container simple-form">
+            <span class="version-label">当前模式：简单版本</span>
+
+            <!-- 视频创意输入 -->
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="label-icon">📝</span>
+                    <span>输入您的视频创意 <span class="required">*</span></span>
+                </label>
+                <textarea placeholder="示例：小猫在花园里玩耍"></textarea>
+            </div>
+
+            <!-- 视频类型和生成数量并排 -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🎬</span>
+                        <span>选择视频类型</span>
+                    </label>
+                    <select>
+                        <option value="">-- 选择类型 --</option>
+                        <option value="animation">动画 (Animation)</option>
+                        <option value="realistic">写实 (Realistic)</option>
+                        <option value="cartoon">卡通 (Cartoon)</option>
+                        <option value="movie">电影 (Movie)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🔢</span>
+                        <span>生成提示词数量</span>
+                    </label>
+                    <select>
+                        <option value="1">1 - 单个提示词</option>
+                        <option value="2">2 - 两个变体</option>
+                        <option value="3" selected>3 - 三个变体</option>
+                        <option value="4">4 - 四个变体</option>
+                        <option value="5">5 - 五个变体</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 提交按钮 -->
+            <div class="submit-section">
+                <button class="btn btn-primary">✨ 生成提示词</button>
+                <button class="btn btn-secondary">🔄 重置</button>
+            </div>
+
+            <div class="note">
+                <div class="note-title">💡 提示</div>
+                <div class="note-content">
+                    简单版本会根据您的创意自动生成优化的 Sora 提示词。想要更精细的控制？切换到"详细版本"！
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 详细版本表单 ==================== -->
+        <div id="detailed-version" class="form-container detailed-form">
+            <span class="version-label">当前模式：详细版本</span>
+
+            <!-- 分类标签 -->
+            <div class="category-tabs">
+                <div class="category-tab active">
+                    <span class="tab-icon">🎬</span>
+                    <span class="tab-name">电影叙事</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">🌿</span>
+                    <span class="tab-name">自然风光</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">👤</span>
+                    <span class="tab-name">人物肖像</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">📦</span>
+                    <span class="tab-name">产品展示</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">⚡</span>
+                    <span class="tab-name">动作运动</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">🎨</span>
+                    <span class="tab-name">抽象艺术</span>
+                </div>
+                <div class="category-tab">
+                    <span class="tab-icon">📹</span>
+                    <span class="tab-name">生活记录</span>
+                </div>
+            </div>
+
+            <!-- 字段网格 (3列布局) -->
+            <div class="fields-grid">
+                <div class="form-group">
+                    <label class="form-label">
+                        镜头类型 <span class="required">*</span>
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="close-up">Close-up (特写)</option>
+                        <option value="wide-shot">Wide shot (远景)</option>
+                        <option value="medium-shot">Medium shot (中景)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        主体描述 <span class="required">*</span>
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="person">Person (人物)</option>
+                        <option value="animal">Animal (动物)</option>
+                        <option value="object">Object (物体)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        动作描述 <span class="required">*</span>
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="walking">Walking (行走)</option>
+                        <option value="running">Running (奔跑)</option>
+                        <option value="sitting">Sitting (坐着)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        环境场景
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="indoor">Indoor (室内)</option>
+                        <option value="outdoor">Outdoor (室外)</option>
+                        <option value="urban">Urban (城市)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        光照条件
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="natural">Natural light (自然光)</option>
+                        <option value="studio">Studio light (影棚灯)</option>
+                        <option value="golden-hour">Golden hour (黄金时刻)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        摄像机运动
+                    </label>
+                    <select>
+                        <option value="">请选择...</option>
+                        <option value="static">Static (静止)</option>
+                        <option value="pan">Pan (摇镜)</option>
+                        <option value="zoom">Zoom (变焦)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 视频类型和生成数量 (与简单版本样式一致) -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🎬</span>
+                        <span>视频类型</span>
+                    </label>
+                    <select>
+                        <option value="">-- 选择类型 --</option>
+                        <option value="animation">动画 (Animation)</option>
+                        <option value="realistic">写实 (Realistic)</option>
+                        <option value="cartoon">卡通 (Cartoon)</option>
+                        <option value="movie">电影 (Movie)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🔢</span>
+                        <span>生成提示词数量</span>
+                    </label>
+                    <select>
+                        <option value="1">1 - 单个提示词</option>
+                        <option value="2">2 - 两个变体</option>
+                        <option value="3" selected>3 - 三个变体</option>
+                        <option value="4">4 - 四个变体</option>
+                        <option value="5">5 - 五个变体</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 提交按钮 -->
+            <div class="submit-section">
+                <button class="btn btn-primary">✨ 生成提示词</button>
+                <button class="btn btn-secondary">🔄 重置</button>
+            </div>
+
+            <div class="note">
+                <div class="note-title">💡 提示</div>
+                <div class="note-content">
+                    详细版本让您完全掌控每个参数。需要快速生成？切换到"简单版本"！
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能对比表 -->
+        <div class="comparison">
+            <h2 class="comparison-title">📊 两个版本功能对比</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>功能特性</th>
+                        <th style="text-align: center;">简单版本</th>
+                        <th style="text-align: center;">详细版本</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>视频创意输入</strong></td>
+                        <td style="text-align: center;"><span class="check">✓</span> 文本框</td>
+                        <td style="text-align: center;"><span class="cross">✗</span> 使用字段</td>
+                    </tr>
+                    <tr>
+                        <td><strong>分类选择</strong></td>
+                        <td style="text-align: center;"><span class="cross">✗</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span> 7个分类</td>
+                    </tr>
+                    <tr>
+                        <td><strong>详细字段配置</strong></td>
+                        <td style="text-align: center;"><span class="cross">✗</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span> 镜头、光照等</td>
+                    </tr>
+                    <tr>
+                        <td><strong>视频类型选择</strong></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>生成数量选择</strong></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                        <td style="text-align: center;"><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>适用场景</strong></td>
+                        <td>快速生成、初学者</td>
+                        <td>精细控制、专业用户</td>
+                    </tr>
+                    <tr>
+                        <td><strong>操作步骤</strong></td>
+                        <td>3步完成</td>
+                        <td>多步骤配置</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function switchVersion(version) {
+            const simpleForm = document.getElementById('simple-version');
+            const detailedForm = document.getElementById('detailed-version');
+            const buttons = document.querySelectorAll('.toggle-btn');
+
+            if (version === 'simple') {
+                simpleForm.style.display = 'block';
+                detailedForm.style.display = 'none';
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+            } else {
+                simpleForm.style.display = 'none';
+                detailedForm.style.display = 'block';
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

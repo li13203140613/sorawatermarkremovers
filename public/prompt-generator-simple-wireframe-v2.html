@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提示词生成器 - 简单/详细版本切换（简约版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f9fafb;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #111;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* 版本切换 - 极简设计 */
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 24px;
+            background: #e5e7eb;
+            padding: 3px;
+            border-radius: 8px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mode-btn {
+            padding: 8px 24px;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .mode-btn.active {
+            background: white;
+            color: #111;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* 表单容器 */
+        .form-box {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        /* 简单版本 */
+        .simple-form {
+            display: block;
+        }
+
+        .detailed-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        textarea:focus, select:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .submit-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* 详细版本 - 分类标签 */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            border-color: #10b981;
+        }
+
+        .tab.active {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .fields-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* 结果展示区 */
+        .results-section {
+            background: #f9fafb;
+            padding: 32px 20px;
+            border-radius: 12px;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .results-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .results-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .card-content {
+            border-left: 3px solid #10b981;
+            padding-left: 12px;
+            margin-bottom: 12px;
+            color: #374151;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 80px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-copy:hover {
+            background: #059669;
+        }
+
+        .btn-share {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-download {
+            background: #f59e0b;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .fields-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sora2 提示词生成器</h1>
+
+        <!-- 版本切换 -->
+        <div class="mode-toggle">
+            <button class="mode-btn active" onclick="switchMode('simple')">简单版本</button>
+            <button class="mode-btn" onclick="switchMode('detailed')">详细版本</button>
+        </div>
+
+        <!-- ========== 简单版本表单 ========== -->
+        <div id="simple" class="form-box simple-form">
+            <div class="form-group">
+                <label class="form-label">输入您的视频创意 <span class="required">*</span></label>
+                <textarea placeholder="小猫"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">选择视频类型</label>
+                    <select>
+                        <option value="animation">Animation</option>
+                        <option value="realistic">Realistic</option>
+                        <option value="cartoon">Cartoon</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">生成提示词数量</label>
+                    <select>
+                        <option value="1">1 - Single prompt</option>
+                        <option value="2">2 - Two variations</option>
+                        <option value="3">3 - Three variations</option>
+                        <option value="4" selected>4 - Four variations</option>
+                        <option value="5">5 - Five variations</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="submit-row">
+                <button class="btn btn-primary">生成 AI 提示词</button>
+                <button class="btn btn-secondary">重置</button>
+            </div>
+        </div>
+
+        <!-- ========== 详细版本表单 ========== -->
+        <div id="detailed" class="form-box detailed-form">
+            <!-- 分类标签 -->
+            <div class="tabs">
+                <div class="tab active">电影叙事</div>
+                <div class="tab">自然风光</div>
+                <div class="tab">人物肖像</div>
+                <div class="tab">产品展示</div>
+                <div class="tab">动作运动</div>
+                <div class="tab">抽象艺术</div>
+                <div class="tab">生活记录</div>
+            </div>
+
+            <!-- 字段网格 -->
+            <div class="fields-grid">
+                <div class="form-group">
+                    <label class="form-label">镜头类型 <span class="required">*</span></label>
+                    <select>
+                        <option>请选择...</option>
+                        <option>Close-up</option>
+                        <option>Wide shot</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">主体描述 <span class="required">*</span></label>
+                    <select>
+                        <option>请选择...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">动作描述 <span class="required">*</span></label>
+                    <select>
+                        <option>请选择...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">环境场景</label>
+                    <select>
+                        <option>请选择...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">光线类型</label>
+                    <select>
+                        <option>请选择...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">镜头运动</label>
+                    <select>
+                        <option>请选择...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 视频类型和生成数量 -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">选择视频类型</label>
+                    <select>
+                        <option value="animation">Animation</option>
+                        <option value="realistic">Realistic</option>
+                        <option value="cartoon">Cartoon</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">生成提示词数量</label>
+                    <select>
+                        <option value="2">2 - Two variations</option>
+                        <option value="3">3 - Three variations</option>
+                        <option value="4">4 - Four variations</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="submit-row">
+                <button class="btn btn-primary">生成提示词</button>
+                <button class="btn btn-secondary">重置</button>
+            </div>
+        </div>
+
+        <!-- ========== 结果展示区（不变）========== -->
+        <div class="results-section">
+            <div class="results-header">
+                <h2 class="results-title">生成的提示词结果</h2>
+                <p class="results-subtitle">系统已为您生成 3 个专业级 Sora 视频提示词</p>
+            </div>
+
+            <div class="results-grid">
+                <!-- 卡片 1 -->
+                <div class="result-card">
+                    <div class="card-header">
+                        <span>Prompt #1</span>
+                        <span>电影叙事</span>
+                    </div>
+                    <div class="card-content">
+                        Close-up of a detective in a dark alley, shot on ARRI Alexa, cinematic lighting, moody atmosphere...
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn btn-copy">复制</button>
+                        <button class="card-btn btn-share">分享</button>
+                        <button class="card-btn btn-download">下载</button>
+                    </div>
+                </div>
+
+                <!-- 卡片 2 -->
+                <div class="result-card">
+                    <div class="card-header">
+                        <span>Prompt #2</span>
+                        <span>电影叙事</span>
+                    </div>
+                    <div class="card-content">
+                        Wide shot of a detective in a dark alley, shot on RED Dragon, dramatic lighting, film noir style...
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn btn-copy">复制</button>
+                        <button class="card-btn btn-share">分享</button>
+                        <button class="card-btn btn-download">下载</button>
+                    </div>
+                </div>
+
+                <!-- 卡片 3 -->
+                <div class="result-card">
+                    <div class="card-header">
+                        <span>Prompt #3</span>
+                        <span>电影叙事</span>
+                    </div>
+                    <div class="card-content">
+                        Medium shot of a detective in a dark alley, shot on Sony Venice, atmospheric lighting, mysterious mood...
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn btn-copy">复制</button>
+                        <button class="card-btn btn-share">分享</button>
+                        <button class="card-btn btn-download">下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchMode(mode) {
+            const simple = document.getElementById('simple');
+            const detailed = document.getElementById('detailed');
+            const buttons = document.querySelectorAll('.mode-btn');
+
+            if (mode === 'simple') {
+                simple.style.display = 'block';
+                detailed.style.display = 'none';
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+            } else {
+                simple.style.display = 'none';
+                detailed.style.display = 'block';
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

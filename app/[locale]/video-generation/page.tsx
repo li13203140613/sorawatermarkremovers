@@ -1,7 +1,7 @@
 'use client'
 
-import MultiVideoGenerator from '@/components/video-generation/MultiVideoGenerator';
+import VideoGenerator from '@/components/video-generation/VideoGenerator';
 
 export default function VideoGenerationPage() {
-  return <MultiVideoGenerator />;
+  return <VideoGenerator />;
 }

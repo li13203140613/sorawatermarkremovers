@@ -136,9 +136,9 @@ export default function VideoTestPage() {
         <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 mb-8">
           <h3 className="font-bold text-blue-800 mb-2">💡 使用说明:</h3>
           <ul className="text-sm text-blue-700 space-y-1">
-            <li>1. 粘贴视频URL并点击"添加"</li>
+            <li>1. 粘贴视频URL并点击&quot;添加&quot;</li>
             <li>2. 首次加载会显示加载时间 (5-10秒)</li>
-            <li>3. 点击"刷新页面"按钮重新加载</li>
+            <li>3. 点击&quot;刷新页面&quot;按钮重新加载</li>
             <li>4. 第二次加载应该瞬间完成 (&lt;100ms) - 证明缓存生效</li>
             <li>5. 绿色标签 = 从缓存加载, 黄色标签 = 从网络加载</li>
           </ul>

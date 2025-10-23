@@ -58,13 +58,32 @@ export interface PromptFormData {
   values: Record<string, string>;  // 字段名 -> 用户填写的值
 }
 
-// 生成的完整提示词
-export interface GeneratedPrompt {
+// 生成的完整提示词（旧版本 - 用于UI显示）
+export interface GeneratedPromptOld {
   category: PromptCategory;
   categoryName: string;
   prompt: string;                  // 完整提示词
   fields: Record<string, string>;  // 用户填写的值
   generatedAt: Date;
+}
+
+// API 返回的提示词（新版本 - 批量生成）
+export interface GeneratedPrompt {
+  success: boolean;
+  index: number;
+  temperature: number;
+  prompt: string;
+  usage: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+  };
+  cost: {
+    inputCost: number;
+    outputCost: number;
+    totalCost: number;
+  };
+  error?: string;
 }
 
 // 字段验证结果

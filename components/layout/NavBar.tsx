@@ -34,6 +34,12 @@ export function NavBar() {
               {t('promptGenerator', { default: 'Prompt Generator' })}
             </Link>
             <Link
+              href="/soraprompting"
+              className="text-gray-700 hover:text-purple-600 font-medium transition-colors"
+            >
+              {t('promptGallery', { default: 'Prompt Gallery' })}
+            </Link>
+            <Link
               href="/dashboard"
               className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
