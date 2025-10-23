@@ -186,7 +186,7 @@ export function GoogleOneTap() {
   }
 
   if (!isProduction) {
-    console.log('[GoogleOneTap] Disabled in development environment (localhost)')
+    // console.log('[GoogleOneTap] Disabled in development environment (localhost)')
     return null
   }
 

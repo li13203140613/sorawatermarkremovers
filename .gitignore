@@ -48,3 +48,10 @@ test-*.html
 check-task-status.js
 create-user-profile.js
 _archived_tests*/
+
+# crawler data (keep locally only - do not commit to GitHub)
+data/soraprompting/
+data/soraprompting/**
+*.mp4
+*.json
+data/*.html

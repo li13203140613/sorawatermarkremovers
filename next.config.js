@@ -1,4 +1,5 @@
 const withNextIntl = require('next-intl/plugin')('./i18n.ts')
+const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -30,10 +31,10 @@ const nextConfig = {
       },
     ],
   },
-  // 修复 Next.js 15 的 React Server Components 问题
-  experimental: {
-    serverComponentsExternalPackages: ['next-intl'],
-  },
+  // 修复 Next.js 15 的配置（使用新的 serverExternalPackages）
+  serverExternalPackages: ['next-intl'],
+  // 显式设置 workspace root 以避免 lockfile 警告
+  outputFileTracingRoot: path.join(__dirname),
 }
 
 module.exports = withNextIntl(nextConfig)

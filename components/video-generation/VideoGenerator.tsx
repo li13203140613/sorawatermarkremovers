@@ -587,7 +587,8 @@ export default function VideoGenerator({ apiKey }: VideoGeneratorProps) {
                       autoPlay
                       loop
                       className="w-full"
-                      src={taskStatus.result.output_url}
+                      src={`/api/video/proxy?url=${encodeURIComponent(taskStatus.result.output_url)}`}
+                      preload="auto"
                     >
                       您的浏览器不支持视频播放。
                     </video>

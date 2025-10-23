@@ -1,7 +1,7 @@
 'use client'
 
-import VideoGenerator from '@/components/video-generation/VideoGenerator';
+import MultiVideoGenerator from '@/components/video-generation/MultiVideoGenerator';
 
-export default function TestAICodingPage() {
-  return <VideoGenerator />;
+export default function VideoGenerationPage() {
+  return <MultiVideoGenerator />;
 }

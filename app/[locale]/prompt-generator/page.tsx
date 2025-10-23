@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { VideoType, PromptCount, GeneratedPrompt } from '@/lib/prompt-generator/types';
-import { generatePrompts } from '@/lib/prompt-generator/api';
+import {
+  type PromptCategory,
+  type GeneratedPrompt,
+  generatePromptVariants,
+} from '@/lib/prompt-generator';
 import PromptGeneratorForm from '@/components/prompt-generator/PromptGeneratorForm';
 import PromptResultsDisplay from '@/components/prompt-generator/PromptResultsDisplay';
 import PromptGallery from '@/components/prompt-generator/PromptGallery';
@@ -17,32 +20,33 @@ export default function PromptGeneratorPage() {
   const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const handleGenerate = async (videoIdea: string, videoType: VideoType, promptCount: PromptCount) => {
+  const handleGenerate = async (
+    category: PromptCategory,
+    values: Record<string, string>,
+    promptCount: number
+  ) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await generatePrompts({
-        videoIdea,
-        videoType,
-        promptCount,
-      });
+      // 使用本地生成
+      const generatedPrompts = generatePromptVariants(
+        { category, values },
+        promptCount
+      );
 
-      if (response.success) {
-        setPrompts(response.prompts);
-        // Scroll to results
-        setTimeout(() => {
-          const resultsSection = document.getElementById('results');
-          if (resultsSection) {
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        setError(response.error || 'Failed to generate prompts');
-      }
+      setPrompts(generatedPrompts);
+
+      // Scroll to results
+      setTimeout(() => {
+        const resultsSection = document.getElementById('results');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     } catch (err) {
       console.error('Error generating prompts:', err);
-      setError('An unexpected error occurred. Please try again.');
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
     }

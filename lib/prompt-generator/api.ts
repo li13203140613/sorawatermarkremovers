@@ -20,10 +20,10 @@ export async function generatePrompts(
     const { videoType, promptCount } = request;
 
     // Get mock prompts for the selected video type
-    const mockPromptsForType = MOCK_PROMPTS[videoType] || MOCK_PROMPTS.realistic;
+    const mockPromptsForType = MOCK_PROMPTS[videoType as keyof typeof MOCK_PROMPTS] || MOCK_PROMPTS.realistic;
 
     // Generate the requested number of prompts
-    const prompts: GeneratedPrompt[] = [];
+    const prompts: PromptGenerateResponse['prompts'] = [];
 
     for (let i = 0; i < promptCount; i++) {
       // Cycle through available mock prompts

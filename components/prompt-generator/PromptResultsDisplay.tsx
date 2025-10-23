@@ -1,41 +1,36 @@
 'use client';
 
-import { GeneratedPrompt } from '@/lib/prompt-generator/types';
+import { GeneratedPrompt } from '@/lib/prompt-generator';
 import PromptCard from './PromptCard';
 
 interface PromptResultsDisplayProps {
   prompts: GeneratedPrompt[];
-  locale?: string;
 }
 
-export default function PromptResultsDisplay({ prompts, locale = 'en' }: PromptResultsDisplayProps) {
+export default function PromptResultsDisplay({ prompts }: PromptResultsDisplayProps) {
   if (prompts.length === 0) return null;
 
-  // Determine grid layout based on number of prompts
-  const getGridClass = () => {
-    if (prompts.length <= 3) {
-      return 'grid-cols-1'; // Single column for 1-3 prompts
-    } else if (prompts.length <= 6) {
-      return 'grid-cols-1 md:grid-cols-2'; // 2 columns for 4-6 prompts
-    } else {
-      return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'; // 3 columns for 7-9 prompts
-    }
-  };
-
   return (
-    <div className="bg-gray-50 py-10 px-4 border-t border-gray-200">
-      <div className="max-w-5xl mx-auto">
+    <div className="bg-gray-50 py-12 px-4 border-t border-gray-200">
+      <div className="max-w-6xl mx-auto">
         {/* Section Title */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            ✅ 您优化的 Sora AI 提示词结果 - 专业级 Sora 提示词
+        <div className="mb-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            生成的提示词结果
           </h2>
+          <p className="text-gray-600">
+            系统已为您生成 {prompts.length} 个专业级 Sora 视频提示词
+          </p>
         </div>
 
         {/* Results Grid */}
-        <div className={`grid ${getGridClass()} gap-6`}>
-          {prompts.map((prompt) => (
-            <PromptCard key={prompt.id} prompt={prompt} locale={locale} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {prompts.map((prompt, index) => (
+            <PromptCard
+              key={`${prompt.category}-${index}`}
+              prompt={prompt}
+              index={index + 1}
+            />
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-export default function VideoGenerationLayout({
+export default function VideoTestLayout({
   children,
 }: {
   children: React.ReactNode;
