@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   Film,
   Mountain,
@@ -22,6 +23,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import type { PromptCategory, GeneratedPrompt } from '@/lib/prompt-generator/types';
+import { getAllCategories, getCategoryById } from '@/lib/prompt-generator';
 
 const videoStyles: Array<{ id: PromptCategory; label: string; icon: any }> = [
   { id: 'cinematic', label: '电影叙事', icon: Film },
@@ -50,18 +52,20 @@ export default function PromptGeneratorV2({ onGenerated, loading: externalLoadin
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [temperature, setTemperature] = useState(0.7);
-
-  // 专业模式字段
-  const [cameraType, setCameraType] = useState('');
-  const [lighting, setLighting] = useState('');
-  const [colorTone, setColorTone] = useState('');
-  const [movement, setMovement] = useState('');
-  const [time, setTime] = useState('');
-  const [weather, setWeather] = useState('');
+  const [formValues, setFormValues] = useState<Record<string, string>>({});
 
   const currentDescription = mode === 'simple' ? simpleIdea : advancedIdea;
   const setCurrentDescription = mode === 'simple' ? setSimpleIdea : setAdvancedIdea;
   const isLoading = loading || externalLoading;
+
+  // 获取当前分类的字段配置
+  const currentCategory = useMemo(() => getCategoryById(selectedStyle), [selectedStyle]);
+
+  // 切换风格时清空表单
+  useEffect(() => {
+    setFormValues({});
+    setError(null);
+  }, [selectedStyle]);
 
   const handleGenerate = async () => {
     try {
@@ -73,39 +77,27 @@ export default function PromptGeneratorV2({ onGenerated, loading: externalLoadin
 
       if (mode === 'simple') {
         // 简单模式：直接使用用户输入
-        if (!simpleIdea.trim()) {
-          setError('请输入您的创意描述');
-          setLoading(false);
-          return;
-        }
-        scene = simpleIdea.trim();
+        scene = simpleIdea.trim() || '生成一个创意视频';
       } else {
-        // 高级模式：组合创意描述 + 字段值
-        if (!advancedIdea.trim()) {
-          setError('请输入您的创意描述');
-          setLoading(false);
-          return;
+        // 高级模式：组合创意描述 + 字段值（带字段名称）
+        const fieldValues: string[] = [];
+
+        // 添加创意描述（如果有）
+        if (advancedIdea.trim()) {
+          fieldValues.push(advancedIdea.trim());
         }
 
-        const fieldValues: string[] = [advancedIdea.trim()];
-
-        // 添加专业模式的字段值
-        const fields = [
-          cameraType,
-          lighting,
-          colorTone,
-          movement,
-          time,
-          weather
-        ];
-
-        fields.forEach((value) => {
+        // 添加专业模式的字段值，带上字段标签
+        Object.entries(formValues).forEach(([fieldName, value]) => {
           if (value && value.trim()) {
-            fieldValues.push(value.trim());
+            const field = currentCategory?.fields.find(f => f.name === fieldName);
+            if (field) {
+              fieldValues.push(`${field.label}：${value.trim()}`);
+            }
           }
         });
 
-        scene = fieldValues.join(', ');
+        scene = fieldValues.length > 0 ? fieldValues.join('\n') : '生成一个创意视频';
       }
 
       // 获取选中风格的中文名称
@@ -158,7 +150,7 @@ export default function PromptGeneratorV2({ onGenerated, loading: externalLoadin
   };
 
   return (
-    <Card className="overflow-hidden border-border/50 shadow-lg">
+    <Card className="border-border/50 shadow-lg">
       <div className="space-y-8 p-6 md:p-8">
         {/* Mode Toggle - Tabs 组件 */}
         <div className="space-y-4">
@@ -265,8 +257,7 @@ export default function PromptGeneratorV2({ onGenerated, loading: externalLoadin
         {/* Description Input */}
         <div className="space-y-3">
           <Label htmlFor="description" className="text-base font-semibold">
-            {mode === 'simple' ? '描述您的创意' : '创意描述'}{' '}
-            <span className="text-red-500">*</span>
+            {mode === 'simple' ? '描述您的创意' : '创意描述'}
           </Label>
           <Textarea
             id="description"
@@ -283,89 +274,59 @@ export default function PromptGeneratorV2({ onGenerated, loading: externalLoadin
           </div>
         </div>
 
-        {/* Advanced Mode Fields */}
-        {mode === 'advanced' && (
+        {/* Advanced Mode Fields - Dynamic */}
+        {mode === 'advanced' && currentCategory && (
           <div className="space-y-6">
-            {/* Basic Parameters Grid */}
+            {/* Dynamic Fields Grid */}
             <div className="grid gap-4 grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="camera" className="text-sm font-medium">
-                  镜头类型
-                </Label>
-                <Input
-                  id="camera"
-                  placeholder="选择或输入镜头类型..."
-                  value={cameraType}
-                  onChange={(e) => setCameraType(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lighting" className="text-sm font-medium">
-                  光线
-                </Label>
-                <Input
-                  id="lighting"
-                  placeholder="选择或输入光线效果..."
-                  value={lighting}
-                  onChange={(e) => setLighting(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="color" className="text-sm font-medium">
-                  色调
-                </Label>
-                <Input
-                  id="color"
-                  placeholder="选择或输入色调..."
-                  value={colorTone}
-                  onChange={(e) => setColorTone(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="movement" className="text-sm font-medium">
-                  运动方式
-                </Label>
-                <Input
-                  id="movement"
-                  placeholder="选择或输入运动方式..."
-                  value={movement}
-                  onChange={(e) => setMovement(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="time" className="text-sm font-medium">
-                  时间
-                </Label>
-                <Input
-                  id="time"
-                  placeholder="选择或输入时间..."
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="weather" className="text-sm font-medium">
-                  天气
-                </Label>
-                <Input
-                  id="weather"
-                  placeholder="选择或输入天气..."
-                  value={weather}
-                  onChange={(e) => setWeather(e.target.value)}
-                  disabled={isLoading}
-                  className="bg-gray-50 border-gray-200"
-                />
-              </div>
+              {currentCategory.fields.map((field) => (
+                <div key={field.name} className="space-y-2">
+                  <Label htmlFor={field.name} className="text-sm font-medium">
+                    {field.label}
+                  </Label>
+
+                  {field.type === 'select' && field.options ? (
+                    <>
+                      <Input
+                        id={field.name}
+                        list={`${field.name}List`}
+                        type="text"
+                        placeholder={field.placeholder || `选择或输入${field.label}...`}
+                        value={formValues[field.name] || ''}
+                        onChange={(e) => setFormValues(prev => ({ ...prev, [field.name]: e.target.value }))}
+                        disabled={isLoading}
+                        className="bg-gray-50 border-gray-200"
+                      />
+                      <datalist id={`${field.name}List`}>
+                        {field.options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </datalist>
+                    </>
+                  ) : field.type === 'textarea' ? (
+                    <Textarea
+                      id={field.name}
+                      placeholder={field.placeholder || `请输入${field.label}...`}
+                      value={formValues[field.name] || ''}
+                      onChange={(e) => setFormValues(prev => ({ ...prev, [field.name]: e.target.value }))}
+                      disabled={isLoading}
+                      className="bg-gray-50 border-gray-200 min-h-[100px]"
+                    />
+                  ) : (
+                    <Input
+                      id={field.name}
+                      type="text"
+                      placeholder={field.placeholder || `选择或输入${field.label}...`}
+                      value={formValues[field.name] || ''}
+                      onChange={(e) => setFormValues(prev => ({ ...prev, [field.name]: e.target.value }))}
+                      disabled={isLoading}
+                      className="bg-gray-50 border-gray-200"
+                    />
+                  )}
+                </div>
+              ))}
             </div>
 
             {/* Advanced Options Accordion */}
