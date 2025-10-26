@@ -10,7 +10,7 @@
  * 🔄 客户端：Google One Tap, Prompt Generator, Results Display, Gallery, FAQ
  */
 
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { generateHomePageSchema, generateFAQSchema, HOME_FAQ_DATA } from '@/lib/seo/structured-data';
 import ClientInteractiveSection from '@/components/home/ClientInteractiveSection';
 import SoraIntroductionSSR from '@/components/prompt-generator/SoraIntroductionSSR';
@@ -18,8 +18,8 @@ import ProductAdvantagesSSR from '@/components/prompt-generator/ProductAdvantage
 import FeatureNavigationSSR from '@/components/prompt-generator/FeatureNavigationSSR';
 import Script from 'next/script';
 
-export default function Home() {
-  const t = useTranslations('home');
+export default async function Home() {
+  const t = await getTranslations('home');
 
   // 生成结构化数据
   const homeSchemas = generateHomePageSchema();
