@@ -1,59 +1,67 @@
-'use client'
+/**
+ * 首页 - 混合渲染架构（SEO优化版本）
+ *
+ * SEO优化策略：
+ * - 服务端渲染：H1、静态内容、结构化数据 → 搜索引擎友好
+ * - 客户端渲染：表单、交互、动态内容 → 用户体验优化
+ *
+ * 渲染方式：
+ * ✅ 服务端：Hero Section, Sora Introduction, Product Advantages, Feature Navigation, Structured Data
+ * 🔄 客户端：Google One Tap, Prompt Generator, Results Display, Gallery, FAQ
+ */
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { GoogleOneTap } from '@/components/auth'
-import PromptGeneratorV2 from '@/components/prompt-generator/PromptGeneratorV2';
-import PromptResultsDisplay from '@/components/prompt-generator/PromptResultsDisplay';
-import PromptGallery from '@/components/prompt-generator/PromptGallery';
-import SoraIntroduction from '@/components/prompt-generator/SoraIntroduction';
-import ProductAdvantages from '@/components/prompt-generator/ProductAdvantages';
-import FAQ from '@/components/prompt-generator/FAQ';
-import type { GeneratedPrompt } from '@/lib/prompt-generator/types';
+import { generateHomePageSchema, generateFAQSchema, HOME_FAQ_DATA } from '@/lib/seo/structured-data';
+import ClientInteractiveSection from '@/components/home/ClientInteractiveSection';
+import SoraIntroductionSSR from '@/components/prompt-generator/SoraIntroductionSSR';
+import ProductAdvantagesSSR from '@/components/prompt-generator/ProductAdvantagesSSR';
+import FeatureNavigationSSR from '@/components/prompt-generator/FeatureNavigationSSR';
+import Script from 'next/script';
 
 export default function Home() {
   const t = useTranslations('home');
-  const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
 
-  const handleGenerated = (generatedPrompts: GeneratedPrompt[]) => {
-    setPrompts(generatedPrompts);
-  };
+  // 生成结构化数据
+  const homeSchemas = generateHomePageSchema();
+  const faqSchema = generateFAQSchema(HOME_FAQ_DATA);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Google One Tap */}
-      <GoogleOneTap />
+    <>
+      {/* 结构化数据 - JSON-LD Schema（SEO关键） */}
+      {homeSchemas.map((schema, index) => (
+        <Script
+          key={`schema-${index}`}
+          id={`structured-data-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: schema }}
+        />
+      ))}
+      <Script
+        id="structured-data-faq"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', ...faqSchema }) }}
+      />
 
-      {/* Hero Section */}
-      <div className="bg-gray-50 py-16 px-4 text-center border-b border-gray-200">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          {t('hero.title')}
-        </h1>
-      </div>
-
-      {/* Input Section */}
-      <div className="bg-white py-10 border-b border-gray-200">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <PromptGeneratorV2 onGenerated={handleGenerated} />
+      <div className="min-h-screen bg-white">
+        {/* Hero Section - 服务端渲染（SEO关键：H1标题） */}
+        <div className="bg-gray-50 py-16 px-4 text-center border-b border-gray-200">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+            {t('hero.title')}
+          </h1>
         </div>
+
+        {/* 客户端交互区域（表单、结果、画廊、FAQ） */}
+        <ClientInteractiveSection />
+
+        {/* Sora Introduction - 服务端渲染（SEO优化） */}
+        <SoraIntroductionSSR />
+
+        {/* Product Advantages - 服务端渲染（SEO优化） */}
+        <ProductAdvantagesSSR />
+
+        {/* Feature Navigation - 服务端渲染（内链优化） */}
+        <FeatureNavigationSSR />
       </div>
-
-      {/* Results Section */}
-      <div id="results">
-        <PromptResultsDisplay prompts={prompts} />
-      </div>
-
-      {/* Gallery Section */}
-      <PromptGallery />
-
-      {/* Sora Introduction Section */}
-      <SoraIntroduction />
-
-      {/* Product Advantages Section */}
-      <ProductAdvantages />
-
-      {/* FAQ Section */}
-      <FAQ />
-    </div>
-  )
+    </>
+  );
 }

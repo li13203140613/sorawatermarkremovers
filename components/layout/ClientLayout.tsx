@@ -3,11 +3,13 @@
 import { AuthProvider } from '@/lib/auth'
 import { CreditsProvider } from '@/contexts/CreditsContext'
 import { NavBar } from './NavBar'
+import { NProgressBar } from './NProgressBar'
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       <CreditsProvider>
+        <NProgressBar />
         {children}
       </CreditsProvider>
     </AuthProvider>

@@ -6,6 +6,7 @@ import { NavUserProfile } from '@/components/auth'
 import { CreditsDisplay } from '@/components/credits/CreditsDisplay'
 import LanguageSwitcher from '@/components/language/LanguageSwitcher'
 import { useTranslations } from 'next-intl'
+import { NavLink } from './NavLink'
 
 export function NavBar() {
   const { user } = useAuth()
@@ -27,42 +28,48 @@ export function NavBar() {
 
           {/* 中间：导航链接 */}
           <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/prompt-generator"
-              className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+            <NavLink
+              href="/"
+              className="text-gray-700 hover:text-green-600"
+              activeClassName="text-green-600 font-semibold"
             >
               {t('promptGenerator', { default: 'Prompt Generator' })}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/soraprompting"
-              className="text-gray-700 hover:text-purple-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-purple-600"
+              activeClassName="text-purple-600 font-semibold"
             >
               {t('promptGallery', { default: 'Prompt Gallery' })}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/dashboard"
-              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-indigo-600"
+              activeClassName="text-indigo-600 font-semibold"
             >
               {t('removeWatermark', { default: 'Remove Watermark' })}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/video-generation"
-              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-indigo-600"
+              activeClassName="text-indigo-600 font-semibold"
             >
               {t('videoGeneration', { default: 'Video Generation' })}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/blog"
-              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-indigo-600"
+              activeClassName="text-indigo-600 font-semibold"
             >
               {t('blog', { default: 'Blog' })}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/pricing"
-              className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-indigo-600"
+              activeClassName="text-indigo-600 font-semibold"
             >
               {t('pricing', { default: 'Pricing' })}
-            </Link>
+            </NavLink>
           </div>
 
           {/* 右侧：积分 + 语言切换 + 用户信息 */}

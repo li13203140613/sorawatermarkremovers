@@ -3,24 +3,51 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import "../globals.css";
 import "@/styles/blog.css";
+import "@/styles/nprogress.css";
 import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
 import { IntlProvider } from '@/components/providers/IntlProvider';
+import { getCanonicalUrl, getAlternateLinks } from '@/lib/seo/canonical';
 
-export const metadata: Metadata = {
-  title: "Sora2 Video HD Free Watermark Removal Tool",
-  description: "Sora2 Remove Watermark Tool - Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered watermark removal technology while maintaining HD quality. No registration required, just paste Sora share link to remove watermark with one click and download watermark-free HD videos instantly. Sora2 去水印工具 - 免费在线 Sora 视频水印去除服务。支持 Sora 和 Sora2 所有视频格式，AI 智能去水印技术，保持高清画质不变。无需注册登录，粘贴 Sora 分享链接即可一键去除水印，快速下载无水印高清视频。",
-  keywords: "Sora 2 Remove Watermark, Sora2 去水印, Sora watermark removal, AI watermark remover, video watermark removal, free watermark remover, HD video processing",
-  openGraph: {
+// 动态生成 metadata（包含 canonical 链接）
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  // 生成 canonical URL（首页）
+  const canonicalUrl = getCanonicalUrl('/', locale);
+
+  // 生成多语言 alternate links
+  const alternates = {
+    canonical: canonicalUrl,
+    languages: Object.fromEntries(
+      ['en', 'zh', 'ja', 'de', 'zh-hant'].map(lang => [
+        lang,
+        getCanonicalUrl('/', lang)
+      ])
+    )
+  };
+
+  return {
     title: "Sora2 Video HD Free Watermark Removal Tool",
-    description: "Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered technology. No registration required, remove watermark with one click.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sora2 Video HD Free Watermark Removal Tool",
-    description: "Free Sora & Sora2 video watermark removal. AI-powered, HD quality, one-click processing. No registration needed.",
-  },
-};
+    description: "Sora2 Remove Watermark Tool - Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered watermark removal technology while maintaining HD quality. No registration required, just paste Sora share link to remove watermark with one click and download watermark-free HD videos instantly. Sora2 去水印工具 - 免费在线 Sora 视频水印去除服务。支持 Sora 和 Sora2 所有视频格式，AI 智能去水印技术，保持高清画质不变。无需注册登录，粘贴 Sora 分享链接即可一键去除水印，快速下载无水印高清视频。",
+    keywords: "Sora 2 Remove Watermark, Sora2 去水印, Sora watermark removal, AI watermark remover, video watermark removal, free watermark remover, HD video processing",
+    alternates,
+    openGraph: {
+      title: "Sora2 Video HD Free Watermark Removal Tool",
+      description: "Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered technology. No registration required, remove watermark with one click.",
+      type: "website",
+      url: canonicalUrl,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Sora2 Video HD Free Watermark Removal Tool",
+      description: "Free Sora & Sora2 video watermark removal. AI-powered, HD quality, one-click processing. No registration needed.",
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
