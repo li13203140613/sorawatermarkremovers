@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { AdminStats, LogsResponse, UsersResponse, LogsFilter } from '@/lib/admin/types'
 import StatsCards from '@/components/admin/StatsCards'
 import UsersTable from '@/components/admin/UsersTable'
@@ -134,6 +135,12 @@ export default function AdminPage() {
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">管理后台</h1>
           <div className="flex gap-3">
+            <Link
+              href="/admin/analytics"
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition inline-block"
+            >
+              📊 数据分析
+            </Link>
             <button
               onClick={handleRefresh}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"

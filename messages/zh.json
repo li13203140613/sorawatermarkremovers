@@ -146,6 +146,44 @@
       "title": "使用我们的免费生成器创建令人惊叹的 Sora AI 视频提示词",
       "subtitle": "在几秒钟内生成专业级 AI 视频提示词"
     },
+    "v2": {
+      "modes": {
+        "simple": "快速模式",
+        "advanced": "专业模式"
+      },
+      "categories": {
+        "cinematic": "电影叙事",
+        "nature": "自然风光",
+        "portrait": "人物肖像",
+        "product": "产品展示",
+        "action": "动作运动",
+        "abstract": "抽象艺术",
+        "lifestyle": "生活记录"
+      },
+      "labels": {
+        "selectStyle": "选择您的视频风格",
+        "description": "描述您的创意",
+        "creativeDescription": "创意描述",
+        "placeholder": "例如：一只橘猫在雨天的街道上行走，镜头缓缓推进...",
+        "characterCount": "字",
+        "advancedOptions": "高级选项",
+        "temperature": "温度 (创意度)",
+        "conservative": "保守",
+        "creative": "创意",
+        "promptCount": "生成提示词数量",
+        "selectOrInput": "选择或输入{field}...",
+        "pleaseInput": "请输入{field}...",
+        "generating": "生成中...",
+        "generate": "生成提示词",
+        "aiGenerating": "AI 正在生成创意提示词...",
+        "defaultPrompt": "生成一个创意视频"
+      },
+      "errors": {
+        "apiFailed": "API 请求失败: {status}",
+        "generateFailed": "生成失败",
+        "retryPrompt": "生成失败，请重试"
+      }
+    },
     "form": {
       "title": "开始使用 Sora 提示词生成器 - 输入您的视频创意",
       "videoIdea": {
@@ -248,7 +286,26 @@
       "viewBlog": "查看教程博客"
     },
     "faq": {
-      "title": "常见问题 - Sora 提示词生成器 FAQ"
+      "title": "常见问题",
+      "subtitle": "解答您关心的问题",
+      "questions": {
+        "q1": {
+          "question": "如何使用提示词生成器创建 AI 视频？",
+          "answer": "只需三步：{br}1) 选择您想要的视频类别{br}2) 在快速模式输入创意，或在专业模式填写详细参数{br}3) 点击\"生成提示词\"按钮{br}{br}我们的 AI 会立即生成专业级 Sora 2 提示词供您使用。生成提示词后，您可以前往 AI 视频生成 页面直接生成视频。"
+        },
+        "q2": {
+          "question": "生成的提示词可以直接在 Sora 2 中使用吗？",
+          "answer": "是的！所有生成的提示词都完全兼容 Sora 2 平台。您可以直接复制提示词到 Sora 2 官方平台，立即开始生成高质量视频。我们的 AI 模型经过专门训练，确保生成的提示词符合 Sora 2 的最佳实践。{br}{br}还想看更多优质案例？访问 Prompt 展示 查看海量精选提示词。"
+        },
+        "q3": {
+          "question": "除了提示词生成，还有其他功能吗？",
+          "answer": "当然！Sora Tools 提供完整的视频工具生态：{br}{br}• 视频去水印 - 一键移除 Sora2 视频水印{br}• AI 视频生成 - 使用提示词直接生成视频{br}• Prompt 展示 - 浏览优质提示词案例{br}{br}查看 积分套餐 了解更多功能详情。"
+        },
+        "q4": {
+          "question": "如何联系技术支持？",
+          "answer": "您可以通过以下方式联系我们：{br}• 邮箱：support@sora-prompt.io{br}• 访问 博客 查看详细教程和常见问题解答{br}{br}我们的专业团队会在 24 小时内回复您的问题。"
+        }
+      }
     },
     "errors": {
       "videoIdeaRequired": "请输入您的视频创意",

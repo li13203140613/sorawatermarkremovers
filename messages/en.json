@@ -146,6 +146,44 @@
       "title": "Create Amazing Sora AI Video Prompts with Our Free Generator",
       "subtitle": "Generate professional-grade AI video prompts in seconds"
     },
+    "v2": {
+      "modes": {
+        "simple": "Quick Mode",
+        "advanced": "Professional Mode"
+      },
+      "categories": {
+        "cinematic": "Cinematic",
+        "nature": "Nature",
+        "portrait": "Portrait",
+        "product": "Product",
+        "action": "Action",
+        "abstract": "Abstract",
+        "lifestyle": "Lifestyle"
+      },
+      "labels": {
+        "selectStyle": "Select Your Video Style",
+        "description": "Describe Your Creative Idea",
+        "creativeDescription": "Creative Description",
+        "placeholder": "Example: An orange cat walking down a rainy street, camera slowly pushing in...",
+        "characterCount": "characters",
+        "advancedOptions": "Advanced Options",
+        "temperature": "Temperature (Creativity)",
+        "conservative": "Conservative",
+        "creative": "Creative",
+        "promptCount": "Number of Prompts to Generate",
+        "selectOrInput": "Select or enter {field}...",
+        "pleaseInput": "Please enter {field}...",
+        "generating": "Generating...",
+        "generate": "Generate Prompt",
+        "aiGenerating": "AI is generating creative prompts...",
+        "defaultPrompt": "Generate a creative video"
+      },
+      "errors": {
+        "apiFailed": "API request failed: {status}",
+        "generateFailed": "Generation failed",
+        "retryPrompt": "Generation failed, please try again"
+      }
+    },
     "form": {
       "title": "Start Using Sora Prompt Generator - Enter Your Video Idea",
       "videoIdea": {
@@ -248,7 +286,26 @@
       "viewBlog": "View Tutorial Blog"
     },
     "faq": {
-      "title": "Frequently Asked Questions - Sora Prompt Generator FAQ"
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to Your Questions",
+      "questions": {
+        "q1": {
+          "question": "How to use the prompt generator to create AI videos?",
+          "answer": "Just three steps:{br}1) Select your desired video category{br}2) Enter your idea in Quick Mode, or fill in detailed parameters in Professional Mode{br}3) Click the \"Generate Prompt\" button{br}{br}Our AI will instantly generate professional-grade Sora 2 prompts for you to use. After generating prompts, you can go to the AI Video Generation page to directly generate videos."
+        },
+        "q2": {
+          "question": "Can the generated prompts be used directly in Sora 2?",
+          "answer": "Yes! All generated prompts are fully compatible with the Sora 2 platform. You can directly copy the prompts to the official Sora 2 platform and start generating high-quality videos immediately. Our AI model has been specifically trained to ensure that the generated prompts follow Sora 2 best practices.{br}{br}Want to see more quality examples? Visit Prompt Showcase to view a massive collection of curated prompts."
+        },
+        "q3": {
+          "question": "Are there any other features besides prompt generation?",
+          "answer": "Of course! Sora Tools provides a complete video tool ecosystem:{br}{br}• Watermark Removal - Remove Sora2 video watermarks with one click{br}• AI Video Generation - Generate videos directly using prompts{br}• Prompt Showcase - Browse quality prompt examples{br}{br}Check out Credit Packages for more feature details."
+        },
+        "q4": {
+          "question": "How to contact technical support?",
+          "answer": "You can contact us through:{br}• Email: support@sora-prompt.io{br}• Visit Blog to view detailed tutorials and FAQs{br}{br}Our professional team will reply to your questions within 24 hours."
+        }
+      }
     },
     "errors": {
       "videoIdeaRequired": "Please enter your video idea",

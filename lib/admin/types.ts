@@ -3,6 +3,11 @@
  */
 
 /**
+ * 操作类型
+ */
+export type ActionType = 'watermark_removal' | 'video_generation' | 'prompt_generation'
+
+/**
  * 操作日志
  */
 export interface UsageLog {
@@ -16,6 +21,21 @@ export interface UsageLog {
   status: 'success' | 'failed'
   error_message: string | null
   platform: string | null
+  ip_address: string | null
+  user_agent: string | null
+  action_type: ActionType
+  created_at: string
+}
+
+/**
+ * 用户会话记录
+ */
+export interface UserSession {
+  id: string
+  user_id: string | null
+  user_email: string | null
+  session_started_at: string
+  session_ended_at: string | null
   ip_address: string | null
   user_agent: string | null
   created_at: string
@@ -42,6 +62,40 @@ export interface AdminStats {
   activeUsers7d: number
   todayNewUsers: number
   totalCreditsConsumed: number
+}
+
+/**
+ * 高级分析统计数据
+ */
+export interface AnalyticsStats {
+  // 用户统计
+  totalVisitors: number              // 总登录访客数
+  todayVisitors: number              // 今日登录访客数
+  newRegistrations: number           // 新注册人数（总）
+  todayRegistrations: number         // 今日新注册人数
+
+  // 操作统计
+  promptGenerations: number          // 提示词生成次数（总）
+  todayPromptGenerations: number     // 今日提示词生成次数
+  watermarkRemovals: number          // 去水印次数（总）
+  todayWatermarkRemovals: number     // 今日去水印次数
+  videoGenerations: number           // 视频生成次数（总）
+  todayVideoGenerations: number      // 今日视频生成次数
+
+  // 趋势数据（最近7天）
+  dailyStats: DailyStats[]
+}
+
+/**
+ * 每日统计数据
+ */
+export interface DailyStats {
+  date: string
+  visitors: number
+  registrations: number
+  promptGenerations: number
+  watermarkRemovals: number
+  videoGenerations: number
 }
 
 /**
@@ -86,6 +140,17 @@ export interface CreateLogParams {
   status: 'success' | 'failed'
   errorMessage?: string | null
   platform?: string | null
+  ipAddress?: string | null
+  userAgent?: string | null
+  actionType?: ActionType
+}
+
+/**
+ * 创建会话记录的参数
+ */
+export interface CreateSessionParams {
+  userId?: string | null
+  userEmail?: string | null
   ipAddress?: string | null
   userAgent?: string | null
 }
