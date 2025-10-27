@@ -16,10 +16,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // 跳过 API 路由和静态资源
+  // 跳过 API 路由、静态资源和管理后台路由
   if (
     request.nextUrl.pathname.startsWith('/api') ||
     request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.startsWith('/admin') ||  // 跳过 /admin 路径
     request.nextUrl.pathname.includes('.')
   ) {
     return await updateSession(request)
