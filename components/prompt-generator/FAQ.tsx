@@ -19,19 +19,12 @@ export default function FAQ({ locale = 'zh' }: FAQProps) {
   const faqKeys = ['q1', 'q2', 'q3', 'q4'];
 
   const renderAnswer = (answerKey: string) => {
-    const answer = t(`questions.${answerKey}.answer`);
-    const parts = answer.split('{br}');
+    // Use t.rich() to provide {br} as a React element
+    const answer = t.rich(`questions.${answerKey}.answer`, {
+      br: () => <br />
+    });
 
-    return (
-      <div>
-        {parts.map((part, index) => (
-          <span key={index}>
-            {part}
-            {index < parts.length - 1 && <br />}
-          </span>
-        ))}
-      </div>
-    );
+    return <div>{answer}</div>;
   };
 
   return (

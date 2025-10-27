@@ -39,7 +39,11 @@ export function NavBarIsland({ locale, initialMessages }: NavBarIslandProps) {
   return (
     <AuthProvider>
       <CreditsProvider>
-        <NextIntlClientProvider messages={messages} locale={locale}>
+        <NextIntlClientProvider
+          messages={messages}
+          locale={locale}
+          timeZone="Asia/Shanghai"
+        >
           <NavBar />
         </NextIntlClientProvider>
       </CreditsProvider>

@@ -1,16 +1,9 @@
 /**
- * 首页 - 混合渲染架构（SEO优化版本）
- *
- * SEO优化策略：
- * - 服务端渲染：H1、静态内容、结构化数据 → 搜索引擎友好
- * - 客户端渲染：表单、交互、动态内容 → 用户体验优化
- *
- * 渲染方式：
- * ✅ 服务端：Hero Section, Sora Introduction, Product Advantages, Feature Navigation, Structured Data
- * 🔄 客户端：Google One Tap, Prompt Generator, Results Display, Gallery, FAQ
+ * 首页 - 完整版本（调试翻译问题）
+ * 修复：确认 messages 是否正确传递
  */
 
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getMessages } from 'next-intl/server';
 import { generateHomePageSchema, generateFAQSchema, HOME_FAQ_DATA } from '@/lib/seo/structured-data';
 import ClientInteractiveSectionWithProviders from '@/components/home/ClientInteractiveSectionWithProviders';
 import SoraIntroductionSSR from '@/components/prompt-generator/SoraIntroductionSSR';
@@ -20,6 +13,7 @@ import FeatureNavigationSSR from '@/components/prompt-generator/FeatureNavigatio
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'home' });
+  const messages = await getMessages({ locale });
 
   // 生成结构化数据
   const homeSchemas = generateHomePageSchema();
@@ -51,7 +45,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
 
         {/* 客户端交互区域（表单、结果、画廊、FAQ） */}
-        <ClientInteractiveSectionWithProviders />
+        <ClientInteractiveSectionWithProviders locale={locale} messages={messages} />
 
         {/* Sora Introduction - 服务端渲染（SEO优化） */}
         <SoraIntroductionSSR />

@@ -6,7 +6,7 @@ import "@/styles/blog.css";
 import "@/styles/nprogress.css";
 import { NavBarIsland } from '@/components/layout/NavBarIsland';
 import { NProgressBar } from '@/components/layout/NProgressBar';
-import { getCanonicalUrl, getAlternateLinks } from '@/lib/seo/canonical';
+import { getCanonicalUrl } from '@/lib/seo/canonical';
 
 // 动态生成 metadata（包含 canonical 链接）
 export async function generateMetadata({
@@ -34,6 +34,11 @@ export async function generateMetadata({
     title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
     description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation. Best prompt generator for stunning videos!",
     keywords: "Sora prompt generator, AI video prompts, Sora AI, free prompt generator, video prompt creator, Sora 2 prompts, AI video creation, viral video prompts",
+    icons: {
+      icon: [
+        { url: '/sora2-icon.svg', type: 'image/svg+xml' },
+      ],
+    },
     alternates,
     openGraph: {
       title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
