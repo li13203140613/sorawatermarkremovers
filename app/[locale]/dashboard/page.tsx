@@ -1,9 +1,14 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+import { AuthProvider } from '@/lib/auth'
+import { CreditsProvider } from '@/contexts/CreditsContext'
 import { VideoProcessor } from '@/components/video'
 import { useTranslations } from 'next-intl'
 
-export default function DashboardPage() {
+function DashboardContent() {
   const t = useTranslations('dashboard')
 
   return (
@@ -53,5 +58,27 @@ export default function DashboardPage() {
         </div>
       </footer>
     </main>
+  )
+}
+
+export default function DashboardPage() {
+  const params = useParams()
+  const locale = params.locale as string
+  const [messages, setMessages] = useState({})
+
+  useEffect(() => {
+    import(`@/messages/${locale}.json`)
+      .then((m) => setMessages(m.default))
+      .catch((err) => console.error('Failed to load messages:', err))
+  }, [locale])
+
+  return (
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      <AuthProvider>
+        <CreditsProvider>
+          <DashboardContent />
+        </CreditsProvider>
+      </AuthProvider>
+    </NextIntlClientProvider>
   )
 }
