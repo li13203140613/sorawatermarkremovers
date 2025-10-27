@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { AnalyticsStats } from '@/lib/admin/types'
 import AnalyticsStatsCards from '@/components/admin/AnalyticsStatsCards'
 import AnalyticsChart from '@/components/admin/AnalyticsChart'
-import Link from 'next/link'
 
 export default function AnalyticsPage() {
   const router = useRouter()
