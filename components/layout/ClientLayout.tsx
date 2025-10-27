@@ -4,6 +4,7 @@ import { AuthProvider } from '@/lib/auth'
 import { CreditsProvider } from '@/contexts/CreditsContext'
 import { NavBar } from './NavBar'
 import { NProgressBar } from './NProgressBar'
+import Breadcrumbs from './Breadcrumbs'
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -26,6 +27,7 @@ export function ClientLayoutWrapper({ children }: { children: React.ReactNode })
     <ClientProviders>
       <div className="min-h-screen flex flex-col">
         <ClientNavBar />
+        <Breadcrumbs />
         <main className="flex-1">
           {children}
         </main>

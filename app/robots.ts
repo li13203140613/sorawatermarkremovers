@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
   const allowPaths = locales.flatMap(locale => [
     `/${locale}/`,
     `/${locale}/blog/`,
-    `/${locale}/sora2prompt/`,
+    `/${locale}/dashboard/`,
+    `/${locale}/video-generation/`,
+    `/${locale}/soraprompting/`,
     `/${locale}/pricing/`,
     `/${locale}/privacy/`,
   ])
