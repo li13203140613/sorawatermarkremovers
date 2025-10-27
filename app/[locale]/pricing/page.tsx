@@ -1,9 +1,14 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+import { AuthProvider } from '@/lib/auth'
+import { CreditsProvider } from '@/contexts/CreditsContext'
 import { PaymentPackages } from '@/components/payment'
 import { useTranslations } from 'next-intl'
 
-export default function PricingPage() {
+function PricingContent() {
   const t = useTranslations('payment')
   const tDashboard = useTranslations('dashboard')
 
@@ -44,5 +49,27 @@ export default function PricingPage() {
         </div>
       </footer>
     </main>
+  )
+}
+
+export default function PricingPage() {
+  const params = useParams()
+  const locale = params.locale as string
+  const [messages, setMessages] = useState({})
+
+  useEffect(() => {
+    import(`@/messages/${locale}.json`)
+      .then((m) => setMessages(m.default))
+      .catch((err) => console.error('Failed to load messages:', err))
+  }, [locale])
+
+  return (
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      <AuthProvider>
+        <CreditsProvider>
+          <PricingContent />
+        </CreditsProvider>
+      </AuthProvider>
+    </NextIntlClientProvider>
   )
 }
