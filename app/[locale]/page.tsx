@@ -16,10 +16,10 @@ import ClientInteractiveSection from '@/components/home/ClientInteractiveSection
 import SoraIntroductionSSR from '@/components/prompt-generator/SoraIntroductionSSR';
 import ProductAdvantagesSSR from '@/components/prompt-generator/ProductAdvantagesSSR';
 import FeatureNavigationSSR from '@/components/prompt-generator/FeatureNavigationSSR';
-import Script from 'next/script';
 
-export default async function Home() {
-  const t = await getTranslations('home');
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'home' });
 
   // 生成结构化数据
   const homeSchemas = generateHomePageSchema();
@@ -29,14 +29,14 @@ export default async function Home() {
     <>
       {/* 结构化数据 - JSON-LD Schema（SEO关键） */}
       {homeSchemas.map((schema, index) => (
-        <Script
+        <script
           key={`schema-${index}`}
           id={`structured-data-${index}`}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: schema }}
         />
       ))}
-      <Script
+      <script
         id="structured-data-faq"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', ...faqSchema }) }}
