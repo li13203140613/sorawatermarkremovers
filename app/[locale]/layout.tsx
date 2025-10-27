@@ -4,8 +4,8 @@ import { locales } from '@/i18n';
 import "../globals.css";
 import "@/styles/blog.css";
 import "@/styles/nprogress.css";
-import { ClientProviders, ClientNavBar } from '@/components/layout/ClientLayout';
-import { IntlProvider } from '@/components/providers/IntlProvider';
+import { NavBarIsland } from '@/components/layout/NavBarIsland';
+import { NProgressBar } from '@/components/layout/NProgressBar';
 import { getCanonicalUrl, getAlternateLinks } from '@/lib/seo/canonical';
 
 // 动态生成 metadata（包含 canonical 链接）
@@ -95,16 +95,18 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        <IntlProvider messages={messages} locale={locale}>
-          <ClientProviders>
-            <div className="min-h-screen flex flex-col">
-              <ClientNavBar />
-              <main className="flex-1">
-                {children}
-              </main>
-            </div>
-          </ClientProviders>
-        </IntlProvider>
+        {/* Progress Bar - 客户端组件 */}
+        <NProgressBar />
+
+        <div className="min-h-screen flex flex-col">
+          {/* NavBar Island - 独立的客户端岛屿，不影响 children */}
+          <NavBarIsland locale={locale} initialMessages={messages} />
+
+          {/* 主内容区域 - 保持服务端渲染 */}
+          <main className="flex-1">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

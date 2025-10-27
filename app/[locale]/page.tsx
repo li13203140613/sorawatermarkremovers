@@ -12,7 +12,7 @@
 
 import { getTranslations } from 'next-intl/server';
 import { generateHomePageSchema, generateFAQSchema, HOME_FAQ_DATA } from '@/lib/seo/structured-data';
-import ClientInteractiveSection from '@/components/home/ClientInteractiveSection';
+import ClientInteractiveSectionWithProviders from '@/components/home/ClientInteractiveSectionWithProviders';
 import SoraIntroductionSSR from '@/components/prompt-generator/SoraIntroductionSSR';
 import ProductAdvantagesSSR from '@/components/prompt-generator/ProductAdvantagesSSR';
 import FeatureNavigationSSR from '@/components/prompt-generator/FeatureNavigationSSR';
@@ -51,7 +51,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
 
         {/* 客户端交互区域（表单、结果、画廊、FAQ） */}
-        <ClientInteractiveSection />
+        <ClientInteractiveSectionWithProviders />
 
         {/* Sora Introduction - 服务端渲染（SEO优化） */}
         <SoraIntroductionSSR />

@@ -31,8 +31,6 @@ const nextConfig = {
       },
     ],
   },
-  // 修复 Next.js 15 的配置（使用新的 serverExternalPackages）
-  serverExternalPackages: ['next-intl'],
   // 显式设置 workspace root 以避免 lockfile 警告
   outputFileTracingRoot: path.join(__dirname),
 }
