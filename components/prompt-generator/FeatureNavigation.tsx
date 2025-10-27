@@ -2,66 +2,69 @@
 
 import Link from 'next/link';
 import { Video, Sparkles, Image, DollarSign } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Feature {
-  title: string;
-  description: string;
   icon: any;
   href: string;
   color: string;
   bgColor: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
-const FEATURES: Feature[] = [
+const FEATURE_CONFIG: Feature[] = [
   {
-    title: '去水印工具',
-    description: '一键移除 Sora2 视频水印，快速高效',
     icon: Video,
     href: '/dashboard',
     color: 'text-blue-600',
     bgColor: 'bg-blue-50 hover:bg-blue-100',
+    titleKey: 'watermark.title',
+    descriptionKey: 'watermark.description',
   },
   {
-    title: 'AI 视频生成',
-    description: '使用提示词生成高质量 AI 视频',
     icon: Sparkles,
     href: '/video-generation',
     color: 'text-purple-600',
     bgColor: 'bg-purple-50 hover:bg-purple-100',
+    titleKey: 'videoGeneration.title',
+    descriptionKey: 'videoGeneration.description',
   },
   {
-    title: 'Prompt 展示',
-    description: '浏览海量优质 Sora 提示词案例',
     icon: Image,
     href: '/soraprompting',
     color: 'text-green-600',
     bgColor: 'bg-green-50 hover:bg-green-100',
+    titleKey: 'promptShowcase.title',
+    descriptionKey: 'promptShowcase.description',
   },
   {
-    title: '积分套餐',
-    description: '查看积分套餐，解锁更多功能',
     icon: DollarSign,
     href: '/pricing',
     color: 'text-amber-600',
     bgColor: 'bg-amber-50 hover:bg-amber-100',
+    titleKey: 'pricing.title',
+    descriptionKey: 'pricing.description',
   },
 ];
 
 export default function FeatureNavigation() {
+  const t = useTranslations('promptGenerator.features');
+
   return (
     <div className="bg-white py-16 px-4 border-t border-gray-200">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-3">
-            更多强大功能
+            {t('title')}
           </h2>
-          <p className="text-xl text-gray-600">探索 Sora Tools 的完整工具生态</p>
+          <p className="text-xl text-gray-600">{t('subtitle')}</p>
         </div>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {FEATURES.map((feature, index) => {
+          {FEATURE_CONFIG.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <Link
@@ -77,17 +80,17 @@ export default function FeatureNavigation() {
 
                   {/* Title */}
                   <h3 className={`text-lg font-bold mb-2 ${feature.color}`}>
-                    {feature.title}
+                    {t(feature.titleKey)}
                   </h3>
 
                   {/* Description */}
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    {feature.description}
+                    {t(feature.descriptionKey)}
                   </p>
 
                   {/* Arrow */}
                   <div className="mt-4 text-sm font-medium text-gray-500 group-hover:text-gray-700 flex items-center gap-1">
-                    立即使用
+                    {t('useNow')}
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -107,7 +110,7 @@ export default function FeatureNavigation() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            查看教程博客
+            {t('viewBlog')}
           </Link>
         </div>
       </div>

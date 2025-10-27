@@ -10,17 +10,6 @@ interface BreadcrumbItem {
   href: string;
 }
 
-// 页面名称映射（中文）
-const PAGE_NAMES: Record<string, string> = {
-  'dashboard': '去水印工具',
-  'video-generation': 'AI 视频生成',
-  'soraprompting': 'Prompt 展示',
-  'pricing': '积分套餐',
-  'blog': '博客',
-  'login': '登录',
-  'privacy': '隐私政策',
-};
-
 export default function Breadcrumbs() {
   const pathname = usePathname();
   const t = useTranslations('breadcrumbs');
@@ -40,7 +29,7 @@ export default function Breadcrumbs() {
 
     // 添加首页
     breadcrumbs.push({
-      label: '首页',
+      label: t('home'),
       href: '/',
     });
 
@@ -49,8 +38,8 @@ export default function Breadcrumbs() {
     paths.forEach((path, index) => {
       currentPath += `/${path}`;
 
-      // 获取页面名称
-      const pageName = PAGE_NAMES[path] || path;
+      // 获取页面名称（使用翻译或 fallback 到路径本身）
+      const pageName = t(path, { default: path });
 
       breadcrumbs.push({
         label: pageName,

@@ -190,28 +190,62 @@
       "subtitle": "浏览热门 Sora 提示词，获取最佳 Sora 提示词实践灵感"
     },
     "introduction": {
-      "title": "什么是 Sora 2？- 完整的 AI 视频生成器指南",
+      "title": "什么是 Sora 2？",
       "subtitle": "Sora 2 AI 视频生成器 - OpenAI 最新技术",
-      "content": "Sora 2 是 OpenAI 最新推出的 AI 视频生成模型。您只需输入简单的文字描述，Sora 2 就能根据您的 Sora 提示词生成高质量的视频内容。无论是电影级特效、真实场景还是创意动画，我们的 Sora 提示词生成器都能帮您创建最完美的 Sora 提示词。"
+      "description1": "Sora 2 是 OpenAI 最新推出的 AI 视频生成模型。只需输入简单的文字描述，即可生成高质量的视频内容。",
+      "description2": "无论是电影级特效、真实场景还是创意动画，我们的提示词生成器都能帮您创建最完美的提示词，释放 Sora 2 的全部潜能。",
+      "stats": {
+        "generations": "生成次数",
+        "satisfaction": "满意度",
+        "service": "在线服务"
+      },
+      "testimonial": {
+        "quote": "使用 Sora-Prompt 后，我的视频创作效率提升了 300%！AI 生成的提示词专业且富有创意。",
+        "author": "张小明",
+        "role": "独立视频创作者"
+      }
     },
     "advantages": {
-      "title": "为什么选择 Sora-Prompt 提示词生成器？",
+      "title": "为什么选择我们？",
+      "subtitle": "专业、高效、易用的 AI 提示词生成工具",
       "speed": {
-        "title": "超快速 Sora 提示词生成",
+        "title": "🚀 超快速 Sora 提示词生成",
         "description": "仅需 3 秒生成专业级 Sora 提示词，比手动输入快 100 倍"
       },
       "customization": {
-        "title": "高度定制化提示词",
+        "title": "🎨 高度定制化提示词",
         "description": "根据您的创意需求精确生成优化的 Sora AI 提示词"
       },
       "viral": {
-        "title": "走红内容优化",
+        "title": "📱 走红内容优化",
         "description": "AI 分析帮助您生成更容易走红的 Sora 视频提示词"
       },
       "free": {
-        "title": "100% 免费使用",
+        "title": "✨ 100% 免费使用",
         "description": "免费 Sora 提示词生成器，无需付费，无隐藏成本"
       }
+    },
+    "features": {
+      "title": "更多强大功能",
+      "subtitle": "探索 Sora Tools 的完整工具生态",
+      "watermark": {
+        "title": "去水印工具",
+        "description": "一键移除 Sora2 视频水印，快速高效"
+      },
+      "videoGeneration": {
+        "title": "AI 视频生成",
+        "description": "使用提示词生成高质量 AI 视频"
+      },
+      "promptShowcase": {
+        "title": "Prompt 展示",
+        "description": "浏览海量优质 Sora 提示词案例"
+      },
+      "pricing": {
+        "title": "积分套餐",
+        "description": "查看积分套餐，解锁更多功能"
+      },
+      "useNow": "立即使用",
+      "viewBlog": "查看教程博客"
     },
     "faq": {
       "title": "常见问题 - Sora 提示词生成器 FAQ"
@@ -221,5 +255,15 @@
       "videoTypeRequired": "请选择视频类型",
       "generationFailed": "生成提示词失败，请重试。"
     }
+  },
+  "breadcrumbs": {
+    "home": "首页",
+    "dashboard": "去水印工具",
+    "videoGeneration": "AI 视频生成",
+    "soraprompting": "Prompt 展示",
+    "pricing": "积分套餐",
+    "blog": "博客",
+    "login": "登录",
+    "privacy": "隐私政策"
   }
 }
