@@ -9,7 +9,7 @@ import { isAdmin } from '@/lib/admin/auth'
 export async function GET(request: NextRequest) {
   try {
     // 验证管理员权限
-    const adminCheck = await isAdmin()
+    const adminCheck = await isAdmin(request)
     if (!adminCheck) {
       return NextResponse.json(
         { error: 'Unauthorized' },

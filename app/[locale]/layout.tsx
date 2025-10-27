@@ -31,20 +31,20 @@ export async function generateMetadata({
   };
 
   return {
-    title: "Sora2 Video HD Free Watermark Removal Tool",
-    description: "Sora2 Remove Watermark Tool - Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered watermark removal technology while maintaining HD quality. No registration required, just paste Sora share link to remove watermark with one click and download watermark-free HD videos instantly. Sora2 去水印工具 - 免费在线 Sora 视频水印去除服务。支持 Sora 和 Sora2 所有视频格式，AI 智能去水印技术，保持高清画质不变。无需注册登录，粘贴 Sora 分享链接即可一键去除水印，快速下载无水印高清视频。",
-    keywords: "Sora 2 Remove Watermark, Sora2 去水印, Sora watermark removal, AI watermark remover, video watermark removal, free watermark remover, HD video processing",
+    title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
+    description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation. Best prompt generator for stunning videos!",
+    keywords: "Sora prompt generator, AI video prompts, Sora AI, free prompt generator, video prompt creator, Sora 2 prompts, AI video creation, viral video prompts",
     alternates,
     openGraph: {
-      title: "Sora2 Video HD Free Watermark Removal Tool",
-      description: "Free online Sora video watermark removal service. Support all Sora and Sora2 video formats with AI-powered technology. No registration required, remove watermark with one click.",
+      title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
+      description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation. Best prompt generator for stunning videos!",
       type: "website",
       url: canonicalUrl,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Sora2 Video HD Free Watermark Removal Tool",
-      description: "Free Sora & Sora2 video watermark removal. AI-powered, HD quality, one-click processing. No registration needed.",
+      title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
+      description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation.",
     },
   };
 }
