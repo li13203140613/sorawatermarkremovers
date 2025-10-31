@@ -13,13 +13,14 @@ export async function createUsageLog(params: CreateLogParams): Promise<boolean> 
       user_email: params.userEmail || null,
       original_url: params.originalUrl,
       processed_url: params.processedUrl || null,
-      credits_used: params.creditsUsed || 1,
+      credits_used: params.creditsUsed || 0,
       credits_remaining: params.creditsRemaining || null,
       status: params.status,
       error_message: params.errorMessage || null,
       platform: params.platform || null,
       ip_address: params.ipAddress || null,
       user_agent: params.userAgent || null,
+      action_type: params.actionType || 'watermark_removal',
     })
 
     if (error) {
