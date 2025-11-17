@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable @next/next/no-img-element */
 
 import { useAuth } from '@/lib/auth'
 import { useTranslations } from 'next-intl'

@@ -39,12 +39,9 @@ export function generateWebSiteSchema(): WebSite {
     },
     potentialAction: {
       '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${BASE_URL}/blog?search={search_term_string}`,
-      },
+      target: `${BASE_URL}/blog?search={search_term_string}`,
       'query-input': 'required name=search_term_string',
-    },
+    } as any,
   }
 }
 

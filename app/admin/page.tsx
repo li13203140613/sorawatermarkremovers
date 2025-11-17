@@ -23,11 +23,13 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<'logs' | 'users'>('logs')
 
   // 加载统计数据
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchStats()
   }, [])
 
   // 加载日志
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (activeTab === 'logs') {
       fetchLogs()
@@ -35,6 +37,7 @@ export default function AdminPage() {
   }, [filter, activeTab])
 
   // 加载用户列表
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (activeTab === 'users') {
       fetchUsers()

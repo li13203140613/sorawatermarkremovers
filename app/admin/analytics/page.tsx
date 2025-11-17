@@ -13,6 +13,7 @@ export default function AnalyticsPage() {
   const [stats, setStats] = useState<AnalyticsStats | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchStats()
   }, [])

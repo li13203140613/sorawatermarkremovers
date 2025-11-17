@@ -153,7 +153,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <section>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Technical notes for Sora &amp; Sora 2 watermark removal</h2>
               <p className="text-gray-700 mb-4">
-                Optimized for searches like "remove Sora watermark", "Sora 2 watermark remover", "download Sora video without watermark", and other Sora watermark removal keywords.
+                Optimized for searches like &quot;remove Sora watermark&quot;, &quot;Sora 2 watermark remover&quot;,
+                &quot;download Sora video without watermark&quot;, and other Sora watermark removal keywords.
               </p>
               <ul className="list-disc list-inside text-gray-700 space-y-2">
                 {SEO_TECH_NOTES.map((note, idx) => (

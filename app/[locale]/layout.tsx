@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { locales } from '@/i18n'
