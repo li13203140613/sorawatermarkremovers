@@ -7,7 +7,11 @@ import { classifyError, logErrorDetail, API_ERRORS } from '@/lib/api/error-class
  */
 const ALLOWED_ORIGINS = [
   process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com',
-  'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold'  // Chrome 插件
+  'https://www.sorawatermarkremovers.com',
+  'https://sorawatermarkremovers.com',
+  'https://www.sora-prompt.io',
+  'https://sora-prompt.io',
+  'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold', // Chrome 插件
 ]
 
 function isOriginAllowed(origin: string | null): boolean {
@@ -17,7 +21,9 @@ function isOriginAllowed(origin: string | null): boolean {
 
 function getCorsHeaders(origin: string | null) {
   return {
-    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : (process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'),
+    'Access-Control-Allow-Origin': isOriginAllowed(origin)
+      ? origin!
+      : (process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'),
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cookie',
     'Access-Control-Allow-Credentials': 'true',

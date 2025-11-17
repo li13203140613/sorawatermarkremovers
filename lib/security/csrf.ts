@@ -14,6 +14,8 @@ const PRIMARY_ORIGIN = process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawater
 const ALLOWED_ORIGINS = [
   PRIMARY_ORIGIN,
   PRIMARY_ORIGIN.replace('www.', ''), // 裸域
+  'https://www.sora-prompt.io',
+  'https://sora-prompt.io',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
   ...(process.env.CHROME_EXTENSION_ID
