@@ -1,54 +1,40 @@
-'use client';
+'use client'
 
-/**
- * Locale 级别错误边界组件
- * 捕获国际化路由下的错�?
- */
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface ErrorProps {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }
 
 export default function LocaleError({ error, reset }: ErrorProps) {
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    console.error('Locale Error Boundary caught:', error);
-  }, [error]);
+    console.error('Locale Error Boundary caught:', error)
+  }, [error])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-        {/* 错误图标 */}
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
-            <span className="text-4xl">�?/span>
-          </div>
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center text-4xl">⚠️</div>
         </div>
 
-        {/* 错误标题 */}
-        <h1 className="text-3xl font-bold text-gray-900 text-center mb-4">
-          Something went wrong!
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900 text-center mb-4">Something went wrong!</h1>
 
-        {/* 错误描述 */}
         <p className="text-lg text-gray-600 text-center mb-8">
-          The application encountered an unexpected error. We&apos;ve logged this issue and will fix it as soon as possible.
+          The application encountered an unexpected error. We&apos;ve logged this issue and will fix it as soon as
+          possible.
         </p>
 
-        {/* 开发环境：显示错误详情 */}
         {process.env.NODE_ENV === 'development' && (
           <div className="mb-8 p-4 bg-gray-100 rounded-lg border border-gray-300">
             <p className="text-sm font-mono text-gray-800 mb-2">
               <strong>Error Message:</strong>
             </p>
-            <p className="text-sm font-mono text-red-600 break-all">
-              {error.message}
-            </p>
+            <p className="text-sm font-mono text-red-600 break-all">{error.message}</p>
             {error.digest && (
               <p className="text-sm font-mono text-gray-600 mt-2">
                 <strong>Error Digest:</strong> {error.digest}
@@ -56,18 +42,13 @@ export default function LocaleError({ error, reset }: ErrorProps) {
             )}
             {error.stack && (
               <details className="mt-4">
-                <summary className="text-sm font-mono text-gray-700 cursor-pointer">
-                  Stack Trace (click to expand)
-                </summary>
-                <pre className="text-xs font-mono text-gray-600 mt-2 overflow-x-auto whitespace-pre-wrap">
-                  {error.stack}
-                </pre>
+                <summary className="text-sm font-mono text-gray-700 cursor-pointer">Stack Trace (click to expand)</summary>
+                <pre className="text-xs font-mono text-gray-600 mt-2 overflow-x-auto whitespace-pre-wrap">{error.stack}</pre>
               </details>
             )}
           </div>
         )}
 
-        {/* 操作按钮 */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={reset}
@@ -84,19 +65,15 @@ export default function LocaleError({ error, reset }: ErrorProps) {
           </button>
         </div>
 
-        {/* 帮助信息 */}
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-sm text-gray-500 text-center">
             If the problem persists, please contact{' '}
-            <a
-              href="mailto:support@sorawatermarkremovers.com"
-              className="text-blue-600 hover:text-blue-700 underline font-medium"
-            >
+            <a href="mailto:support@sorawatermarkremovers.com" className="text-blue-600 hover:text-blue-700 underline font-medium">
               technical support
             </a>
           </p>
         </div>
       </div>
     </div>
-  );
+  )
 }
