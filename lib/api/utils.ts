@@ -6,10 +6,15 @@ import { verifyCsrfProtection } from '@/lib/security/csrf'
 /**
  * CORS 配置
  */
+const PRIMARY_ORIGIN = process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'
 const ALLOWED_ORIGINS = [
-  'https://sora.com',
-  'chrome-extension://njdkfjnpicmacjbflkcbbohkhmefffcp',
-  process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  PRIMARY_ORIGIN,
+  PRIMARY_ORIGIN.replace('www.', ''), // 裸域
+  'https://www.sora-prompt.io',
+  'https://sora-prompt.io',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold', // Chrome 插件
 ]
 
 /**
