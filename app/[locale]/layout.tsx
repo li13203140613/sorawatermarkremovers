@@ -65,14 +65,14 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFC640NVZG"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY9YZJ8C6Z"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-VFC640NVZG');
+              gtag('config', 'G-TY9YZJ8C6Z');
             `,
           }}
         />
