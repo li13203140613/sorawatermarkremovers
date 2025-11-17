@@ -11,6 +11,7 @@ import BlogContent from '@/components/blog/BlogContent'
 import BlogRelated from '@/components/blog/BlogRelated'
 import { BlogPost, Language } from '@/lib/blog/types'
 import Link from 'next/link'
+import { BlogArticleSchema, BlogSEOHead, BreadcrumbSchema, getBlogBreadcrumbs } from '@/components/seo'
 
 const UI_TEXT = {
   zh: {
@@ -129,6 +130,11 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* SEO Components */}
+      <BlogSEOHead post={post} locale={lang} />
+      <BlogArticleSchema post={post} locale={lang} />
+      <BreadcrumbSchema items={getBlogBreadcrumbs(lang, post.title)} />
+
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Language Switcher */}
         <div className="flex justify-between items-center mb-8">

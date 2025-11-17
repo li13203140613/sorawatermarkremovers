@@ -6,7 +6,7 @@
 import { defaultLocale } from '@/i18n.config';
 
 // 从环境变量获取网站基础 URL
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.sora-prompt.io';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com';
 
 /**
  * 生成 canonical URL

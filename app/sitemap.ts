@@ -1,29 +1,23 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog/utils'
+import { locales } from '@/i18n.config'
 
-const SITE_URL = 'https://sora-prompt.io'
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'
 
-// 支持的语言
-const LANGUAGES = ['zh', 'en']
-
-// 静态页面路由
+// 当前有效、可索引的静态页（多语言）
 const STATIC_ROUTES = [
-  '',  // 首页
-  '/dashboard',
-  '/video-generation',
-  '/soraprompting',
+  '', // 首页
   '/pricing',
   '/blog',
-  '/login',
   '/privacy',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const sitemap: MetadataRoute.Sitemap = []
 
-  // 1. 添加静态页面（包含所有语言版本）
+  // 静态页
   STATIC_ROUTES.forEach(route => {
-    LANGUAGES.forEach(lang => {
+    locales.forEach(lang => {
       sitemap.push({
         url: `${SITE_URL}/${lang}${route}`,
         lastModified: new Date(),
@@ -33,19 +27,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // 2. 添加博客文章（所有语言）
-  LANGUAGES.forEach(lang => {
-    const posts = getAllPosts(lang as 'zh' | 'en')
-
-    posts.forEach(post => {
-      sitemap.push({
-        url: `${SITE_URL}/${lang}/blog/${post.slug}`,
-        lastModified: new Date(post.date),
-        changeFrequency: 'monthly',
-        priority: 0.6,
+  // 博客文章（目前仅中英）
+  locales
+    .filter(lang => ['en', 'zh'].includes(lang))
+    .forEach(lang => {
+      const posts = getAllPosts(lang as 'zh' | 'en')
+      posts.forEach(post => {
+        sitemap.push({
+          url: `${SITE_URL}/${lang}/blog/${post.slug}`,
+          lastModified: new Date(post.date),
+          changeFrequency: 'monthly',
+          priority: 0.6,
+        })
       })
     })
-  })
 
   return sitemap
 }

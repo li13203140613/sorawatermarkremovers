@@ -6,7 +6,7 @@ import { classifyError, logErrorDetail, API_ERRORS } from '@/lib/api/error-class
  * CORS 配置
  */
 const ALLOWED_ORIGINS = [
-  'https://www.sora-prompt.io',
+  process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com',
   'chrome-extension://ibeimhfbbijepbkhppinidodjbolpold'  // Chrome 插件
 ]
 
@@ -17,7 +17,7 @@ function isOriginAllowed(origin: string | null): boolean {
 
 function getCorsHeaders(origin: string | null) {
   return {
-    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : 'https://www.sora-prompt.io',
+    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : (process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'),
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cookie',
     'Access-Control-Allow-Credentials': 'true',

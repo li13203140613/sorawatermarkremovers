@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import BlogCard from '@/components/blog/BlogCard'
 import { BlogPost, Language } from '@/lib/blog/types'
+import { BlogListSchema, BreadcrumbSchema, getBlogBreadcrumbs } from '@/components/seo'
 
 const UI_TEXT = {
   zh: {
@@ -108,6 +109,10 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* SEO Components */}
+      {posts.length > 0 && <BlogListSchema posts={posts} locale={lang} />}
+      <BreadcrumbSchema items={getBlogBreadcrumbs(lang)} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">

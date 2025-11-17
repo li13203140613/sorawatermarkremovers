@@ -46,6 +46,10 @@
       "easy": {
         "title": "简单易用",
         "description": "粘贴链接即可处理"
+      },
+      "secure": {
+        "title": "安全私密",
+        "description": "您的数据安全，绝不外泄"
       }
     }
   },

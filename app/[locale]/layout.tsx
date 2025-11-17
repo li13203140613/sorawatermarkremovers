@@ -1,76 +1,65 @@
-import type { Metadata } from "next";
-import { notFound } from 'next/navigation';
-import { locales } from '@/i18n';
-import "../globals.css";
-import "@/styles/blog.css";
-import "@/styles/nprogress.css";
-import { NavBarIsland } from '@/components/layout/NavBarIsland';
-import { NProgressBar } from '@/components/layout/NProgressBar';
-import { getCanonicalUrl } from '@/lib/seo/canonical';
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { locales } from '@/i18n'
+import '../globals.css'
+import '@/styles/blog.css'
+import '@/styles/nprogress.css'
+import { NavBarIsland } from '@/components/layout/NavBarIsland'
+import { NProgressBar } from '@/components/layout/NProgressBar'
+import { getCanonicalUrl } from '@/lib/seo/canonical'
 
-// 动态生成 metadata（包含 canonical 链接）
 export async function generateMetadata({
-  params
+  params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = await params
 
-  // 生成 canonical URL（首页）
-  const canonicalUrl = getCanonicalUrl('/', locale);
-
-  // 生成多语言 alternate links
+  const canonicalUrl = getCanonicalUrl('/', locale)
   const alternates = {
     canonical: canonicalUrl,
     languages: Object.fromEntries(
-      ['en', 'zh', 'ja', 'de', 'zh-hant'].map(lang => [
-        lang,
-        getCanonicalUrl('/', lang)
-      ])
-    )
-  };
+      ['en', 'zh', 'ja', 'de', 'zh-hant'].map(lang => [lang, getCanonicalUrl('/', lang)])
+    ),
+  }
 
   return {
-    title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
-    description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation. Best prompt generator for stunning videos!",
-    keywords: "Sora prompt generator, AI video prompts, Sora AI, free prompt generator, video prompt creator, Sora 2 prompts, AI video creation, viral video prompts",
+    title: 'Free online Sora & Sora 2 watermark remover for logo-free video downloads',
+    description:
+      'Free Sora/Sora 2 watermark remover to download videos without logos. Fast AI watermark removal, HD output, supports Sora video links. Remove Sora watermarks online with one click.',
     icons: {
-      icon: [
-        { url: '/sora2-icon.svg', type: 'image/svg+xml' },
-      ],
+      icon: [{ url: '/sora2-icon.svg', type: 'image/svg+xml' }],
     },
     alternates,
     openGraph: {
-      title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
-      description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation. Best prompt generator for stunning videos!",
-      type: "website",
+      title: 'Sora Watermark Remover | Remove Sora & Sora 2 Watermarks Free Online',
+      description:
+        'Remove Sora and Sora 2 watermarks instantly, download Sora videos without logos, and get HD files with our free online AI watermark remover.',
+      type: 'website',
       url: canonicalUrl,
     },
     twitter: {
-      card: "summary_large_image",
-      title: "Create Amazing Sora AI Video Prompts with Our Free Generator",
-      description: "Free Sora Prompt Generator - Create Viral AI Video Prompts Instantly. Generate perfect prompts for Sora AI video creation.",
+      card: 'summary_large_image',
+      title: 'Sora Watermark Remover | Download Sora Videos Without Watermark',
+      description: 'Free Sora watermark remover for Sora & Sora 2 videos. One-click online removal, HD output, no logo.',
     },
-  };
+  }
 }
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
 }) {
-  // Next.js 15: 需要先 await params
-  const { locale } = await params;
+  const { locale } = await params
 
-  // 验证 locale 是否有效
   if (!locales.includes(locale as any)) {
-    notFound();
+    notFound()
   }
 
-  // 直接导入翻译文件，避免使用 getMessages() 导致客户端组件问题
-  const messages = (await import(`@/messages/${locale}.json`)).default;
+  const messages = (await import(`@/messages/${locale}.json`)).default
 
   return (
     <html lang={locale}>
@@ -100,19 +89,13 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        {/* Progress Bar - 客户端组件 */}
         <NProgressBar />
 
         <div className="min-h-screen flex flex-col">
-          {/* NavBar Island - 独立的客户端岛屿，不影响 children */}
           <NavBarIsland locale={locale} initialMessages={messages} />
-
-          {/* 主内容区域 - 保持服务端渲染 */}
-          <main className="flex-1">
-            {children}
-          </main>
+          <main className="flex-1">{children}</main>
         </div>
       </body>
     </html>
-  );
+  )
 }

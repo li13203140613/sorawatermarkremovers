@@ -12,7 +12,7 @@ import { VisitorCredits, ConsumeResult } from './types'
  */
 const COOKIE_NAME = 'visitor_credits'
 const COOKIE_EXPIRY_DAYS = 30
-const INITIAL_CREDITS = 1
+const INITIAL_CREDITS = 2
 
 /**
  * Cookie 积分管理器

@@ -65,7 +65,7 @@ export default function Breadcrumbs() {
       '@type': 'ListItem',
       'position': index + 1,
       'name': item.label,
-      'item': `https://sora-prompt.io${item.href}`,
+      'item': `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'}${item.href}`,
     })),
   };
 

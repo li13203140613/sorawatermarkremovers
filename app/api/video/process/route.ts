@@ -43,14 +43,15 @@ export async function POST(request: NextRequest) {
       const token = authHeader.substring(7)
 
       try {
-        // 创建临时客户端验证 token
+        // 创建客户端验证 token（使用 Anon Key，保持 RLS 保护）
         const { createClient: createSupabaseClient } = await import('@supabase/supabase-js')
-        const tempClient = createSupabaseClient(
+        supabase = createSupabaseClient(
           process.env.NEXT_PUBLIC_SUPABASE_URL!,
           process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
         )
 
-        const { data: userData, error: authError } = await tempClient.auth.getUser(token)
+        // 验证 Bearer Token 并获取用户信息
+        const { data: userData, error: authError } = await supabase.auth.getUser(token)
 
         if (authError || !userData.user) {
           videoLogger.error('Bearer Token 验证失败', authError?.message)
@@ -64,11 +65,11 @@ export async function POST(request: NextRequest) {
         user = userData.user
         videoLogger.success('Bearer Token 验证成功', user.email)
 
-        // 创建 Service Role 客户端用于数据库操作
-        supabase = createSupabaseClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!
-        )
+        // 设置用户会话（确保 RLS 策略正确应用）
+        await supabase.auth.setSession({
+          access_token: token,
+          refresh_token: '', // Bearer Token 模式不需要 refresh token
+        })
       } catch (error) {
         videoLogger.error('Bearer Token 处理异常', error)
         return apiError({

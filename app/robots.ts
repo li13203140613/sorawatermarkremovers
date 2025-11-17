@@ -2,13 +2,10 @@ import { MetadataRoute } from 'next'
 import { locales } from '@/i18n.config'
 
 export default function robots(): MetadataRoute.Robots {
-  // 为每个语言创建 allow 规则
+  // 允许的路径（按多语言）
   const allowPaths = locales.flatMap(locale => [
     `/${locale}/`,
     `/${locale}/blog/`,
-    `/${locale}/dashboard/`,
-    `/${locale}/video-generation/`,
-    `/${locale}/soraprompting/`,
     `/${locale}/pricing/`,
     `/${locale}/privacy/`,
   ])
@@ -28,7 +25,7 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: 'https://www.sora-prompt.io/sitemap.xml',
-    host: 'https://www.sora-prompt.io',
+    sitemap: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com'}/sitemap.xml`,
+    host: process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com',
   }
 }

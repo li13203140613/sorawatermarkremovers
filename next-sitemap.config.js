@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://www.sora-prompt.io',
+  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: [
@@ -43,7 +43,7 @@ module.exports = {
       }
     ],
     additionalSitemaps: [
-      'https://www.sora-prompt.io/sitemap.xml',
+      (process.env.NEXT_PUBLIC_APP_URL || 'https://www.sorawatermarkremovers.com') + '/sitemap.xml',
     ]
   }
 }

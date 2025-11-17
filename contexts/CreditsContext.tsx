@@ -58,6 +58,29 @@ export function CreditsProvider({ children }: { children: ReactNode }) {
   }, [user, authLoading])
 
   /**
+   * 登录后触发每日登录奖励（服务端保证每天一次）
+   */
+  useEffect(() => {
+    if (authLoading || !user) return
+
+    const claimDailyLoginBonus = async () => {
+      try {
+        const res = await fetch('/api/user/daily-login', { method: 'POST' })
+        if (res.ok) {
+          const data = await res.json()
+          if (data.rewarded) {
+            await loadDatabaseCredits()
+          }
+        }
+      } catch (error) {
+        console.error('领取每日登录奖励失败:', error)
+      }
+    }
+
+    claimDailyLoginBonus()
+  }, [authLoading, user])
+
+  /**
    * 加载数据库积分（已登录用户）
    */
   async function loadDatabaseCredits() {

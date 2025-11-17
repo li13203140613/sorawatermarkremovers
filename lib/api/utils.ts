@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { User } from '@supabase/supabase-js'
+import { verifyCsrfProtection } from '@/lib/security/csrf'
 
 /**
  * CORS 配置
@@ -197,4 +198,38 @@ export async function apiFetch<T = unknown>(
     }
     return { error: String(err) }
   }
+}
+
+/**
+ * CSRF 保护中间件
+ * 验证请求来源是否合法
+ *
+ * @example
+ * export async function POST(request: NextRequest) {
+ *   const csrfCheck = requireCsrfProtection(request);
+ *   if (csrfCheck.error) return csrfCheck.error;
+ *
+ *   // 继续处理请求...
+ * }
+ */
+export function requireCsrfProtection(request: NextRequest): {
+  valid: boolean
+  error: NextResponse | null
+} {
+  const origin = request.headers.get('origin')
+  const csrfCheck = verifyCsrfProtection(request)
+
+  if (!csrfCheck.valid) {
+    return {
+      valid: false,
+      error: apiError({
+        message: 'CSRF validation failed',
+        status: 403,
+        origin,
+        details: csrfCheck.reason,
+      }),
+    }
+  }
+
+  return { valid: true, error: null }
 }

@@ -46,6 +46,10 @@
       "easy": {
         "title": "Easy to Use",
         "description": "Simply paste the link and process"
+      },
+      "secure": {
+        "title": "Secure & Private",
+        "description": "Your data is safe and never shared"
       }
     }
   },

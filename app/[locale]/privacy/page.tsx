@@ -160,7 +160,7 @@ export default function PrivacyPage() {
               <li><strong>Withdraw Consent:</strong> Revoke permissions given to the extension</li>
             </ul>
             <p className="text-gray-700 mt-3">
-              To exercise these rights, contact us at <a href="mailto:support@sora-prompt.io" className="text-purple-600 hover:underline">support@sora-prompt.io</a>
+              To exercise these rights, contact us at <a href="mailto:support@sorawatermarkremovers.com" className="text-purple-600 hover:underline">support@sorawatermarkremovers.com</a>
             </p>
           </section>
 
@@ -206,7 +206,7 @@ export default function PrivacyPage() {
                 <p><strong>Host permissions (sora.chatgpt.com):</strong> To access Sora video pages</p>
               </div>
               <div>
-                <p><strong>Host permissions (www.sora-prompt.io):</strong> To communicate with our API</p>
+                <p><strong>Host permissions (www.sorawatermarkremovers.com):</strong> To communicate with our API</p>
               </div>
             </div>
           </section>
@@ -278,14 +278,14 @@ export default function PrivacyPage() {
             <div className="bg-purple-50 p-6 rounded-lg space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:support@sora-prompt.io" className="text-purple-600 hover:underline">
-                  support@sora-prompt.io
+                <a href="mailto:support@sorawatermarkremovers.com" className="text-purple-600 hover:underline">
+                  support@sorawatermarkremovers.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Website:</strong>{' '}
-                <a href="https://www.sora-prompt.io" className="text-purple-600 hover:underline">
-                  https://www.sora-prompt.io
+                <a href="https://www.sorawatermarkremovers.com" className="text-purple-600 hover:underline">
+                  https://www.sorawatermarkremovers.com
                 </a>
               </p>
             </div>
@@ -309,7 +309,7 @@ export default function PrivacyPage() {
             href="/"
             className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
           >
-            ‚Üê Back to Home
+            ‚Ü?Back to Home
           </Link>
         </div>
       </div>

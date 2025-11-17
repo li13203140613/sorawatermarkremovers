@@ -19,10 +19,10 @@ export function NavBar() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xl font-bold">S</span>
+              <span className="text-white text-xl font-bold">R</span>
             </div>
             <Link href="/" className="text-xl font-semibold text-gray-900">
-              Sora Tools
+              RemoveWM
             </Link>
           </div>
 
@@ -30,31 +30,10 @@ export function NavBar() {
           <div className="hidden md:flex items-center gap-6">
             <NavLink
               href="/"
-              className="text-gray-700 hover:text-green-600"
-              activeClassName="text-green-600 font-semibold"
-            >
-              {t('promptGenerator', { default: 'Prompt Generator' })}
-            </NavLink>
-            <NavLink
-              href="/soraprompting"
-              className="text-gray-700 hover:text-purple-600"
-              activeClassName="text-purple-600 font-semibold"
-            >
-              {t('promptGallery', { default: 'Prompt Gallery' })}
-            </NavLink>
-            <NavLink
-              href="/dashboard"
               className="text-gray-700 hover:text-indigo-600"
               activeClassName="text-indigo-600 font-semibold"
             >
-              {t('removeWatermark', { default: 'Remove Watermark' })}
-            </NavLink>
-            <NavLink
-              href="/video-generation"
-              className="text-gray-700 hover:text-indigo-600"
-              activeClassName="text-indigo-600 font-semibold"
-            >
-              {t('videoGeneration', { default: 'Video Generation' })}
+              {t('home', { default: 'Home' })}
             </NavLink>
             <NavLink
               href="/blog"
