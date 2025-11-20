@@ -51,6 +51,145 @@
         "title": "安全私密",
         "description": "您的数据安全，绝不外泄"
       }
+    },
+    "rating": {
+      "label": "优秀",
+      "scoreText": "4.8",
+      "reviews": "2,768",
+      "tagline": "信任评分"
+    },
+    "usage": {
+      "title": "如何使用 RemoveWM",
+      "subtitle": "三步完成清爽 Sora 视频",
+      "steps": {
+        "stepOneTitle": "粘贴分享链接",
+        "stepOneDescription": "复制 Sora 分享链接，粘贴到上方输入框。",
+        "stepTwoTitle": "提交 AI 清理",
+        "stepTwoDescription": "点击提交，AI 会在当前页面去除水印。",
+        "stepThreeTitle": "下载无水印视频",
+        "stepThreeDescription": "处理完成后即可下载保留原声的高清片段。"
+      }
+    },
+    "membership": {
+      "title": "想要更高画质并去掉 AI 提示？",
+      "description": "购买积分成为会员，去除隐藏的 AI 水印，并提高视频清晰度。",
+      "cta": "购买积分"
+    },
+    "reasons": {
+      "title": "为何用户信赖 RemoveWM",
+      "subtitle": "参考教程风格打造的快速、安全去水印体验",
+      "items": {
+        "fast": {
+          "title": "极速处理",
+          "description": "AI 秒级去除水印，让你可以随时继续创作。"
+        },
+        "private": {
+          "title": "隐私且无限",
+          "description": "无需登录，只需粘贴链接即可开始处理。"
+        },
+        "instant": {
+          "title": "立刻获得高清",
+          "description": "下载保留原始音频和码率，适合专业分享。"
+        },
+        "clean": {
+          "title": "简洁一页式流程",
+          "description": "所有操作集中在一个页面里，就像参考图一样清晰。"
+        },
+        "aiSafe": {
+          "title": "避免 TikTok AI 警告",
+          "description": "用积分去除隐藏 AI 水印后，TikTok 不再提示 AI 视频。"
+        },
+        "support": {
+          "title": "数千次满意下载",
+          "description": "我们持续优化性能、加强隐私，并根据反馈改进。"
+        }
+      }
+    },
+    "recommended": {
+      "title": "推荐文章",
+      "subtitle": "来自博客的精选技巧",
+      "viewMore": "查看更多文章",
+      "empty": "暂时还没有推荐文章"
+    },
+    "satisfaction": {
+      "title": "请为这次下载评分",
+      "subtitle": "每次下载后点亮星星，让我们了解是否达到了你的期待。",
+      "prompt": "点击星星提交评分",
+      "received": "评分已经收到了，谢谢！"
+    },
+    "reviews": {
+      "title": "数千名用户的真实评价",
+      "subtitle": "看看创作者们怎么说",
+      "items": [
+        {
+          "id": "1",
+          "userName": "艾瑞斯·蒙哥马利",
+          "avatar": "https://ui-avatars.com/api/?name=Iris+M&background=4F46E5&color=fff&size=128",
+          "date": "6月12日",
+          "rating": 5,
+          "comment": "终于找到一个不需要登录就能正常使用的 Sora 去水印工具。这正是我需要的。",
+          "likes": 19,
+          "views": 3.9
+        },
+        {
+          "id": "2",
+          "userName": "芬兰十字",
+          "avatar": "https://ui-avatars.com/api/?name=Finnian+C&background=10B981&color=fff&size=128",
+          "date": "6月11日",
+          "rating": 5,
+          "comment": "我经常旅行，这个去水印工具完美绕过了地区限制。它已成为我获取必要工具的首选。",
+          "likes": 22,
+          "views": 4.2
+        },
+        {
+          "id": "3",
+          "userName": "巴斯蒂安·约克",
+          "avatar": "https://ui-avatars.com/api/?name=Bastien+Y&background=F59E0B&color=fff&size=128",
+          "date": "6月6日",
+          "rating": 5,
+          "comment": "我欣赏它如何尊重我的隐私——我可以浏览而不必担心被监控。",
+          "likes": 54,
+          "views": 7.8
+        },
+        {
+          "id": "4",
+          "userName": "西尔维·卡弗",
+          "avatar": "https://ui-avatars.com/api/?name=Sylvie+C&background=EC4899&color=fff&size=128",
+          "date": "6月14日",
+          "rating": 5,
+          "comment": "推文查看器太棒了——单页上就有信息丰富且不杂乱。",
+          "likes": 67,
+          "views": 91
+        },
+        {
+          "id": "5",
+          "userName": "伊索尔德·纳瓦罗",
+          "avatar": "https://ui-avatars.com/api/?name=Isolde+N&background=8B5CF6&color=fff&size=128",
+          "date": "6月10日",
+          "rating": 5,
+          "comment": "个人资料查看器让我就能够完整地查看账户信息，而无需休止地滚动。",
+          "likes": 81,
+          "views": 10.4
+        },
+        {
+          "id": "6",
+          "userName": "梅芙·桑顿",
+          "avatar": "https://ui-avatars.com/api/?name=Maeve+T&background=EF4444&color=fff&size=128",
+          "date": "6月22日",
+          "rating": 5,
+          "comment": "筒洁无广告的界面真是个梦想。我可以专注于数据，除此之外没有其他干扰。",
+          "likes": 29,
+          "views": 5.1
+        }
+      ]
+    },
+    "footer": {
+      "description": "面向 Sora 与 Sora2 的 AI 去水印解决方案。",
+      "explore": "探索",
+      "links": "链接",
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "copy": "© 2025 RemoveWM。保留所有权利。"
     }
   },
   "auth": {

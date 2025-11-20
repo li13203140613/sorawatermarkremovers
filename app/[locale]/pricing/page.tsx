@@ -35,18 +35,18 @@ function PricingContent() {
     <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pricingSchema }} />
       <div className="flex-1 flex flex-col">
-        {/* 充值套餐区块 */}
+        {/* Pricing Packages */}
         <div className="flex-1 px-4 pt-16 pb-12">
           <PaymentPackages />
         </div>
       </div>
 
-      {/* 底部免责声明 */}
+      {/* Footer Disclaimer */}
       <footer className="bg-white border-t border-gray-200 py-10 px-4 mt-auto">
         <div className="max-w-4xl mx-auto">
           <div className="text-center space-y-3">
             <p className="text-sm text-gray-600">
-              ?? {tDashboard('disclaimer.title')}
+              鈿狅笍 {tDashboard('disclaimer.title')}
             </p>
             <p className="text-xs text-gray-500 max-w-2xl mx-auto leading-relaxed">
               {tDashboard('disclaimer.content')}

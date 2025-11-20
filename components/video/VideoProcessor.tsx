@@ -14,7 +14,11 @@ interface ProcessResponse {
   shouldConsumeCredit?: boolean
 }
 
-export function VideoProcessor() {
+interface VideoProcessorProps {
+  onVideoProcessed?: () => void
+}
+
+export function VideoProcessor({ onVideoProcessed }: VideoProcessorProps = {}) {
   const t = useTranslations('video')
   const tDashboard = useTranslations('dashboard')
   const { credits, hasCredits, isLoggedIn, consumeCredit, getVisitorId, refresh } = useCredits()
@@ -89,6 +93,9 @@ export function VideoProcessor() {
           // 如果是数据库积分，刷新显示
           await refresh()
         }
+
+        // 通知父组件视频处理成功
+        onVideoProcessed?.()
       } else {
         setError(t('errors.processingFailed'))
       }

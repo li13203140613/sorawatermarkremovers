@@ -51,6 +51,145 @@
         "title": "Secure & Private",
         "description": "Your data is safe and never shared"
       }
+    },
+    "rating": {
+      "label": "Excellent",
+      "scoreText": "4.8",
+      "reviews": "2,768",
+      "tagline": "Trust Score"
+    },
+    "usage": {
+      "title": "How to use RemoveWM",
+      "subtitle": "Three simple steps to a clean Sora video",
+      "steps": {
+        "stepOneTitle": "Paste the share link",
+        "stepOneDescription": "Copy the Sora link and drop it into the field above.",
+        "stepTwoTitle": "Submit for AI cleaning",
+        "stepTwoDescription": "Click submit to let the AI remove the watermark while you stay on the page.",
+        "stepThreeTitle": "Download the watermark-free video",
+        "stepThreeDescription": "Grab the HD clip with audio preserved once processing finishes."
+      }
+    },
+    "membership": {
+      "title": "Want higher resolution and no AI prompts?",
+      "description": "Purchase credits to become a member, remove hidden AI watermarks, and improve video quality.",
+      "cta": "Purchase credits"
+    },
+    "reasons": {
+      "title": "Why users trust RemoveWM",
+      "subtitle": "Fast, private, and reliable watermark removal inspired by our tutorials",
+      "items": {
+        "fast": {
+          "title": "Speed you can rely on",
+          "description": "Our AI removes the watermark in seconds so you can keep creating."
+        },
+        "private": {
+          "title": "Private & unlimited",
+          "description": "No login required — paste a link and start cleaning right away."
+        },
+        "instant": {
+          "title": "Instant HD delivery",
+          "description": "Downloads keep original audio and bitrate for professional sharing."
+        },
+        "clean": {
+          "title": "Clear, single-page workflow",
+          "description": "Everything lives on one page, just like the reference screenshot."
+        },
+        "aiSafe": {
+          "title": "No TikTok AI warnings",
+          "description": "After using credits to strip the hidden AI watermark, TikTok stops flagging your video as AI content."
+        },
+        "support": {
+          "title": "Thousands of satisfied downloads",
+          "description": "We monitor quality, refresh privacy promises, and keep improving based on your feedback."
+        }
+      }
+    },
+    "recommended": {
+      "title": "Recommended Articles",
+      "subtitle": "Fresh tips from our blog",
+      "viewMore": "View more articles",
+      "empty": "No articles available yet."
+    },
+    "satisfaction": {
+      "title": "Rate your download experience",
+      "subtitle": "Leave a star after every download so we know if the video matches your expectations.",
+      "prompt": "Tap a star to submit your rating",
+      "received": "Rating received, thank you!"
+    },
+    "reviews": {
+      "title": "Trusted by Thousands — Here's Why",
+      "subtitle": "See what creators are saying",
+      "items": [
+        {
+          "id": "1",
+          "userName": "Iris Montgomery",
+          "avatar": "https://ui-avatars.com/api/?name=Iris+M&background=4F46E5&color=fff&size=128",
+          "date": "Jun 12",
+          "rating": 5,
+          "comment": "Finally found a Sora watermark removal tool that doesn't require login. This is exactly what I needed.",
+          "likes": 19,
+          "views": 3.9
+        },
+        {
+          "id": "2",
+          "userName": "Finnian Cross",
+          "avatar": "https://ui-avatars.com/api/?name=Finnian+C&background=10B981&color=fff&size=128",
+          "date": "Jun 11",
+          "rating": 5,
+          "comment": "I travel often, and this watermark remover perfectly bypasses regional restrictions. It's become my go-to for essential tools.",
+          "likes": 22,
+          "views": 4.2
+        },
+        {
+          "id": "3",
+          "userName": "Bastien Yorke",
+          "avatar": "https://ui-avatars.com/api/?name=Bastien+Y&background=F59E0B&color=fff&size=128",
+          "date": "Jun 6",
+          "rating": 5,
+          "comment": "I appreciate how it respects my privacy—I can browse without worrying about being monitored.",
+          "likes": 54,
+          "views": 7.8
+        },
+        {
+          "id": "4",
+          "userName": "Sylvie Carver",
+          "avatar": "https://ui-avatars.com/api/?name=Sylvie+C&background=EC4899&color=fff&size=128",
+          "date": "Jun 14",
+          "rating": 5,
+          "comment": "The tweet viewer is amazing—informative and clutter-free on a single page.",
+          "likes": 67,
+          "views": 91
+        },
+        {
+          "id": "5",
+          "userName": "Isolde Navarro",
+          "avatar": "https://ui-avatars.com/api/?name=Isolde+N&background=8B5CF6&color=fff&size=128",
+          "date": "Jun 10",
+          "rating": 5,
+          "comment": "The profile viewer lets me see complete account info without endless scrolling.",
+          "likes": 81,
+          "views": 10.4
+        },
+        {
+          "id": "6",
+          "userName": "Maeve Thornton",
+          "avatar": "https://ui-avatars.com/api/?name=Maeve+T&background=EF4444&color=fff&size=128",
+          "date": "Jun 22",
+          "rating": 5,
+          "comment": "The clean, ad-free interface is a dream. I can focus on data without any other distractions.",
+          "likes": 29,
+          "views": 5.1
+        }
+      ]
+    },
+    "footer": {
+      "description": "AI-powered watermark removal for Sora & Sora2 videos.",
+      "explore": "Explore",
+      "links": "Links",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "copy": "© 2025 RemoveWM. All rights reserved."
     }
   },
   "auth": {
